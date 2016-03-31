@@ -1,30 +1,19 @@
 <!DOCTYPE HTML>
-<html ng-app="app">
+<html ng-app="game">
 <head>
     <meta charset="UTF-8" />
-    <title>GameName</title>
+    <title>Caves of Herobora</title>
 </head>
 <body>
-    <div id="game">
+    <div id="game" ng-controller="main">
         <div id="left">
-            <div id="inventory">
-                
-            </div>
+            <div id="canvas"></div>
 
             <div id="interface">
                 <div class="hp">
-                    <div>xxx/yyy</div>
+                    <div ng-bind="player.hp[0] + '/' + player.hp[1]"></div>
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li ng-repeat='i in player.hp[2]' ng-class="{lost: $index >= player.hp[0]}"></li>
                     </ul>
                     <div style="clear:both;display:none"></div>
                 </div>
@@ -48,16 +37,185 @@
                 </div>
             </div>
 
-            <div id="canvas"></div>
+            <div id="gameover" ng-show="view == 'gameover'">
+                <h1>Ты проиграл</h1>
+                <h3>Без пчелки играть не интересно, ты скучный =(</h3> 
+            </div>
+
+            <div id="inventory" ng-show="view == 'inventory'">
+                <div class="equip">
+                    <div><span>left</span></div>
+                    <div><span>head</span></div>
+                    <div><span>body</span></div>
+                    <div><span>pants</span></div>
+                    <div><span>boots</span></div>
+                    <div><span>right</span></div>
+                </div>
+
+                <div class="list">
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h1>Item</h1>
+                        <p>Item Description</p>
+                        <div>
+                            <button>set on</button>
+                            <button>throw</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="character" ng-show="view == 'character'">
+                <div class="state">
+
+                    <div class="item" ng-repeat="(k, c) in player.character">
+                        <p>{{k}} ({{c.val}}/{{c.max}})[level: {{c.lvl}}]:</p>
+                        <span style="width:{{c.val*2}}px; background: {{c.color}};"></span>
+                    </div>
+                </div>
+
+                <div class="skills">
+                    <div class="set">
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                    </div>
+
+                    <div class="set">
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                    </div>
+
+                    <div class="set">
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                    </div>
+
+                    <div class="set">
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                        <div><span>Description</span></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="right">
-            <h1>UserName</h1>
+            <h1 ng-bind="player.name"></h1>
             <div>
-                <button>character</button>
+                <button ng-click="view == 'character' ? view = '' : view = 'character'">character</button>
             </div>   
             <div>
-                <button>inventory</button>
+                <button ng-click="view == 'inventory' ? view = '' : view = 'inventory'">inventory</button>
             </div>
         </div>
     </div>
