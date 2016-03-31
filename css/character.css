@@ -1,0 +1,82 @@
+#character {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 600px;
+    background: rgba(145, 181, 45, 0.95);
+}
+
+#character .state {
+    display: block;
+    position: relative;
+    float: left;
+    width: 300px;
+    height: 600px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#character .state .item {
+    display: block;
+    position: relative;
+    padding: 15px 15px 30px 15px;
+    margin: 10px 20px 10px 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+#character .state .item>span {
+    display: block;
+    position: absolute;
+    left: 20px; bottom: 5px;
+    height: 20px;
+}
+
+#character .skills {
+    display: block;
+    position: relative;
+    float: left;
+    width: 500px;
+    height: 600px;
+}
+
+#character .skills .set {
+    display: block;
+    position: relative;
+    float: left;
+    width: 200px;
+    height: 250px;
+    padding: 5px;
+    margin: 20px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+#character .skills .set div{
+    display: block;
+    width: 90px;
+    height: 90px;
+    float: left;
+    margin: 5px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+#character .skills .set div:hover{
+    background: rgba(0, 0, 0, 0.2); 
+}
+
+#character .skills .set div span{
+    display: none;
+    position: relative;
+    top: -35px;
+    left: -10px;
+    width: 100px;
+    height: 20px;
+    padding: 5px;
+    background: rgba(250, 250, 250, 0.8);
+    text-align: center;
+}
+
+#character .skills .set div:hover span{
+    display: block;
+}
