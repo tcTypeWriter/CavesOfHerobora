@@ -1,28 +1,28 @@
 
 module.exports = Bee;
 
-var speed = 200;
-var lowspeed = 100;
-var vision_distance = 300;
-var radius = 30;
+var speed = 100;
+var lowspeed = 50;
+var vision_distance = 250;
+var radius = 10;
 
 function Bee(player, x, y) {
     var game = Bee.game;
 
-    this.player = player;
-
-    this.position = {x: x, y: y};
-    this.hp = [5, 5];
-    this.state = 'swirl';
-
     var bee = this.sprite = game.add.sprite(x + radius, y, 'bee');
-    
-    bee.anchor.set(0.5);
-    game.physics.arcade.enable(bee);
-    bee.body.collideWorldBounds = true;
-    bee.body.bounce.setTo(0.3, 0.3);
 
+    bee.player = player;
+    bee.base = {x: x, y: y};
+    bee.hp = [5, 5];
+    bee.state = 'swirl';
+    
+    game.physics.enable(bee, Phaser.Physics.ARCADE);
+    bee.body.collideWorldBounds = true;
     bee.body.velocity.y = lowspeed;
+
+    bee.Update = Update;
+
+    return bee;
 }
 
 Bee.load = function(game) {
@@ -37,19 +37,24 @@ Bee.load = function(game) {
     game.create.texture('bee', bee_texture, 6, 6, 0);
     this.game = game;
 };
-
-Bee.prototype.update = function(game) {
-    var x = this.position.x;
-    var y = this.position.y;
+function Update(game) {
+    var x = this.base.x;
+    var y = this.base.y;
     
     if(this.state == 'swirl'){
-        game.physics.arcade.accelerateToXY(this.sprite, x, y, lowspeed);
-    } else {
-        game.physics.arcade.moveToObject(this.sprite, this.player.sprite, lowspeed);
-    }
+        game.physics.arcade.accelerateToXY(this, x, y, lowspeed);
+    } else if(this.state == 'chase'){
+        game.physics.arcade.moveToObject(this, this.player.sprite, speed);
+    } else if(this.state == 'back')
+        game.physics.arcade.moveToXY(this, x + radius, y, speed);
+
 
     if(game.physics.arcade.distanceToXY(this.player.sprite, x, y) < vision_distance){
         this.state = 'chase';
-    } else
+    } else if(game.physics.arcade.distanceToXY(this, x + radius, y) < 10 && this.state == 'back'){
+        this.body.velocity.setTo(0, lowspeed);
         this.state = 'swirl';
+    } else if (this.state == 'chase'){
+        this.state = 'back';
+    }
 };

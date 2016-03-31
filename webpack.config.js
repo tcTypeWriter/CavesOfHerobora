@@ -15,6 +15,7 @@ module.exports = {
     },
 
     watch: NODE_ENV === 'dev',
+    devtool: NODE_ENV === 'dev' ? "source-map" : null,
 
     resolve:{
         modulesDirectories: ["libs", "css"]

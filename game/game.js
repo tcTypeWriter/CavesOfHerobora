@@ -10,11 +10,11 @@ function create() {
     game.stage.backgroundColor = '#ffffff';
 
     model.player.load(game);
-    for(var key in model.mobs){
-        model.mobs[key].load(game);
+    for(var key in model.mobsCreator){
+        model.mobsCreator[key].load(game);
     }
 
-    model.map.load();
+    model.map.load(game);
 }
 
 function update() {

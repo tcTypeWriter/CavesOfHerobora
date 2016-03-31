@@ -7,8 +7,10 @@ var angular = require('angular');
 var engine = require('./game.js');
 
 var SimpleMap = require('./map/SimpleMap.js');
+
 var Player = require('./player/player.js');
-var mobs = require('./mobs/mobs.js');
+var mobsCreator =   require('./mobs/mobsCreator.js');
+var skillsCreator = require('./skills/skillsCreator.js');
 
 var game = angular.module('game', []);
 
@@ -16,9 +18,9 @@ game.controller("main", ["$scope", function ($scope) {
     $scope.view = 'game';
 
     $scope.player = new Player();
-    $scope.mobs = mobs;
+    $scope.mobsCreator = mobsCreator;
 
-    $scope.map = new SimpleMap($scope.mobs, $scope.player);
+    $scope.map = new SimpleMap($scope.mobsCreator, $scope.player);
 
     engine($scope);
 }]);

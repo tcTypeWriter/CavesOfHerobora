@@ -5,7 +5,7 @@ var Character = require('./character.js');
 var Equip = require('./equip.js');
 
 function Player() {
-    this.name = "UserName";
+    this.name = "User Name";
 
     this.hp = [8, 10, [1, 2, 3, 4, 5 , 6, 7, 8, 9, 10]];
 

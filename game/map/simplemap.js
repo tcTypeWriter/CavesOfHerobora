@@ -1,23 +1,38 @@
 
 module.exports = SimpleMap;
 
-function SimpleMap(mobs, player) {
-    this.add = mobs;
+function SimpleMap(mobsCreator, player) {
+    this.mobsCreator = mobsCreator;
     this.player = player;
-    this.mobs = [];
 }
 
 
 SimpleMap.prototype.load = function(game) {
-    this.mobs.push(new this.add.Bee(this.player, 100, 100));
+    var mobs = this.mobs = createGroup();
+    var skills = this.skills = createGroup();
+    var items = this.items = createGroup();
+    
+    skills.setAll('outOfBoundsKill', true);
+
+    mobs.add( this.mobsCreator.Bee(this.player, 150, 150) );
+
+
+
+    function createGroup(){
+        var grp = game.add.group();
+        grp.enableBody = true;
+        grp.physicsBodyType = Phaser.Physics.ARCADE;
+        grp.setAll('anchor.x', 0.5);
+        grp.setAll('anchor.y', 0.5);
+        return grp;
+    }
 }
 
 
 SimpleMap.prototype.update = function(game) {
-    var mobs = this.mobs;
+    this.mobs.forEachAlive(function(mob){
+        mob.Update(game);
+    });
 
-    for(var i in mobs){
-        mobs[i].update(game);
-        game.physics.arcade.collide(this.player.sprite, mobs[i].sprite);
-    }
+    game.physics.arcade.collide(this.player.sprite, this.mobs);
 }
