@@ -11,10 +11,11 @@ function SimpleMap(mobsCreator, player) {
 
 SimpleMap.prototype.load = function(game) {
     var mobs = this.mobs = createGroup();
-    var skills = this.skills = createGroup();
+    var playerSkills = this.playerSkills = createGroup();
+    var mobsSkills = this.mobsSkills = createGroup();
     var items = this.items = createGroup();
     
-    skills.setAll('outOfBoundsKill', true);
+    playerSkills.setAll('outOfBoundsKill', true);
 
     mobs.add( this.mobsCreator.Bee(this.player, 150, 150) );
 
@@ -36,13 +37,16 @@ SimpleMap.prototype.update = function(game) {
 
     game.physics.arcade.collide(this.player.sprite, this.mobs);
     game.physics.arcade.over
-    game.physics.arcade.overlap(this.skills, this.mobs, hit, null, this);
+    game.physics.arcade.overlap(this.playerSkills, this.mobs, hit, null, this);
+}
+
+SimpleMap.prototype.gameover = function() {
+    return this.mobs.countLiving() == 0;
 }
 
 
-function hit(skill, mob){
-    console.log(skill.damage());
 
+function hit(skill, mob){
     mob.isHurted(skill.damage());
     skill.kill();
 }

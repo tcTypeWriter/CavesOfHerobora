@@ -70,6 +70,6 @@ Player.prototype.update = function(game) {
 
     if (game.input.activePointer.isDown && this.active.ready()){
         var skill = this.active(player.position);
-        this.map.skills.add(skill);
+        this.map.playerSkills.add(skill);
     }
 };

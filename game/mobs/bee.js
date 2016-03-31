@@ -61,7 +61,6 @@ function Update(game) {
 };
 
 function isHurted(damage){
-    console.log(damage);
     this.hp[0] -= damage;
     if(this.hp[0] <= 0)
         this.kill();

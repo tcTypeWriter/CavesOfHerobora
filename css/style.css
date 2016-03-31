@@ -67,3 +67,15 @@ body{
     width: 800px;
     height: 600px;
 }
+
+#gameover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 800px;
+    height: 400px;
+    padding-top: 200px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+}
