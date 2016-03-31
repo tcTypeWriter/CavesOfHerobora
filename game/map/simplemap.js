@@ -4,6 +4,8 @@ module.exports = SimpleMap;
 function SimpleMap(mobsCreator, player) {
     this.mobsCreator = mobsCreator;
     this.player = player;
+
+    player.map = this;
 }
 
 
@@ -15,8 +17,6 @@ SimpleMap.prototype.load = function(game) {
     skills.setAll('outOfBoundsKill', true);
 
     mobs.add( this.mobsCreator.Bee(this.player, 150, 150) );
-
-
 
     function createGroup(){
         var grp = game.add.group();
@@ -35,4 +35,14 @@ SimpleMap.prototype.update = function(game) {
     });
 
     game.physics.arcade.collide(this.player.sprite, this.mobs);
+    game.physics.arcade.over
+    game.physics.arcade.overlap(this.skills, this.mobs, hit, null, this);
+}
+
+
+function hit(skill, mob){
+    console.log(skill.damage());
+
+    mob.isHurted(skill.damage());
+    skill.kill();
 }

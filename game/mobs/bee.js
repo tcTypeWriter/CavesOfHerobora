@@ -21,6 +21,7 @@ function Bee(player, x, y) {
     bee.body.velocity.y = lowspeed;
 
     bee.Update = Update;
+    bee.isHurted = isHurted;
 
     return bee;
 }
@@ -54,7 +55,14 @@ function Update(game) {
     } else if(game.physics.arcade.distanceToXY(this, x + radius, y) < 10 && this.state == 'back'){
         this.body.velocity.setTo(0, lowspeed);
         this.state = 'swirl';
-    } else if (this.state == 'chase'){
+    } else if (this.state == 'chase' || game.physics.arcade.distanceToXY(this, x, y) > vision_distance*0.7){
         this.state = 'back';
     }
 };
+
+function isHurted(damage){
+    console.log(damage);
+    this.hp[0] -= damage;
+    if(this.hp[0] <= 0)
+        this.kill();
+}

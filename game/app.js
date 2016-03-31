@@ -19,6 +19,7 @@ game.controller("main", ["$scope", function ($scope) {
 
     $scope.player = new Player();
     $scope.mobsCreator = mobsCreator;
+    $scope.skillsCreator = skillsCreator;
 
     $scope.map = new SimpleMap($scope.mobsCreator, $scope.player);
 

@@ -1,6 +1,8 @@
 
 module.exports = Player;
 
+
+var skillsCreator = require('../skills/skillsCreator');
 var Character = require('./character.js');
 var Equip = require('./equip.js');
 
@@ -13,6 +15,7 @@ function Player() {
     this.equip = new Equip();
     this.skills = [];
     this.inventory = [];
+    this.active = skillsCreator.Fireball;
 }
 
 Player.prototype.load = function(game) {
@@ -64,4 +67,9 @@ Player.prototype.update = function(game) {
     
     if (keys.down.isDown)
         player.body.velocity.y = 400;
+
+    if (game.input.activePointer.isDown && this.active.ready()){
+        var skill = this.active(player.position);
+        this.map.skills.add(skill);
+    }
 };

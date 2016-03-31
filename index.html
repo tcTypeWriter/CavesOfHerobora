@@ -2,7 +2,7 @@
 <html ng-app="game">
 <head>
     <meta charset="UTF-8" />
-    <title>GameName</title>
+    <title>Caves of Herobora</title>
 </head>
 <body>
     <div id="game" ng-controller="main">
@@ -166,9 +166,9 @@
             <div id="character" ng-show="view == 'character'">
                 <div class="state">
 
-                    <div class="item" ng-repeat="(k, v) in player.character">
-                        <p>{{k}} ({{v[0]}}/{{v[1]}})[level: {{v[2]}}]:</p>
-                        <span style="width:{{v[0]*2}}px; background: {{v[3]}};"></span>
+                    <div class="item" ng-repeat="(k, c) in player.character">
+                        <p>{{k}} ({{c.val}}/{{c.max}})[level: {{c.lvl}}]:</p>
+                        <span style="width:{{c.val*2}}px; background: {{c.color}};"></span>
                     </div>
                 </div>
 

@@ -14,6 +14,10 @@ function create() {
         model.mobsCreator[key].load(game);
     }
 
+    for(var key in model.skillsCreator){
+        model.skillsCreator[key].load(game);
+    }
+
     model.map.load(game);
 }
 
