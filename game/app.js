@@ -1,12 +1,19 @@
-'use strict';
-
 require('style.css');
 require('interface.css');
 require('inventory.css');
 require('character.css');
 
 var angular = require('angular');
-var gameRun = require('./game');
+var engine = require('./game.js');
 
-angular.module('app', []);
-gameRun({}); 
+var Player = require('./player/player.js')
+
+var game = angular.module('game', []);
+
+game.controller("main", ["$scope", function ($scope) {
+    $scope.view = 'game';
+
+    $scope.player = new Player()
+
+    engine($scope);
+}]);

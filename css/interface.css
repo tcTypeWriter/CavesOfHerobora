@@ -46,6 +46,10 @@
     border: 1px solid gray;
 }
 
+#interface .hp ul li.lost{
+    background: rgba(89, 4, 0, 1);
+}
+
 #interface .skills {
     display: block;
     position: absolute;

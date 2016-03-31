@@ -1,28 +1,19 @@
 <!DOCTYPE HTML>
-<html ng-app="app">
+<html ng-app="game">
 <head>
     <meta charset="UTF-8" />
     <title>GameName</title>
 </head>
 <body>
-    <div id="game">
+    <div id="game" ng-controller="main">
         <div id="left">
             <div id="canvas"></div>
 
             <div id="interface">
                 <div class="hp">
-                    <div>xxx/yyy</div>
+                    <div ng-bind="player.hp[0] + '/' + player.hp[1]"></div>
                     <ul>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
+                        <li ng-repeat='i in player.hp[2]' ng-class="{lost: $index >= player.hp[0]}"></li>
                     </ul>
                     <div style="clear:both;display:none"></div>
                 </div>
@@ -46,7 +37,7 @@
                 </div>
             </div>
 
-            <div id="inventory" style="display:none;">
+            <div id="inventory" ng-show="view == 'inventory'">
                 <div class="equip">
                     <div><span>left</span></div>
                     <div><span>head</span></div>
@@ -172,23 +163,12 @@
                 </div>
             </div>
 
-            <div id="character" style="display:none;">
+            <div id="character" ng-show="view == 'character'">
                 <div class="state">
-                    <div class="item">
-                        <p>Exp (xxx/yyy)[level: x]:</p>
-                        <span style="width:10px; background:blue;"></span>
-                    </div>
-                    <div class="item">
-                        <p>Str (xxx/yyy)[level: x]:</p>
-                        <span style="width:140px; background:green;"></span>
-                    </div>
-                    <div class="item">
-                        <p>Dex (xxx/yyy)[level: x]:</p>
-                        <span style="width:120px; background:orange;"></span>
-                    </div>
-                    <div class="item">
-                        <p>Other (xxx/yyy)[level: x]:</p>
-                        <span style="width:80px; background:red;"></span>
+
+                    <div class="item" ng-repeat="(k, v) in player.character">
+                        <p>{{k}} ({{v[0]}}/{{v[1]}})[level: {{v[2]}}]:</p>
+                        <span style="width:{{v[0]*2}}px; background: {{v[3]}};"></span>
                     </div>
                 </div>
 
@@ -227,10 +207,10 @@
         <div id="right">
             <h1>UserName</h1>
             <div>
-                <button>character</button>
+                <button ng-click="view == 'character' ? view = '' : view = 'character'">character</button>
             </div>   
             <div>
-                <button>inventory</button>
+                <button ng-click="view == 'inventory' ? view = '' : view = 'inventory'">inventory</button>
             </div>
         </div>
     </div>

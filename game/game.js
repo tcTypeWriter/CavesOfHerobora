@@ -1,14 +1,21 @@
+var game, model;
+
 module.exports = function(m){
-    // game = new Phaser.Game(800, 600, Phaser.CANVAS, 'game', { create: create, update: update, render: render });
+    game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas', { create: create, update: update});
     model = m;
 }
-
-var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas', { create: create });
 
 function create() {
     game.physics.startSystem(Phaser.Physics.ARCADE);
     game.stage.backgroundColor = '#ffffff';
+
+    model.player.load(game);
 }
+
+function update() {
+    model.player.update(game);
+}
+
 /*
 var player;
 var keys;
