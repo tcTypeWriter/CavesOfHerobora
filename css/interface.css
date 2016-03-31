@@ -1,0 +1,99 @@
+#interface {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+}
+
+#interface .hp {
+    display: block;
+    position: absolute;
+    width: 200px;
+    height: 40px;
+    top: 20px;
+    left: 20px;
+    overflow: visible;
+}
+
+#interface .hp div {
+    display: block;
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 20px;
+    padding: 10px;
+    margin-right: 5px;
+    background: gray;
+    color: white;
+}
+
+#interface .hp ul {
+    display: block;
+    float: left;
+    width: 120px;
+    height: 20px;
+    margin-top: 10px;
+    list-style: none;
+}
+
+#interface .hp ul li{
+    display: block;
+    float: left;
+    width: 6px;
+    height: 18px;
+    margin-right: 2px;
+    background: red;
+    border: 1px solid gray;
+}
+
+#interface .skills {
+    display: block;
+    position: absolute;
+    width: 400px;
+    height: 60px;
+    top: 540px;
+    left: 200px;
+    overflow: visible;
+    background: #333;
+}
+
+#interface .skills button{
+    display: block;
+    position: relative;
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin: 5px 15px 0 15px;
+    background: #AAFFAA;
+}
+
+#interface .skills button:hover{
+    background: #88DD88;
+}
+
+#interface .skills button span {
+    display: none;
+    position: relative;
+    top: -55px;
+    left: -30px;
+    width: 100px;
+    height: 20px;
+    padding: 5px;
+    background: rgba(150, 150, 150, 0.5);
+}
+
+#interface .skills button:hover span {
+    display: block;
+}
+
+#interface .skills button:first-child{
+    position: absolute;
+    top: 0; left:0;
+    margin: 5px 0 0 -180px; 
+}
+
+#interface .skills button:last-child{
+    position: absolute;
+    top: 0; left:0;
+    margin: 5px 0 0 530px; 
+}
