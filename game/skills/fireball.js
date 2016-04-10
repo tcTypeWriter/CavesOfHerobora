@@ -28,8 +28,7 @@ Fireball.prototype = Object.create(Phaser.Sprite.prototype);
 Fireball.prototype.constructor = Fireball;
 
 Fireball.ready = function(){
-    // debugger;
-    return time ? time.now > lastTime + timeout : true;
+    return time ? (time.now > lastTime + timeout) : true;
 }
 
 module.exports = Fireball;

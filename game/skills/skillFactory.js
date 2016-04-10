@@ -1,5 +1,7 @@
-var Fireball = require('./fireball.js');
+var Fireball = require('./fireball');
+var Sting = require('./sting')
 
 module.exports = {
-    Fireball: Fireball
+    Fireball: Fireball,
+    Sting: Sting
 };

@@ -49,10 +49,11 @@ SimpleRoom.prototype = {
                                                         this.playerPosition.y);
         game.add.existing(this.player);
 
-        this.player.onCastSkill = this.onCastSkill.bind(this);
+        this.player.onCastSkill = this.onPlayerCastSkill.bind(this);
 
         this.mobs = game.add.group();
         this.playerSkills = game.add.group();
+        this.mobsSkills = game.add.group();
         this.doors = game.add.group();
 
         this.createDoors();
@@ -61,10 +62,13 @@ SimpleRoom.prototype = {
 
     update: function() {
         this.physics.arcade.overlap(this.doors, this.player, this.changeRoom);
-        this.physics.arcade.collide(this.mobs, this.player);
-        this.physics.arcade.overlap(this.mobs, this.playerSkills, hitMonster);
+        
+        this.physics.arcade.overlap(this.mobs, this.playerSkills, hit);
+        this.physics.arcade.overlap(this.player, this.mobsSkills, hit);
 
-        function hitMonster(mob, skill){
+        this.physics.arcade.collide(this.mobs, this.player);
+
+        function hit(mob, skill){
             mob.damage(skill.power);
             skill.destroy();
         }
@@ -110,12 +114,17 @@ SimpleRoom.prototype = {
             for(var p in monsters[monsterName]){
                 var point = monsters[monsterName][p];
                 var mob = new mobFactory[monsterName](game,point.x, point.y, this.player);
+                mob.onCastSkill = this.onMobCastSkill.bind(this);
                 mobs.add(mob);
             }   
     },
 
-    onCastSkill: function(skill){
+    onPlayerCastSkill: function(skill){
         this.playerSkills.add(skill);
+    },
+
+    onMobCastSkill: function(skill){
+        this.mobsSkills.add(skill);
     },
 
     debug: function(){
@@ -140,7 +149,9 @@ SimpleRoom.prototype = {
 
         function skillsInfo(){
             return "player's skills: " + st.playerSkills.countLiving() + "/" +
-                                         st.playerSkills.length;
+                                         st.playerSkills.length + " " +
+                    "mob's skills: " + st.mobsSkills.countLiving() + "/" +
+                                         st.mobsSkills.length;
         }
 
         function mobsInfo(){

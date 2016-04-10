@@ -13,6 +13,9 @@ Preload.prototype = {
         this.asset.anchor.setTo(0.5, 0.5);
         this.load.setPreloadSprite(this.asset);
 
+        /*
+            Загрузка картинок
+        */
         this.load.image('background', 'assets/background.png');
 
         var create = this.game.create;
@@ -61,9 +64,13 @@ Preload.prototype = {
         
         create.texture('fireball', fireball_texture, 6, 6, 0);
 
-        /*
-            Загрузка картинок
-        */
+        var sting_texture = [
+            'C...',
+            'CCCC',
+            'C...'
+        ];
+        
+        create.texture('sting', sting_texture, 3, 3, 0);
     },
 
     create: function() {

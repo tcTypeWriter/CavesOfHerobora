@@ -3,7 +3,12 @@
 var speed = 100;
 var lowspeed = 50;
 var vision_distance = 250;
+var attack_distance = 200;
 var radius = 10;
+
+var timeout = 1000;
+
+var skillFactory = require('../skills/skillFactory');
 
 function Bee(game, x, y, player) {
     Phaser.Sprite.call(this, game, x + radius, y, 'bee');
@@ -18,6 +23,7 @@ function Bee(game, x, y, player) {
     this.base = {x: x, y: y};
     this.health = 5;
     this.state = 'swirl';
+    this.lastTime = this.game.time.now
 }
 
 Bee.prototype = Object.create(Phaser.Sprite.prototype);
@@ -43,6 +49,18 @@ Bee.prototype.update = function() {
     } else if (this.state == 'chase' || this.physics.distanceToXY(this, x, y) > vision_distance*0.7){
         this.state = 'back';
     }
+
+
+    if(this.physics.distanceBetween(this.player, this) < attack_distance && 
+        this.lastTime + timeout < this.game.time.now){
+        this.lastTime = this.game.time.now;
+        var skill = new skillFactory.Sting(this.game, 
+                                          this.x + this.width / 2, 
+                                          this.y + this.height / 2,
+                                          this.player);
+        this.onCastSkill && this.onCastSkill(skill);
+    }
+
 };
 
 module.exports = Bee;
