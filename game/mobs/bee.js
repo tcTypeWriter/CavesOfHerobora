@@ -38,6 +38,7 @@ Bee.load = function(game) {
     game.create.texture('bee', bee_texture, 6, 6, 0);
     this.game = game;
 };
+
 function Update(game) {
     var x = this.base.x;
     var y = this.base.y;
@@ -45,12 +46,12 @@ function Update(game) {
     if(this.state == 'swirl'){
         game.physics.arcade.accelerateToXY(this, x, y, lowspeed);
     } else if(this.state == 'chase'){
-        game.physics.arcade.moveToObject(this, this.player.sprite, speed);
+        game.physics.arcade.moveToObject(this, this.player, speed);
     } else if(this.state == 'back')
         game.physics.arcade.moveToXY(this, x + radius, y, speed);
 
 
-    if(game.physics.arcade.distanceToXY(this.player.sprite, x, y) < vision_distance){
+    if(game.physics.arcade.distanceToXY(this.player, x, y) < vision_distance){
         this.state = 'chase';
     } else if(game.physics.arcade.distanceToXY(this, x + radius, y) < 10 && this.state == 'back'){
         this.body.velocity.setTo(0, lowspeed);
