@@ -13,7 +13,7 @@ function StandartPlayer(game, x, y, frame) {
     this.body.collideWorldBounds = true;
     this.body.bounce.setTo(1, 1);
 
-    this.hp = 10;
+    this.health = this.maxHealth = 10;
     this.activeSkill = skillFactory.Fireball;
 
     this.character = new Character();

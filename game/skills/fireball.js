@@ -10,6 +10,8 @@ function Fireball(game, x, y) {
     
     this.checkWorldBounds = true;
     this.outOfBoundsKill = true;
+    this.events.onKilled.add(this.destroy, this);
+
     game.physics.arcade.enable(this);
     game.physics.arcade.moveToPointer(this, speed);
 

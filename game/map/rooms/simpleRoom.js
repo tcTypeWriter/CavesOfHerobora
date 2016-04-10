@@ -68,6 +68,8 @@ SimpleRoom.prototype = {
             mob.damage(skill.power);
             skill.destroy();
         }
+
+        this.debug();
     },
 
     changeRoom: function(player, room){
@@ -114,6 +116,37 @@ SimpleRoom.prototype = {
 
     onCastSkill: function(skill){
         this.playerSkills.add(skill);
+    },
+
+    debug: function(){
+        var game = this.game;
+        var x = 10, y = 10;
+        var st = this;
+
+        game.debug.renderShadow = false;
+        
+        game.debug.inputInfo(x, y, 'black');
+        y += 80;
+        game.debug.text(playerInfo(), x, y, 'black');
+        y += 18;
+        game.debug.text(skillsInfo(), x, y, 'black');
+        y += 18;
+        game.debug.text(mobsInfo(), x, y, 'black');
+
+        function playerInfo(){
+            return "player: " + st.player.health + "/" + 
+                                st.player.maxHealth;
+        }
+
+        function skillsInfo(){
+            return "player's skills: " + st.playerSkills.countLiving() + "/" +
+                                         st.playerSkills.length;
+        }
+
+        function mobsInfo(){
+            return "mobs: " + st.mobs.countLiving() + "/" +
+                              st.mobs.length;
+        }
     }
 };
 
