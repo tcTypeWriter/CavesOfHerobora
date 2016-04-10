@@ -50,6 +50,8 @@ SimpleRoom.prototype = {
         game.add.existing(this.player);
 
         this.player.onCastSkill = this.onPlayerCastSkill.bind(this);
+        this.player.events.onKilled.add(this.onGameOver, this);
+
 
         this.mobs = game.add.group();
         this.playerSkills = game.add.group();
@@ -125,6 +127,10 @@ SimpleRoom.prototype = {
 
     onMobCastSkill: function(skill){
         this.mobsSkills.add(skill);
+    },
+
+    onGameOver: function(){
+        this.game.state.start('gameover');
     },
 
     debug: function(){

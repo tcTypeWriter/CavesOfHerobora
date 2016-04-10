@@ -30,6 +30,7 @@ Bee.prototype = Object.create(Phaser.Sprite.prototype);
 Bee.prototype.constructor = Bee;
 
 Bee.prototype.update = function() {
+    if(!this.alive) return;
     var x = this.base.x;
     var y = this.base.y;
     
