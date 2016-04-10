@@ -5,8 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start http-server -a 127.0.0.1 ./",
-    "build": "webpack"
+    "start": "start http-server -a 127.0.0.1 ./ && webpack"
   },
   "author": "Suhoy <suhoy95@gmail.com>",
   "license": "ISC",

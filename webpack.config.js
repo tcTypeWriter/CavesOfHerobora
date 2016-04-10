@@ -7,7 +7,7 @@ var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-    entry: './game/app.js',
+    entry: './game/game.js',
     output: {
         path: __dirname + "/assets",
         filename: 'build.js'
@@ -15,8 +15,7 @@ module.exports = {
     },
 
     watch: NODE_ENV === 'dev',
-    devtool: NODE_ENV === 'dev' ? "source-map" : null,
-
+  
     resolve:{
         modulesDirectories: ["libs", "css"]
     },
