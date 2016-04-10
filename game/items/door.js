@@ -16,6 +16,7 @@ var Door = function(game, position, room) {
     this.x = getX(position);
     this.y = getY(position); 
     this.angle = getAngle(position);
+    this.door_position = position;
 
     function getX(position){
         if(position === 'left')
@@ -45,7 +46,8 @@ Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
 Door.prototype.go = function(){
-    this.state.start(this.room.key);
+    debugger;
+    this.state.start(this.room.key, true, false, this.door_position);
 }
 
 module.exports = Door;

@@ -26,15 +26,27 @@ function SimpleRoom(game, key) {
 }
 
 SimpleRoom.prototype = {
+    init: function(position){
+        position = position || 'center';
+        var playerPositions = {
+            center: {x: 400, y: 300},
+            left: {x: 750, y: 300},
+            down: {x: 400, y: 60},
+            right: {x: 50, y: 300},
+            up: {x: 400, y: 540}
+        };
+        this.playerPosition = playerPositions[position];
+    },
+
     create: function() {
         var game = this.game;
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
         this.stage.backgroundColor = '#ffffff';
         
-        this.player = new playersFactory.StandartPlayer(game, 
-                                                        game.width/2, 
-                                                        game.height/2);
+        this.player = new playersFactory.StandartPlayer(game,
+                                                        this.playerPosition.x, 
+                                                        this.playerPosition.y);
         game.add.existing(this.player);
 
         this.player.onCastSkill = this.onCastSkill.bind(this);
