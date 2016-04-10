@@ -15,6 +15,7 @@ Preload.prototype = {
 
         this.load.image('background', 'assets/background.png');
 
+        var create = this.game.create;
         var door_data = [
                 '0000',
                 '5555',
@@ -25,7 +26,7 @@ Preload.prototype = {
                 '5555',
                 '0000'
             ];
-        this.game.create.texture('door', door_data, 6, 6, 0);
+        create.texture('door', door_data, 6, 6, 0);
         
         var player_data = [
             '.EEEE.BB',
@@ -38,7 +39,27 @@ Preload.prototype = {
             '.EEEE...'
             ];
 
-        this.game.create.texture('player', player_data, 4, 4, 0);
+        create.texture('player', player_data, 4, 4, 0);
+
+        var bee_texture = [
+            '.......C',
+            '....0.C.',
+            '..0808D.',
+            '.80808DD',
+            '08080...',
+            '0....C..'
+            ];
+
+        create.texture('bee', bee_texture, 6, 6, 0);
+        
+        var fireball_texture = [
+            '.77.',
+            '7337',
+            '7337',
+            '.77.'
+        ];
+        
+        create.texture('fireball', fireball_texture, 6, 6, 0);
 
         /*
             Загрузка картинок

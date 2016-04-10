@@ -1,14 +1,20 @@
 'use strict';
 
 var playersFactory = require('../../player/playersfactory');
-var itemFactory = require('../../items/itemfactory')
+var itemFactory = require('../../items/itemfactory');
+var mobFactory = require('../../mobs/mobfactory');
 
 function SimpleRoom(game, key) {
     Phaser.State.call(this, game);
     this.key = key;
     this.game = game;
     this.monsters = {
-        Bee: [{x: 100, y: 100}]
+        Bee: [
+            {x: 100, y: 100},
+            {x: 700, y: 100},
+            {x: 100, y: 500},
+            {x: 700, y: 500}
+        ]
     };
 
     this.neighbors = {
@@ -31,15 +37,28 @@ SimpleRoom.prototype = {
                                                         game.height/2);
         game.add.existing(this.player);
 
+        this.player.onCastSkill = this.onCastSkill.bind(this);
+
+        this.mobs = game.add.group();
+        this.playerSkills = game.add.group();
+        this.doors = game.add.group();
+
         this.createDoors();
+        this.createMobs();
     },
 
     update: function() {
         this.physics.arcade.overlap(this.doors, this.player, this.changeRoom);
+        this.physics.arcade.collide(this.mobs, this.player);
+        this.physics.arcade.overlap(this.mobs, this.playerSkills, hitMonster);
+
+        function hitMonster(mob, skill){
+            mob.damage(skill.power);
+            skill.destroy();
+        }
     },
 
     changeRoom: function(player, room){
-        debugger;
         room.go();
     },
 
@@ -59,13 +78,30 @@ SimpleRoom.prototype = {
     createDoors: function()
     {
         var game = this.game;
-        var doors = this.doors = game.add.group();
+        var doors = this.doors;
         var nbs = this.neighbors;
         for(var position in nbs)
             if(nbs[position] !== null){
                 var door = new itemFactory.Door(game, position, nbs[position]); 
                 doors.add(door);
             }
+    },
+
+    createMobs: function(){
+        var game = this.game;
+        var mobs = this.mobs;
+        var monsters = this.monsters;
+
+        for(var monsterName in monsters)
+            for(var p in monsters[monsterName]){
+                var point = monsters[monsterName][p];
+                var mob = new mobFactory[monsterName](game,point.x, point.y, this.player);
+                mobs.add(mob);
+            }   
+    },
+
+    onCastSkill: function(skill){
+        this.playerSkills.add(skill);
     }
 };
 

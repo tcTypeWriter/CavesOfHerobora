@@ -1,45 +1,33 @@
-
-module.exports = FireBall;
+'use strict';
 
 var speed = 400;
-var time;
+var power = 1;
+var lastTime, time;
 var timeout = 500;
 
-function FireBall(p) {
-    var game = FireBall.game;
-    time = game.time.now + timeout;
-
-    var fireball = game.add.sprite(p.x, p.y, 'fireball');
-    fireball.checkWorldBounds = true;
-    fireball.outOfBoundsKill = true;
-    game.physics.arcade.enable(fireball);
-    game.physics.arcade.moveToPointer(fireball, speed);
-
-    fireball.body.rotation = game.physics.arcade.angleToPointer(fireball);
+function Fireball(game, x, y) {
+    Phaser.Sprite.call(this, game, x, y, 'fireball');
     
- //   fireball.body.collideWorldBounds = true;
-    fireball.body.bounce.setTo(1, 1);
-    fireball.damage = damage;
+    this.checkWorldBounds = true;
+    this.outOfBoundsKill = true;
+    game.physics.arcade.enable(this);
+    game.physics.arcade.moveToPointer(this, speed);
 
-    return fireball;
+    this.body.rotation = game.physics.arcade.angleToPointer(this);
+    
+    this.body.bounce.setTo(1, 1);
+    this.power = power;
+
+    time = game.time;
+    lastTime = game.time.now;
 }
 
-FireBall.load = function(game) {
-    var fireball_texture = [
-        '.77.',
-        '7337',
-        '7337',
-        '.77.'
-    ];
-    game.create.texture('fireball', fireball_texture, 6, 6, 0);
-    this.game = game;
-    time = game.time.now;
-};
+Fireball.prototype = Object.create(Phaser.Sprite.prototype);
+Fireball.prototype.constructor = Fireball;
 
-FireBall.ready = function() {
-    return true;time < this.game.time.now;
+Fireball.ready = function(){
+    // debugger;
+    return time ? time.now > lastTime + timeout : true;
 }
 
-function damage() {
-    return 1;
-}
+module.exports = Fireball;
