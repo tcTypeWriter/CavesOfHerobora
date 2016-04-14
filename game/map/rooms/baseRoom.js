@@ -14,7 +14,7 @@ function BaseRoom(game, key) {
         up: null,
         right: null,
         down: null
-    };
+    };    
 }
 
 BaseRoom.prototype = {
@@ -38,9 +38,16 @@ BaseRoom.prototype = {
         this.physics.startSystem(Phaser.Physics.ARCADE);
         this.stage.backgroundColor = '#ffffff';
         
+        
+        
         if(this.background)
             this.add.tileSprite(0, 0, 800, 600, this.background);
 
+        this.mobs = game.add.group();
+        this.playerSkills = game.add.group();
+        this.mobsSkills = game.add.group();
+        this.doors = game.add.group();
+        this.createDoors();
 
         this.player = new playersFactory.StandartPlayer(game,
                                                         this.playerPosition.x, 
@@ -50,18 +57,13 @@ BaseRoom.prototype = {
         this.player.events.onCastSkill.add(this.playerCastSkill, this);
         this.player.events.onKilled.add(this.toGameOver, this);
 
-
-        this.mobs = game.add.group();
-        this.playerSkills = game.add.group();
-        this.mobsSkills = game.add.group();
-        this.doors = game.add.group();
-
-        this.createDoors();
         this.createMobs();
+
+        this.space = game.input.keyboard.addKeys({'space': Phaser.Keyboard.SPACEBAR}).space;
     },
 
     update: function() {
-        this.physics.arcade.overlap(this.doors, this.player, this.changeRoom);
+        this.physics.arcade.overlap(this.doors, this.player, this.changeRoom, null, this);
         
         this.physics.arcade.collide(this.mobs, this.playerSkills, hit);
         this.physics.arcade.collide(this.player, this.mobsSkills, hit);
@@ -126,7 +128,8 @@ BaseRoom.prototype = {
         события комнаты
     */
     changeRoom: function(player, door){
-        door.go();
+        if(this.space.isDown)
+            door.go();
     },
 
     playerCastSkill: function(skill){
