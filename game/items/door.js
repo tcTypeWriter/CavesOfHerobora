@@ -39,7 +39,6 @@ Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
 Door.prototype.go = function(){
-    debugger;
     this.state.start(this.room.key, true, false, this.door_position);
 }
 

@@ -7,9 +7,9 @@ function SimpleRoom(game, key) {
     this.monsters = {
         Bat: [
             {x: 100, y: 100},
-            {x: 700, y: 100},
-            {x: 100, y: 500},
-            {x: 700, y: 500}
+            {x: 650, y: 100},
+            {x: 100, y: 450},
+            {x: 650, y: 450}
         ]
     };
     this.background = 'brick2';

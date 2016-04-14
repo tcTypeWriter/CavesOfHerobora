@@ -36,7 +36,7 @@ function CreateSkill(skillName, game){
         var now = game.time.now;
         return lastTime + timeout > now ? lastTime + timeout - now : "OK";
     }
-
+    
     result.NAME = skillName;
 
     return result;

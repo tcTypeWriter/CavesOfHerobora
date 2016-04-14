@@ -15,6 +15,7 @@ function StandartPlayer(game, x, y, frame) {
     this.body.collideWorldBounds = true;
     this.body.bounce.setTo(1, 1);
 
+    this.ready = true;
     this.health = this.maxHealth = 10;
     this.activeSkill = skillFactory.createSkill('Fireball', game);
     this.skillSet = [ skillFactory.createSkill('Bolt', game) ];
@@ -22,7 +23,12 @@ function StandartPlayer(game, x, y, frame) {
     this.character = new Character();
 
     this.events.onCastSkill = new Phaser.Signal();
-
+    this.events.onCastSkill.add(function(){
+        this.ready = false;
+        game.time.events.add(250, function(){
+            this.ready = true;
+        }, this);
+    }, this);
 
     this.game = game;
     this.keys = game.input.keyboard.addKeys(
@@ -55,20 +61,22 @@ StandartPlayer.prototype.update = function(){
     debug();
 
     function checkSkillSet(){
-        if(keys.one.isDown)
-            self.activeSkill = self.skillSet[0];
+        if(keys.one.isDown && self.activeSkill != self.skillSet[0]){
+            setSkillOnce(0);
+            keys.one.isDown = false;
+        }
     }
 
     function setSkillOnce(i){
         var lastActiveSkill = self.activeSkill;
-        return function(game, from, to){
-            self.activeSkill = lastActiveSkill;
-            return self.skillSet[0](game, from, to);
-        }
+        self.activeSkill = self.skillSet[0];
+        self.events.onCastSkill.addOnce(function(){
+            this.activeSkill = lastActiveSkill;
+        }, self);
     }
 
     function tryUseSkill(){
-        if(pointer.isDown && self.activeSkill.ready()){
+        if(pointer.isDown && self.activeSkill.ready() && self.ready){
             var skill = self.activeSkill(self.game, self.center(), pointer);
             self.events.onCastSkill.dispatch(skill);
         }
