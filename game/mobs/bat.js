@@ -6,30 +6,35 @@ var vision_distance = 250;
 var attack_distance = 200;
 var radius = 10;
 
-var timeout = 1000;
 
 var skillFactory = require('../skills/skillFactory');
 
-function Bee(game, x, y, player) {
-    Phaser.Sprite.call(this, game, x + radius, y, 'bee');
+function Bat(game, point, player) {
+    Phaser.Sprite.call(this, game, point.x + radius, point.y, 'bat');
+    this.scale = new Phaser.Point(0.4, 0.4);
+
     
     game.physics.enable(this);
+    this.body.setSize(90, 76, 19, 0);
     this.body.collideWorldBounds = true;
     this.body.velocity.y = lowspeed;
+
+    this.events.onCastSkill = new Phaser.Signal();
 
     this.physics = game.physics.arcade;
     this.player = player;
 
-    this.base = {x: x, y: y};
-    this.health = 5;
+    this.base = point;
+    this.health = this.maxHealth = 5;
     this.state = 'swirl';
-    this.lastTime = this.game.time.now
+
+    this.skill = skillFactory.createSkill('Bolt', game);
 }
 
-Bee.prototype = Object.create(Phaser.Sprite.prototype);
-Bee.prototype.constructor = Bee;
+Bat.prototype = Object.create(Phaser.Sprite.prototype);
+Bat.prototype.constructor = Bat;
 
-Bee.prototype.update = function() {
+Bat.prototype.update = function() {
     if(!this.alive) return;
     var x = this.base.x;
     var y = this.base.y;
@@ -37,9 +42,9 @@ Bee.prototype.update = function() {
     if(this.state == 'swirl'){
         this.physics.accelerateToXY(this, x, y, lowspeed);
     } else if(this.state == 'chase'){
-        this.physics.moveToObject(this, this.player, speed);
+        this.physics.accelerateToObject(this, this.player, speed);
     } else if(this.state == 'back')
-        this.physics.moveToXY(this, x + radius, y, speed);
+        this.physics.accelerateToXY(this, x + radius, y, speed);
 
 
     if(this.physics.distanceToXY(this.player, x, y) < vision_distance){
@@ -53,15 +58,14 @@ Bee.prototype.update = function() {
 
 
     if(this.physics.distanceBetween(this.player, this) < attack_distance && 
-        this.lastTime + timeout < this.game.time.now){
-        this.lastTime = this.game.time.now;
-        var skill = new skillFactory.Sting(this.game, 
-                                          this.x + this.width / 2, 
-                                          this.y + this.height / 2,
-                                          this.player);
-        this.onCastSkill && this.onCastSkill(skill);
+        this.skill.ready()){
+        var skill = this.skill(this.game, {
+                                                        x: this.x + this.width / 2, 
+                                                        y:this.y + this.height / 2
+                                                    }, this.player);
+        this.events.onCastSkill.dispatch(skill);
     }
 
 };
 
-module.exports = Bee;
+module.exports = Bat;

@@ -1,5 +1,5 @@
-var Bee = require('./bee.js');
+var Bat = require('./bat');
 
 module.exports = {
-    Bee: Bee
+    Bat: Bat
 }

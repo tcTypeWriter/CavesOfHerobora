@@ -15,7 +15,6 @@ var Door = function(game, position, room) {
 
     this.x = getX(position);
     this.y = getY(position); 
-    this.angle = getAngle(position);
     this.door_position = position;
 
     function getX(position){
@@ -34,12 +33,6 @@ var Door = function(game, position, room) {
         return game.world.centerY;
 
     }
-
-    function getAngle(position)
-    {
-        return position === 'left' || position === 'right' ? 0 : 90; 
-    }
-
 };
 
 Door.prototype = Object.create(Phaser.Sprite.prototype);

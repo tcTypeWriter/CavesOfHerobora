@@ -4,7 +4,7 @@ var BootState = require('./states/boot');
 var PreloadState = require('./states/preload');
 var GameOver = require('./states/gameover');  
 
-var mapFactory = require('./states/mapfactory');
+var mapFactory = require('./map/mapfactory');
 
 window.onload = function () {
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas');
