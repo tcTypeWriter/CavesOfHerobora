@@ -19,6 +19,7 @@ function Bat(game, point, player) {
     this.body.collideWorldBounds = true;
     this.body.velocity.y = lowspeed;
 
+    this.body.mass = 8;
     this.events.onCastSkill = new Phaser.Signal();
 
     this.physics = game.physics.arcade;
@@ -67,5 +68,21 @@ Bat.prototype.update = function() {
     }
 
 };
+
+Bat.prototype.damage = function (amount) {
+    if (this.alive && !this.immune)
+    {
+        this.health -= amount;
+        this.immune = true;
+        this.game.time.events.add(100, function(){
+            this.immune = false;
+        }, this)
+        if (this.health <= 0)
+        {
+            this.kill();
+        }
+    }
+    return this;
+}
 
 module.exports = Bat;

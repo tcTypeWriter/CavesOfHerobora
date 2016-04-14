@@ -17,9 +17,14 @@ Preload.prototype = {
             Загрузка картинок
         */
         this.load.image('door', 'assets/openDoor.png');
-        this.load.image('player', 'assets/heroleft.png');
+        this.load.image('wizard', 'assets/heroleft.png');
+        this.load.image('warrior', 'assets/heroleft2.png');
+      
         this.load.image('fireball', 'assets/fireball.png');
+        this.load.image('sword', 'assets/sword.png');
         this.load.image('bolt', 'assets/fierball.png');
+        this.load.image('cobble', 'assets/bril.png');
+
 
         this.load.image('bat', 'assets/monsters/bat.png');
 

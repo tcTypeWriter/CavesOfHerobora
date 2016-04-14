@@ -1,6 +1,5 @@
 'use strict';
 
-
 function BaseSkill(game, from, to, key) {
     Phaser.Sprite.call(this, game, from.x, from.y, key);
     
@@ -14,6 +13,8 @@ function BaseSkill(game, from, to, key) {
 
 BaseSkill.prototype = Object.create(Phaser.Sprite.prototype);
 BaseSkill.prototype.constructor = BaseSkill;
+
+BaseSkill.prototype.impact = function(mob){}
 
 BaseSkill.prototype.timeout = 1000;
 

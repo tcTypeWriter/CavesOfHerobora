@@ -20,4 +20,10 @@ function Bolt(game, from, to) {
 Bolt.prototype = Object.create(BaseSkill.prototype);
 Bolt.prototype.constructor = Bolt;
 
+Bolt.prototype.impact = function(mob){
+    mob.damage(this.power);
+    this.kill();
+}
+
+
 module.exports = Bolt;

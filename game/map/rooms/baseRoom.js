@@ -50,7 +50,7 @@ BaseRoom.prototype = {
         this.createDoors();
         this.createObstacles();
 
-        this.player = new playersFactory.StandartPlayer(game,
+        this.player = new playersFactory.Warrior(game,
                                                         this.playerPosition.x, 
                                                         this.playerPosition.y);
         game.add.existing(this.player);
@@ -66,20 +66,17 @@ BaseRoom.prototype = {
     update: function() {
         this.physics.arcade.overlap(this.doors, this.player, this.changeRoom, null, this);
         
-        this.physics.arcade.collide(this.mobs, this.playerSkills, hit);
-        this.physics.arcade.collide(this.player, this.mobsSkills, hit);
-
-        this.physics.arcade.collide(this.mobs, this.player);
+        this.physics.arcade.overlap(this.mobs, this.playerSkills, hit);
+        this.physics.arcade.overlap(this.player, this.mobsSkills, hit);
 
         this.physics.arcade.collide(this.obstacles, this.player);
         this.physics.arcade.collide(this.obstacles, this.mobs);
 
         function hit(mob, skill){
-            mob.damage(skill.power);
-            skill.destroy();
+            skill.impact(mob);
         }
 
-        this.debug();
+        // this.debug();
     },
 
     shutdown: function() {
@@ -170,8 +167,6 @@ BaseRoom.prototype = {
         var color = game.debug.color = 'white';
         
         game.debug.inputInfo(x, y, color);
-        y += 80;
-        game.debug.text(playerInfo(), x, y, color);
         y += 18;
         game.debug.text(skillsInfo(), x, y, color);
         y += 18;
@@ -190,11 +185,6 @@ BaseRoom.prototype = {
         this.mobsSkills.forEachAlive(function(skill){
             game.debug.body(skill);
         });
-
-        function playerInfo(){
-            return "player: " + st.player.health + "/" + 
-                                st.player.maxHealth;
-        }
 
         function skillsInfo(){
             return "player's skills: " + st.playerSkills.countLiving() + "/" +

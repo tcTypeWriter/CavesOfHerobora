@@ -18,5 +18,11 @@ function Fireball(game, from, to) {
 Fireball.prototype = Object.create(BaseSkill.prototype);
 Fireball.prototype.constructor = Fireball;
 
+Fireball.prototype.impact = function(mob){
+    mob.damage(this.power);
+    this.kill();
+}
+
+
 Fireball.prototype.timeout = 1000;
 module.exports = Fireball;

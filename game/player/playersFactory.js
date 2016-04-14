@@ -1,6 +1,7 @@
-var StandartPlayer = require('./standartPlayer.js');
-//var wizard = require('./wizard.js')
+var Wizard = require('./wizard');
+var Warrior = require('./warrior')
 
 module.exports = {
-    StandartPlayer: StandartPlayer
+    Wizard: Wizard,
+    Warrior: Warrior
 }

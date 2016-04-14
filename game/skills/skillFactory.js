@@ -1,5 +1,8 @@
 var Fireball = require('./fireball');
 var Bolt = require('./bolt');
+var Cobble = require('./cobble');
+
+var Sword = require('./sword');
 
 /*
     Skill - конструктор:
@@ -12,6 +15,9 @@ var Bolt = require('./bolt');
 module.exports = {
     Fireball: Fireball,
     Bolt: Bolt,
+    Cobble: Cobble,
+    
+    Sword: Sword,
 
     createSkill: CreateSkill
 };
@@ -36,7 +42,7 @@ function CreateSkill(skillName, game){
         var now = game.time.now;
         return lastTime + timeout > now ? lastTime + timeout - now : "OK";
     }
-    
+
     result.NAME = skillName;
 
     return result;
