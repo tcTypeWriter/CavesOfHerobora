@@ -24,6 +24,8 @@ Preload.prototype = {
         this.load.image('bat', 'assets/monsters/bat.png');
 
         this.load.image('floor', 'assets/dungeon_sheet-1-1.png');
+        this.load.image('brick', 'assets/brick.png');
+        this.load.image('brick1', 'assets/brick1.png');
         this.load.image('brick2', 'assets/brick2.png');
 
         var create = this.game.create;

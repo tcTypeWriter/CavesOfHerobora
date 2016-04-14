@@ -2,6 +2,7 @@
 
 var playersFactory = require('../../player/playersfactory');
 var itemFactory = require('../../items/itemfactory');
+var obstacleFactory = require('../../obstacles/obstaclefactory');
 var mobFactory = require('../../mobs/mobfactory');
 
 function BaseRoom(game, key) {
@@ -36,9 +37,7 @@ BaseRoom.prototype = {
         var game = this.game;
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        this.stage.backgroundColor = '#ffffff';
-        
-        
+        this.stage.backgroundColor = '#ffffff';        
         
         if(this.background)
             this.add.tileSprite(0, 0, 800, 600, this.background);
@@ -46,8 +45,10 @@ BaseRoom.prototype = {
         this.mobs = game.add.group();
         this.playerSkills = game.add.group();
         this.mobsSkills = game.add.group();
+        this.obstacles = game.add.group();
         this.doors = game.add.group();
         this.createDoors();
+        this.createObstacles();
 
         this.player = new playersFactory.StandartPlayer(game,
                                                         this.playerPosition.x, 
@@ -69,6 +70,9 @@ BaseRoom.prototype = {
         this.physics.arcade.collide(this.player, this.mobsSkills, hit);
 
         this.physics.arcade.collide(this.mobs, this.player);
+
+        this.physics.arcade.collide(this.obstacles, this.player);
+        this.physics.arcade.collide(this.obstacles, this.mobs);
 
         function hit(mob, skill){
             mob.damage(skill.power);
@@ -95,8 +99,7 @@ BaseRoom.prototype = {
             this.createDoors();
     },
 
-    createDoors: function()
-    {
+    createDoors: function(){
         var game = this.game;
         var doors = this.doors;
         var nbs = this.neighbors;
@@ -108,6 +111,21 @@ BaseRoom.prototype = {
             }
     },
 
+    createObstacles: function(){
+        var game = this.game;
+        var obstacles = this.obstacles;
+        var wall = null;
+
+        wall = new obstacleFactory.Wall(game, 0, 0, 50, 600);
+        obstacles.add(wall);
+        wall = new obstacleFactory.Wall(game, 0, 0, 800, 50);
+        obstacles.add(wall);
+        wall = new obstacleFactory.Wall(game, 750, 0, 50, 600);
+        obstacles.add(wall);
+        wall = new obstacleFactory.Wall(game, 0, 550, 800, 50);
+        obstacles.add(wall);
+    },
+        
     createMobs: function(){
         var game = this.game;
         var mobs = this.mobs;
@@ -149,15 +167,15 @@ BaseRoom.prototype = {
         var x = 10, y = 10;
         var st = this;
 
-        // game.debug.renderShadow = false;
+        var color = game.debug.color = 'white';
         
-        game.debug.inputInfo(x, y, 'white');
+        game.debug.inputInfo(x, y, color);
         y += 80;
-        game.debug.text(playerInfo(), x, y, 'white');
+        game.debug.text(playerInfo(), x, y, color);
         y += 18;
-        game.debug.text(skillsInfo(), x, y, 'white');
+        game.debug.text(skillsInfo(), x, y, color);
         y += 18;
-        game.debug.text(mobsInfo(), x, y, 'white');
+        game.debug.text(mobsInfo(), x, y, color);
 
         game.debug.body(this.player);
 

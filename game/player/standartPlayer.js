@@ -88,11 +88,11 @@ StandartPlayer.prototype.update = function(){
     function debug(){
         var game = self.game;
         var x = 10, y = 400;
-        
-        game.debug.text(activeSkillInfo(), x, y, 'black');
+        var color = game.debug.color;
+        game.debug.text(activeSkillInfo(), x, y, color);
        
         for(var i = 0; i < self.skillSet.length; i++)
-            game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, 'black');
+            game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
 
         function activeSkillInfo(){
             return "activeSkill: " + self.activeSkill.NAME + "| " + 

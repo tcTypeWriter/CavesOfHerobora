@@ -12,7 +12,7 @@ function SimpleRoom(game, key) {
             {x: 700, y: 500}
         ]
     };
-    this.background = 'floor';
+    this.background = 'brick2';
 }
 
 SimpleRoom.prototype = Object.create(BaseRoom.prototype);
