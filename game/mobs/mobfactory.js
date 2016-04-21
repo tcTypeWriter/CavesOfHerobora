@@ -1,5 +1,7 @@
-var Bee = require('./bee.js');
+var Bat = require('./bat');
+var Tree = require('./tree')
 
 module.exports = {
-    Bee: Bee
+    Bat: Bat,
+    Tree: Tree
 }
