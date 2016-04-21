@@ -38,8 +38,9 @@ var Door = function(game, position, room) {
 Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
-Door.prototype.go = function(){
-    this.state.start(this.room.key, true, false, this.door_position);
+Door.prototype.go = function(player){
+    debugger;
+    this.state.start(this.room.key, true, false, this.door_position, player);
 }
 
 module.exports = Door;

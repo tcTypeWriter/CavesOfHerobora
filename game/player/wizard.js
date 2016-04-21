@@ -5,7 +5,7 @@ var BasePlayer = require('./baseplayer');
 
 function Wizard(game, x, y, frame) {
     BasePlayer.call(this, game, x, y, 'wizard');
-
+    this.name = 'Wizard';
     this.autoSkill = this.activeSkill = skillFactory.createSkill('Fireball', game);
     this.skillSet = [ 
                       skillFactory.createSkill('Bolt', game),

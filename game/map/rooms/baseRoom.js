@@ -22,7 +22,7 @@ BaseRoom.prototype = {
     /*
         Основные функции
     */
-    init: function(position){
+    init: function(position, player){
         position = position || 'center';
         var playerPositions = {
             center: {x: 400, y: 300},
@@ -31,7 +31,10 @@ BaseRoom.prototype = {
             right:  {x: 100, y: 300},
             up:     {x: 400, y: 500}
         };
-        this.playerPosition = playerPositions[position];
+        
+        var p = playerPositions[position];
+        this.player = new playersFactory[player.name](this.game, p.x, p.y);
+        this.player.health = player.health;
     },
     create: function() {
         var game = this.game;
@@ -50,9 +53,6 @@ BaseRoom.prototype = {
         this.createDoors();
         this.createObstacles();
 
-        this.player = new playersFactory.Warrior(game,
-                                                        this.playerPosition.x, 
-                                                        this.playerPosition.y);
         game.add.existing(this.player);
 
         this.player.events.onCastSkill.add(this.playerCastSkill, this);
@@ -75,8 +75,8 @@ BaseRoom.prototype = {
         function hit(mob, skill){
             skill.impact(mob);
         }
-
-        // this.debug();
+        this.mobs.sort('y');
+        this.debug();
     },
 
     shutdown: function() {
@@ -144,7 +144,7 @@ BaseRoom.prototype = {
     */
     changeRoom: function(player, door){
         if(this.space.isDown)
-            door.go();
+            door.go(this.player);
     },
 
     playerCastSkill: function(skill){
@@ -167,24 +167,24 @@ BaseRoom.prototype = {
         var color = game.debug.color = 'white';
         
         game.debug.inputInfo(x, y, color);
-        y += 18;
+        y += 80;
         game.debug.text(skillsInfo(), x, y, color);
         y += 18;
         game.debug.text(mobsInfo(), x, y, color);
 
-        game.debug.body(this.player);
+        // game.debug.body(this.player);
 
-        this.mobs.forEachAlive(function(mob){
-            game.debug.body(mob);
-        });
+        // this.mobs.forEachAlive(function(mob){
+        //     game.debug.body(mob);
+        // });
 
-        this.playerSkills.forEachAlive(function(skill){
-            game.debug.body(skill);
-        });
+        // this.playerSkills.forEachAlive(function(skill){
+        //     game.debug.body(skill);
+        // });
 
-        this.mobsSkills.forEachAlive(function(skill){
-            game.debug.body(skill);
-        });
+        // this.mobsSkills.forEachAlive(function(skill){
+        //     game.debug.body(skill);
+        // });
 
         function skillsInfo(){
             return "player's skills: " + st.playerSkills.countLiving() + "/" +

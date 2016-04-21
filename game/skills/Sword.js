@@ -29,6 +29,7 @@ Sword.prototype.constructor = Sword;
 
 Sword.prototype.update = function(){
     this.position = Phaser.Point.add(this.from, this.shift);
+    
     this.rotation += Math.PI / 25 * (this.to.x > this.x ? 1 : -1);    
 }
 

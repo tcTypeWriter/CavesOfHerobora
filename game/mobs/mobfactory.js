@@ -1,5 +1,7 @@
 var Bat = require('./bat');
+var Tree = require('./tree')
 
 module.exports = {
-    Bat: Bat
+    Bat: Bat,
+    Tree: Tree
 }

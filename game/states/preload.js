@@ -27,6 +27,7 @@ Preload.prototype = {
 
 
         this.load.image('bat', 'assets/monsters/bat.png');
+        this.load.image('tree', 'assets/monsters/oak.png');
 
         this.load.image('floor', 'assets/dungeon_sheet-1-1.png');
         this.load.image('brick', 'assets/brick.png');
@@ -50,7 +51,7 @@ Preload.prototype = {
 
     update: function() {
         if(!!this.ready) {
-            this.game.state.start('play');
+            this.game.state.start('chooseplayer');
         }
     },
 

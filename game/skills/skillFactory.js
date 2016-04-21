@@ -28,7 +28,6 @@ function CreateSkill(skillName, game){
     var lastTime = 0,
         timeout = skill.prototype.timeout;
 
-
     var result = function(_game, _from, _to){
             lastTime = game.time.now;
             return new skill(_game, _from, _to);
