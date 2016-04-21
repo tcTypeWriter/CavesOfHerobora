@@ -29,7 +29,7 @@ var Door = function(game, position, room) {
         if(position === 'up')
             return width / 2;
         if(position === 'down')
-            return game.world.height - width / 2;
+            return game.world.height - height / 2;
         return game.world.centerY;
 
     }
@@ -38,9 +38,10 @@ var Door = function(game, position, room) {
 Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
-Door.prototype.go = function(player){
-    debugger;
-    this.state.start(this.room.key, true, false, this.door_position, player);
-}
+Door.prototype.go = function(player_model){
+    this.state.start(this.room.key, true, false, 
+                                    this.door_position, 
+                                    player_model);
+};
 
 module.exports = Door;

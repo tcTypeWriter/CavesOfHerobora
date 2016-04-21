@@ -76,13 +76,13 @@ Bat.prototype.damage = function (amount) {
         this.immune = true;
         this.game.time.events.add(100, function(){
             this.immune = false;
-        }, this)
+        }, this);
         if (this.health <= 0)
         {
             this.kill();
         }
     }
     return this;
-}
+};
 
 module.exports = Bat;

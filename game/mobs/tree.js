@@ -1,19 +1,8 @@
 'use strict';
 
-var speed = 100;
-var lowspeed = 50;
-var vision_distance = 250;
-var attack_distance = 200;
-var radius = 10;
-
-
-var skillFactory = require('../skills/skillFactory');
-
 function Tree(game, point, player) {
-    Phaser.Sprite.call(this, game, point.x + radius, point.y, 'tree');
-    
-
-    
+    Phaser.Sprite.call(this, game, point.x, point.y, 'tree');
+        
     game.physics.enable(this);
 
     this.body.immovable = true;
@@ -34,13 +23,13 @@ Tree.prototype.damage = function (amount) {
         this.immune = true;
         this.game.time.events.add(100, function(){
             this.immune = false;
-        }, this)
+        }, this);
         if (this.health <= 0)
         {
             this.kill();
         }
     }
     return this;
-}
+};
 
 module.exports = Tree;

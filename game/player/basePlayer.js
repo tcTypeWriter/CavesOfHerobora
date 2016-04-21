@@ -2,13 +2,33 @@
 
 var Character = require('./character');
 
-function BasePlayer(game, x, y, sprite_key) {
+var buttons = {one:0, two: 1, three: 2};
+
+var default_model = {
+        name: 'BasePlayer',
+        ready: true,
+        character: new Character(),
+        inventory: [],
+
+        speed: 300,
+        health: 10,
+        maxHealth: 10,
+
+        autoSkill: function(){},
+        activeSkill: function(){},
+        skillSet: []
+    }; 
+
+
+function BasePlayer(game, x, y, sprite_key, player_model) {
     Phaser.Sprite.call(this, game, x, y, sprite_key);
     var self = this;
 
-    setModel();
     setPhysics();
-    addOnCastSkillEvent();
+    setOnCastSkillEvent();
+
+    this.model = player_model || default_model;
+    this.restoreSkills();
 
     this.game = game;
     this.keys = game.input.keyboard.addKeys({
@@ -16,39 +36,29 @@ function BasePlayer(game, x, y, sprite_key) {
                                     'left': Phaser.Keyboard.A,
                                     'down': Phaser.Keyboard.S,
                                     'right': Phaser.Keyboard.D,
+                                    'take': Phaser.Keyboard.E,
                                     'one': Phaser.Keyboard.ONE,
                                     'two': Phaser.Keyboard.TWO,
-                                    'three': Phaser.Keyboard.THRE
+                                    'three': Phaser.Keyboard.THREE
                                 });
-
-    function setModel(){
-        self.ready = true;
-        self.character = new Character();
-        self.speed = 300;
-        self.scale_k = 0.4;
-        self.health = self.maxHealth = 10;
-        self.autoSkill = function(){};
-        self.activeSkill = function(){};
-        self.skillSet = [];
-    }
-
     function setPhysics(){
         game.physics.enable(self);
         self.anchor.set(0.5);
-        self.scale.setTo(self.scale_k, self.scale_k);
+        self.scale.setTo(0.4);
+
         self.body.collideWorldBounds = true;
         self.body.bounce.setTo(0, 0);
     }
     
-    function addOnCastSkillEvent(){
+    function setOnCastSkillEvent(){
         self.events.onCastSkill = new Phaser.Signal();
-        self.events.onCastSkill.add(notReady, self);
+        self.events.onCastSkill.add(notReady);
 
         function notReady(){
-            this.ready = false;
-            game.time.events.add(250, isReady, this);
+            self.ready = false;
+            game.time.events.add(250, isReady, self);
 
-            function isReady(){ this.ready = true; }
+            function isReady(){ self.ready = true; }
         }
     }
 }
@@ -56,21 +66,52 @@ function BasePlayer(game, x, y, sprite_key) {
 BasePlayer.prototype = Object.create(Phaser.Sprite.prototype);
 BasePlayer.prototype.constructor = BasePlayer;
 
+BasePlayer.prototype.restoreSkills = function(){
+    this.autoSkill = this.model.autoSkill;
+    this.activeSkill = this.model.activeSkill;
+    this.skillSet = this.model.skillSet;
+};
+
+BasePlayer.prototype.getItem = function(item){
+    var take = this.keys.take;
+    
+    if(take.isDown){
+        var loot = item.toLoot();
+        this.model.inventory.push(loot);           
+    }
+};
+
 BasePlayer.prototype.update = function(){
     var self = this,
-        physics = this.game.physics.arcade,
         pointer = this.game.input.activePointer,
         keys = this.keys;
-        
-    this.scale.x = (pointer.x > self.x ? -1 : 1) * this.scale_k;
-    this.body.velocity = evalVelocity();    
-
-    checkSkillSet();
+       
+    updateDirect();
+    updateSpeed();
+    updateSkillSet();
     tryUseSkill();
-    debug();
+    debug(); 
 
-    function checkSkillSet(){
-        var buttons = {one:0, two: 1, three: 2};
+    function updateDirect(){
+        var direct = pointer.x > self.x ? -1 : 1;
+        self.scale.x = direct * Math.abs(self.scale.x);    
+    }
+
+    function updateSpeed(){
+        var velocity = new Phaser.Point(0, 0),
+            speed = self.model.speed;
+
+        if (keys.left.isDown)  velocity.x = -1;
+        if (keys.right.isDown) velocity.x = 1;
+        if (keys.up.isDown)    velocity.y = -1;
+        if (keys.down.isDown)  velocity.y = 1;
+
+        self.body.velocity = velocity.normalize()
+                                     .multiply(speed, speed);
+    }
+
+
+    function updateSkillSet(){
         for(var button in buttons)
             if(keys[button].isDown){
                 setSkillOnce(buttons[button]);
@@ -78,31 +119,28 @@ BasePlayer.prototype.update = function(){
             }
     
         function setSkillOnce(i){
-            if(!self.skillSet[i] || !self.skillSet[i].ready()) return;
+            if(!self.skillSet[i] || !self.skillSet[i].ready()) 
+                return;
 
             self.activeSkill = self.skillSet[i];
-            self.events.onCastSkill.addOnce(backSkill);
-
-            function backSkill(){ self.activeSkill = self.autoSkill; }
+            self.events.onCastSkill.addOnce(restoreSkill);
         }
     }
 
     function tryUseSkill(){
-        if(pointer.isDown && self.activeSkill.ready() && self.ready){
+
+        if(pointer.leftButton.isDown && self.activeSkill.ready() && self.model.ready){
+            // debugger;
             var skill = self.activeSkill(self.game, self, pointer);
             self.events.onCastSkill.dispatch(skill);
         }
+    
+        if(pointer.rightButton.isDown)
+            restoreSkill();
     }
 
-    function evalVelocity(){
-        var velocity = new Phaser.Point(0, 0);
-
-        if (keys.left.isDown)  velocity.x = -1;
-        if (keys.right.isDown) velocity.x = 1;
-        if (keys.up.isDown)    velocity.y = -1;
-        if (keys.down.isDown)  velocity.y = 1;
-
-        return velocity.normalize().multiply(self.speed, self.speed);
+    function restoreSkill(){ 
+        self.activeSkill = self.autoSkill; 
     }
 
     function debug(){
@@ -118,20 +156,38 @@ BasePlayer.prototype.update = function(){
             game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
 
         function hpInfo(){
-            return "player: " + self.health + "/" + 
-                                self.maxHealth;
+            return "player: " + self.model.health + "/" + 
+                                self.model.maxHealth;
         }
 
         function activeSkillInfo(){
-            return "activeSkill: " + self.activeSkill.NAME + "| " + 
+            return "activeSkill: " + self.activeSkill.Name + "| " + 
                                      self.activeSkill.calldown();
         }
 
         function skillInfo(i, skill){
-            return '[' + i + ']:' + skill.NAME + "| " +
+            return '[' + i + ']:' + skill.Name + "| " +
                                     skill.calldown();
         }
     }
-}
+};
+
+BasePlayer.prototype.damage = function (amount) {
+    if (this.alive)
+    {
+        this.model.health -= amount;
+        if (this.model.health <= 0)
+        {
+            this.kill();
+        }
+    }
+
+    return this;
+};
+
+BasePlayer.prototype.setModel = function(model) {
+    this.model = model;
+    this.restoreSkills();
+};
 
 module.exports = BasePlayer;

@@ -1,3 +1,9 @@
+'use strict';
+
+document.oncontextmenu = function (){
+    return false;
+};
+
 require('style.css');
 
 var BootState = require('./states/boot');  
@@ -17,5 +23,4 @@ window.onload = function () {
     game.state.add('preload', PreloadState);  
       
     game.state.start('boot');
-}
-
+};
