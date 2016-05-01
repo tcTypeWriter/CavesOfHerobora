@@ -35,7 +35,8 @@ Preload.prototype = {
 
         function loadMonstersAssets(){
             load.image('bat', 'assets/monsters/bat.png');
-            load.image('tree', 'assets/monsters/oak.png');                
+            load.image('tree', 'assets/monsters/oak.png'); 
+            load.image('stump', 'assets/monsters/stump.png');                
         }
 
         function loadSkillsAssets(){
