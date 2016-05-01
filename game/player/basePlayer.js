@@ -76,8 +76,7 @@ BasePlayer.prototype.getItem = function(item){
     var take = this.keys.take;
     
     if(take.isDown){
-        var loot = item.toLoot();
-        this.model.inventory.push(loot);           
+        item.impact(this);          
     }
 };
 
@@ -185,9 +184,25 @@ BasePlayer.prototype.damage = function (amount) {
     return this;
 };
 
+BasePlayer.prototype.heal = function (amount) {
+    if (this.alive)
+    {
+        this.model.health += amount;
+        if (this.model.health > this.model.maxHealth)
+        {
+            this.model.health = this.model.maxHealth;
+        }
+    }
+
+    return this;
+};
+
 BasePlayer.prototype.setModel = function(model) {
     this.model = model;
     this.restoreSkills();
 };
+
+
+
 
 module.exports = BasePlayer;

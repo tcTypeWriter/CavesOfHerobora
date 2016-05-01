@@ -10,11 +10,10 @@ var HealthPotion = function(game, position) {
 HealthPotion.prototype = Object.create(Phaser.Sprite.prototype);
 HealthPotion.prototype.constructor = HealthPotion;
 
-HealthPotion.prototype.toLoot = function(){
+HealthPotion.prototype.impact = function(player){
+    debugger;
+    player.heal(3);
     this.destroy();
-    return {
-        name: "health potion"
-    };
 };
 
 module.exports = HealthPotion;
