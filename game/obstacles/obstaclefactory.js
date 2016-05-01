@@ -1,3 +1,5 @@
+'use strict';
+
 var Wall = require('./wall');
 
 module.exports = {

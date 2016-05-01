@@ -4,16 +4,21 @@ var BaseRoom = require('./baseroom');
 
 function SimpleRoom(game, key) {
     BaseRoom.call(this, game, key);
-    this.monsters = {
+    this.model.monsters = {
         Bat: [
             {x: 100, y: 100},
-            {x: 650, y: 450},
-            {x: 100, y: 450}
         ],
         Tree: [
             {x:100, y: 300}
         ]
     };
+
+    this.model.items = {
+        HealthPotion: [
+            {x: 400, y: 400}
+        ]
+    };
+
     this.background = 'brick2';
 }
 

@@ -1,15 +1,69 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="game">
 <head>
     <meta charset="UTF-8" />
     <title>Caves of Herobora</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
     <div id="game">
         <div id="canvas"></div>
+        <div id="book" ng-controller="Book as book" ng-switch="chapter">
+            <div class="chapter" ng-switch-when="items">
+                <h1>Предметы</h1>
+                <ul>
+                    <li class="item" ng-repeat="item in book.items">
+                        <h2>{{item.name}}</h2>
+                        <img ng-src="{{item.img}}">
+                        <div>{{item.description}}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="chapter" ng-switch-when="skills">
+                <h1>Способости</h1>
+                <ul>
+                    <li class="item" ng-repeat="skill in book.skills">
+                        <h2>{{skill.name}}</h2>
+                        <img ng-src="{{skill.img}}">
+                        <div>{{skill.description}}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="chapter" ng-switch-when="obstacles">
+                <h1>Окружение</h1>
+                <ul>
+                    <li class="item" ng-repeat="obstacle in book.obstacles">
+                        <h2>{{obstacle.name}}</h2>
+                        <img ng-src="{{obstacle.img}}">
+                        <div>{{obstacle.description}}</div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="chapter" ng-switch-when="monsters">
+                <h1>Монтсры</h1>
+                <ul>
+                    <li class="item" ng-repeat="monster in book.monsters">
+                        <h2>{{monster.name}}</h2>
+                        <img ng-src="{{monster.img}}">
+                        <div>{{monster.description}}</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="book-buttons" ng-controller="bookButtonsController">
+            <button ng-click="open('items')">Предметы</button>
+            <button ng-click="open('skills')">Способности</button>
+            <button ng-click="open('obstacles')">Окружение</button>
+            <button ng-click="open('monsters')">Монстры</button>
+        </div>
     </div>
+    
 
     <script src="libs/phaser.js"></script>
+    <script type="text/javascript" src="libs/angular/angular.js"></script>
     <script type="text/javascript" src="/assets/build.js"></script>
 </body>
 </html>

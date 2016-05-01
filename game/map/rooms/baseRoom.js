@@ -3,14 +3,43 @@
 var playersFactory = require('../../player/playersfactory');
 var itemFactory = require('../../items/itemfactory');
 var obstacleFactory = require('../../obstacles/obstaclefactory');
-var mobFactory = require('../../mobs/mobfactory');
+var monstersFactory = require('../../mobs/mobfactory');
+
+var playerPositions = {
+        center: {x: 400, y: 300},
+        left:   {x: 700, y: 300},
+        down:   {x: 400, y: 100},
+        right:  {x: 100, y: 300},
+        up:     {x: 400, y: 500}
+    };
+
+var invertPosition = {
+            left: 'right',
+            right: 'left',
+            up: 'down',
+            down: 'up' 
+        };
+
 
 function BaseRoom(game, key) {
     Phaser.State.call(this, game);
     this.key = key;
     this.game = game;
 
-    this.neighbors = {
+    this.model = {
+        monsters: {},
+        items: {},
+        obstacles: {
+            Wall: [
+                {x: 0, y: 0, width: 50, height: 600},
+                {x: 0, y: 0, width: 800, height: 50},
+                {x: 750, y: 0, width: 50, height: 600},
+                {x: 0, y: 550, width: 800, height: 50}
+            ]
+        }
+    };
+ 
+    this.join = {
         left: null,
         up: null,
         right: null,
@@ -19,151 +48,176 @@ function BaseRoom(game, key) {
 }
 
 BaseRoom.prototype = {
-    /*
-        Основные функции
-    */
-    init: function(position, player){
+    //
+    // Основные функции
+    //
+    init: function(position, player_model){
         position = position || 'center';
-        var playerPositions = {
-            center: {x: 400, y: 300},
-            left:   {x: 700, y: 300},
-            down:   {x: 400, y: 100},
-            right:  {x: 100, y: 300},
-            up:     {x: 400, y: 500}
-        };
         
-        var p = playerPositions[position];
-        this.player = new playersFactory[player.name](this.game, p.x, p.y);
-        this.player.health = player.health;
+        this.player_model = player_model;
+        this.player_position = playerPositions[position];
     },
+
     create: function() {
+        var self = this;
         var game = this.game;
 
         this.physics.startSystem(Phaser.Physics.ARCADE);
-        this.stage.backgroundColor = '#ffffff';        
-        
-        if(this.background)
-            this.add.tileSprite(0, 0, 800, 600, this.background);
 
-        this.mobs = game.add.group();
-        this.playerSkills = game.add.group();
-        this.mobsSkills = game.add.group();
-        this.obstacles = game.add.group();
-        this.doors = game.add.group();
-        this.createDoors();
-        this.createObstacles();
-
-        game.add.existing(this.player);
-
-        this.player.events.onCastSkill.add(this.playerCastSkill, this);
-        this.player.events.onKilled.add(this.toGameOver, this);
-
-        this.createMobs();
+        setBackground();
+        setGroups();
+        setItems();
+        setObstacles();
+        setPlayer();
+        setDoors();
+        setMonsters();
 
         this.space = game.input.keyboard.addKeys({'space': Phaser.Keyboard.SPACEBAR}).space;
+
+        function setBackground(){
+            self.stage.backgroundColor = '#ffffff';        
+            
+            if(self.background)
+                self.add.tileSprite(0, 0, 800, 600, self.background);
+        }
+      
+        function setGroups(){
+            self.monsters = game.add.group();
+            self.playerSkills = game.add.group();
+            self.monstersSkills = game.add.group();
+            self.items = game.add.group();
+            self.obstacles = game.add.group();
+            self.doors = game.add.group();
+        }
+
+        function setPlayer(){
+            var p = self.player_position,
+                type = self.player_model.name;
+
+            self.player = new playersFactory[type](self.game, p.x, p.y);
+            
+            self.player.setModel(self.player_model);
+
+            game.add.existing(self.player);
+
+            self.player.events.onCastSkill.add(playerCastSkill);
+            self.player.events.onKilled.add(startGameOver);
+
+            function playerCastSkill(skill){
+                self.playerSkills.add(skill);
+            }
+
+            function startGameOver(){
+                self.game.state.start('gameover');
+            }
+
+        }
+
+        function setDoors(){
+            var join = self.join,
+                doors = self.doors,
+                door = null;
+
+            for(var position in join)
+                if(join[position] !== null){
+                    door = new itemFactory.Door(game, position, join[position]); 
+                    doors.add(door);
+                }
+        }
+
+        function setItems(){
+            var items = self.items,
+                model = self.model.items;
+
+            for(var itemType in model)
+                for(var i = 0; i < model[itemType].length; i++){
+                    var data = model[itemType][i],
+                        item = new itemFactory[itemType](game, data);
+                    items.add(item);
+                }
+        }
+
+        function setObstacles(){
+            var obstacles = self.obstacles,
+                model = self.model.obstacles;
+
+            for(var obstacletType in model)
+                for(var i = 0; i < model[obstacletType].length; i++){
+                    var data = model[obstacletType][i],
+                        wall = new obstacleFactory[obstacletType](game, data.x, data.y, 
+                                                                        data.width, data.height);
+                    obstacles.add(wall);
+                }
+        }
+
+        function setMonsters(){
+            var monsters = self.monsters, 
+                model = self.model.monsters;
+
+            for(var monsterType in model)
+                for(var i = 0; i < model[monsterType].length; i++){
+                    var position = model[monsterType][i],
+                        monster = new monstersFactory[monsterType](game, position, self.player);
+
+                    monster.events.onCastSkill.add(monsterCastSkill);
+                    monsters.add(monster);
+            }
+
+            function monsterCastSkill(skill){
+                self.monstersSkills.add(skill);
+            }      
+        }
     },
 
     update: function() {
-        this.physics.arcade.overlap(this.doors, this.player, this.changeRoom, null, this);
-        
-        this.physics.arcade.overlap(this.mobs, this.playerSkills, hit);
-        this.physics.arcade.overlap(this.player, this.mobsSkills, hit);
+        var space = this.space,
+            arcade = this.physics.arcade,
+            overlap = this.physics.arcade.overlap.bind(arcade),
+            collide = this.physics.arcade.collide.bind(arcade);
 
-        this.physics.arcade.collide(this.obstacles, this.player);
-        this.physics.arcade.collide(this.obstacles, this.mobs);
+        overlap(this.player, this.doors, changeRoom);
+        overlap(this.player, this.items, getItem);
 
-        function hit(mob, skill){
-            skill.impact(mob);
+        overlap(this.monsters, this.playerSkills, hit);
+        overlap(this.player, this.monstersSkills, hit);
+
+        collide(this.obstacles, this.player);
+        collide(this.obstacles, this.monsters);
+
+        this.monsters.sort('y');
+        this.debug(true);
+
+        function hit(monster, skill){
+            skill.impact(monster);
         }
-        this.mobs.sort('y');
-        this.debug();
+
+        function getItem(player, item){
+            player.getItem(item);
+        }
+
+        function changeRoom(player, door){
+            if(space.isDown)
+                door.go(player.model);
+        }
     },
 
     shutdown: function() {
-        // Save state
+        // Saving state
     },
 
     concat: function(room, position){
-        var invert = {
-            left: 'right',
-            right: 'left',
-            up: 'down',
-            down: 'up' 
-        };
-        this.neighbors[position] = room;
-        room.neighbors[invert[position]] = this;
-        if(game.state && game.state.current == this.key)
-            this.createDoors();
-    },
-
-    createDoors: function(){
-        var game = this.game;
-        var doors = this.doors;
-        var nbs = this.neighbors;
-
-        for(var position in nbs)
-            if(nbs[position] !== null){
-                var door = new itemFactory.Door(game, position, nbs[position]); 
-                doors.add(door);
-            }
-    },
-
-    createObstacles: function(){
-        var game = this.game;
-        var obstacles = this.obstacles;
-        var wall = null;
-
-        wall = new obstacleFactory.Wall(game, 0, 0, 50, 600);
-        obstacles.add(wall);
-        wall = new obstacleFactory.Wall(game, 0, 0, 800, 50);
-        obstacles.add(wall);
-        wall = new obstacleFactory.Wall(game, 750, 0, 50, 600);
-        obstacles.add(wall);
-        wall = new obstacleFactory.Wall(game, 0, 550, 800, 50);
-        obstacles.add(wall);
-    },
+        var arcPosition = invertPosition[position];
         
-    createMobs: function(){
-        var game = this.game;
-        var mobs = this.mobs;
-        var monsters = this.monsters;
-
-        for(var monsterName in monsters)
-            for(var p in monsters[monsterName]){
-                var point = monsters[monsterName][p];
-               
-                var mob = new mobFactory[monsterName](game, point, this.player);
-                mob.events.onCastSkill.add(this.mobCastSkill, this);
-               
-                mobs.add(mob);
-            }   
+        this.join[position] = room;
+        room.join[arcPosition] = this;
     },
 
-    /*
-        события комнаты
-    */
-    changeRoom: function(player, door){
-        if(this.space.isDown)
-            door.go(this.player);
-    },
-
-    playerCastSkill: function(skill){
-        this.playerSkills.add(skill);
-    },
-
-    mobCastSkill: function(skill){
-        this.mobsSkills.add(skill);
-    },
-
-    toGameOver: function(){
-        this.game.state.start('gameover');
-    },
-
-    debug: function(){
+    debug: function(fisics){
         var game = this.game;
         var x = 10, y = 10;
         var st = this;
 
+        fisics = fisics || false;
         var color = game.debug.color = 'white';
         
         game.debug.inputInfo(x, y, color);
@@ -172,30 +226,40 @@ BaseRoom.prototype = {
         y += 18;
         game.debug.text(mobsInfo(), x, y, color);
 
-        // game.debug.body(this.player);
+        if(fisics){
+            game.debug.body(this.player);
 
-        // this.mobs.forEachAlive(function(mob){
-        //     game.debug.body(mob);
-        // });
+            this.items.forEachAlive(function(item){
+                game.debug.body(item);
+            });
 
-        // this.playerSkills.forEachAlive(function(skill){
-        //     game.debug.body(skill);
-        // });
+            this.obstacles.forEachAlive(function(obstacle){
+                game.debug.body(obstacle);
+            });
 
-        // this.mobsSkills.forEachAlive(function(skill){
-        //     game.debug.body(skill);
-        // });
+            this.monsters.forEachAlive(function(mob){
+                game.debug.body(mob);
+            });
+
+            this.playerSkills.forEachAlive(function(skill){
+                game.debug.body(skill);
+            });
+
+            this.monstersSkills.forEachAlive(function(skill){
+                game.debug.body(skill);
+            });
+        }
 
         function skillsInfo(){
             return "player's skills: " + st.playerSkills.countLiving() + "/" +
                                          st.playerSkills.length + " " +
-                    "mob's skills: " + st.mobsSkills.countLiving() + "/" +
-                                         st.mobsSkills.length;
+                    "monsters's skills: " + st.monstersSkills.countLiving() + "/" +
+                                         st.monstersSkills.length;
         }
 
         function mobsInfo(){
-            return "mobs: " + st.mobs.countLiving() + "/" +
-                              st.mobs.length;
+            return "monsters: " + st.monsters.countLiving() + "/" +
+                              st.monsters.length;
         }
     }
 };

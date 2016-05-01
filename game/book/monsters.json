@@ -1,0 +1,11 @@
+{
+    "Bat": {
+        "name": "Летучая мышь",
+        "img": "assets/monsters/bat.png",
+        "description": "Летучая мышь описание"
+    },
+    "Tree": {
+        "name": "Дерево",
+        "description": "Дерево описание"
+    }
+}
