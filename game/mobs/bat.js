@@ -8,22 +8,18 @@ var radius = 10;
 
 
 var skillFactory = require('../skills/skillFactory');
+var BaseMonster = require('./baseMonster');
 
 function Bat(game, point, player) {
-    Phaser.Sprite.call(this, game, point.x + radius, point.y, 'bat');
+    var position = {x: point.x + radius, y: point.y};
+
+    BaseMonster.call(this, game, position, player, 'bat');
     this.scale = new Phaser.Point(0.4, 0.4);
 
-    
-    game.physics.enable(this);
     this.body.setSize(90, 76, 19, 0);
-    this.body.collideWorldBounds = true;
     this.body.velocity.y = lowspeed;
 
     this.body.mass = 8;
-    this.events.onCastSkill = new Phaser.Signal();
-
-    this.physics = game.physics.arcade;
-    this.player = player;
 
     this.base = point;
     this.health = this.maxHealth = 5;
@@ -32,7 +28,7 @@ function Bat(game, point, player) {
     this.skill = skillFactory.createSkill('Bolt', game);
 }
 
-Bat.prototype = Object.create(Phaser.Sprite.prototype);
+Bat.prototype = Object.create(BaseMonster.prototype);
 Bat.prototype.constructor = Bat;
 
 Bat.prototype.update = function() {
@@ -62,27 +58,11 @@ Bat.prototype.update = function() {
         this.skill.ready()){
         var skill = this.skill(this.game, {
                                                         x: this.x + this.width / 2, 
-                                                        y:this.y + this.height / 2
+                                                        y: this.y + this.height / 2
                                                     }, this.player);
         this.events.onCastSkill.dispatch(skill);
     }
 
-};
-
-Bat.prototype.damage = function (amount) {
-    if (this.alive && !this.immune)
-    {
-        this.health -= amount;
-        this.immune = true;
-        this.game.time.events.add(100, function(){
-            this.immune = false;
-        }, this);
-        if (this.health <= 0)
-        {
-            this.kill();
-        }
-    }
-    return this;
 };
 
 module.exports = Bat;
