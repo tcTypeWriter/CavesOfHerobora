@@ -156,9 +156,10 @@ BaseRoom.prototype = {
 
             for(var monsterType in model)
                 for(var i = 0; i < model[monsterType].length; i++){
-                    var position = model[monsterType][i],
-                        monster = new monstersFactory[monsterType](game, position, self.player);
+                    var monsterModel = model[monsterType][i],
+                        monster = new monstersFactory[monsterType](game, monsterModel, self.player);
 
+                    monster.setModel(monsterModel);
                     monster.events.onCastSkill.add(monsterCastSkill);
                     monsters.add(monster);
             }
@@ -202,7 +203,18 @@ BaseRoom.prototype = {
     },
 
     shutdown: function() {
-        // Saving state
+        var self = this;
+
+        self.model.monsters = {};
+
+        this.monsters.forEachAlive(function(monster){
+            var monsterName = monster.Name,
+                monsters = self.model.monsters[monsterName] || [];
+
+            monsters.push(monster.getModel());
+
+            self.model.monsters[monsterName] = monsters;
+        });
     },
 
     concat: function(room, position){

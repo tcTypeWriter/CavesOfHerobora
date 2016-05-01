@@ -33,4 +33,23 @@ BaseMonster.prototype.damage = function (amount) {
     return this;
 };
 
+
+BaseMonster.prototype.getModel = function() {
+    return {
+        x: this.x,
+        y: this.y,
+        health: this.health,
+        maxHealth: this.maxHealth,
+        state: this.state
+    };
+};
+
+BaseMonster.prototype.setModel = function(data){
+    this.x = data.x || this.x;
+    this.y = data.y || this.y;
+    this.health = data.health || this.health;
+    this.maxHealth = data.maxHealth || this.maxHealth;
+    this.state = data.state || this.state
+};
+
 module.exports = BaseMonster;

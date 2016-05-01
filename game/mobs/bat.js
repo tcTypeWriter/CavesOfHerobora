@@ -21,36 +21,42 @@ function Bat(game, point, player) {
 
     this.body.mass = 8;
 
-    this.base = point;
     this.health = this.maxHealth = 5;
-    this.state = 'swirl';
-
     this.skill = skillFactory.createSkill('Bolt', game);
+
+    this.state = {
+        base: point,
+        urge: 'swirl'
+    };
 }
 
 Bat.prototype = Object.create(BaseMonster.prototype);
 Bat.prototype.constructor = Bat;
+Bat.prototype.Name = "Bat";
 
 Bat.prototype.update = function() {
     if(!this.alive) return;
-    var x = this.base.x;
-    var y = this.base.y;
     
-    if(this.state == 'swirl'){
-        this.physics.accelerateToXY(this, x, y, lowspeed);
-    } else if(this.state == 'chase'){
+    var state = this.state,
+        base = state.base,
+        x = base.x,
+        y = base.y;
+    
+    if(state.urge === 'swirl'){
+        this.physics.accelerateToObject(this, base, lowspeed);
+    } else if(state.urge === 'chase'){
         this.physics.accelerateToObject(this, this.player, speed);
-    } else if(this.state == 'back')
+    } else if(state.urge === 'back')
         this.physics.accelerateToXY(this, x + radius, y, speed);
 
 
     if(this.physics.distanceToXY(this.player, x, y) < vision_distance){
-        this.state = 'chase';
-    } else if(this.physics.distanceToXY(this, x + radius, y) < 10 && this.state == 'back'){
+        state.urge = 'chase';
+    } else if(this.physics.distanceToXY(this, x + radius, y) < 10 && state.urge == 'back'){
         this.body.velocity.setTo(0, lowspeed);
-        this.state = 'swirl';
-    } else if (this.state == 'chase' || this.physics.distanceToXY(this, x, y) > vision_distance*0.7){
-        this.state = 'back';
+        state.urge = 'swirl';
+    } else if (state.urge === 'chase' || this.physics.distanceToXY(this, x, y) > vision_distance*0.7){
+        state.urge = 'back';
     }
 
 

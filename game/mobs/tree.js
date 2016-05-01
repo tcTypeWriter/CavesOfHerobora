@@ -12,5 +12,6 @@ function Tree(game, point, player) {
 
 Tree.prototype = Object.create(BaseMonster.prototype);
 Tree.prototype.constructor = BaseMonster;
+Tree.prototype.Name = "Tree";
 
 module.exports = Tree;
