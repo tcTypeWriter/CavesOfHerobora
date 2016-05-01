@@ -13,6 +13,9 @@ function SimpleRoom(game, key) {
         ],
         Stump: [
             {x: 400, y: 400}
+        ],
+        Spider: [
+            {x: 500, y: 300}
         ]
     };
 
