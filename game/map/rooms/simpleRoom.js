@@ -16,6 +16,9 @@ function SimpleRoom(game, key) {
         ],
         Spider: [
             {x: 500, y: 300}
+        ],
+        Minotaur: [
+            {x: 650, y: 200}
         ]
     };
 
