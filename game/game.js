@@ -1,20 +1,15 @@
 'use strict';
 
-document.oncontextmenu = function (){
-    return false;
-};
-
-require('style.css');
-
 var BootState = require('./states/boot');  
 var PreloadState = require('./states/preload');
 var ChoosePlayer = require('./states/chooseplayer');
 var GameOver = require('./states/gameover');  
 
 var mapFactory = require('./map/mapfactory');
+var game;
 
 window.onload = function () {
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas');
+    game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas');
     
     game.state.add('boot', BootState);
     game.state.add('gameover', GameOver);
@@ -23,4 +18,8 @@ window.onload = function () {
     game.state.add('preload', PreloadState);  
       
     game.state.start('boot');
+};
+
+module.exports = function () {
+    return game;
 };
