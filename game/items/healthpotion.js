@@ -1,17 +1,17 @@
 'use strict';
 
+var BaseItem = require('./baseitem');
+
 var HealthPotion = function(game, position) {
-    Phaser.Sprite.call(this, game, position.x, position.y, 'healthPotion');
-    game.physics.enable(this);
-    this.anchor.set(0.5);
+    BaseItem.call(this, game, position, 'healthPotion');
     this.scale.setTo(0.2, 0.2);
 };
 
-HealthPotion.prototype = Object.create(Phaser.Sprite.prototype);
+HealthPotion.prototype = Object.create(BaseItem.prototype);
 HealthPotion.prototype.constructor = HealthPotion;
+HealthPotion.prototype.Name = "HealthPotion";
 
 HealthPotion.prototype.impact = function(player){
-    debugger;
     player.heal(3);
     this.destroy();
 };

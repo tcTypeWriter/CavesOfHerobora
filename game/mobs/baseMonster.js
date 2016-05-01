@@ -49,7 +49,7 @@ BaseMonster.prototype.setModel = function(data){
     this.y = data.y || this.y;
     this.health = data.health || this.health;
     this.maxHealth = data.maxHealth || this.maxHealth;
-    this.state = data.state || this.state
+    this.state = data.state || this.state;
 };
 
 module.exports = BaseMonster;

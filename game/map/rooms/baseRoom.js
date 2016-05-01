@@ -48,9 +48,6 @@ function BaseRoom(game, key) {
 }
 
 BaseRoom.prototype = {
-    //
-    // Основные функции
-    //
     init: function(position, player_model){
         position = position || 'center';
         
@@ -207,14 +204,19 @@ BaseRoom.prototype = {
 
         self.model.monsters = {};
 
-        this.monsters.forEachAlive(function(monster){
-            var monsterName = monster.Name,
-                monsters = self.model.monsters[monsterName] || [];
+        saveModel('monsters');
+        saveModel('items');
 
-            monsters.push(monster.getModel());
+        function saveModel(type){
+            self.model[type] = {};
+            self[type].forEachAlive(function(entity){
+                var  name = entity.Name,
+                     entities = self.model[type][name] || [];
 
-            self.model.monsters[monsterName] = monsters;
-        });
+                entities.push(entity.getModel());
+                self.model[type][name] = entities;
+            });
+        }
     },
 
     concat: function(room, position){
