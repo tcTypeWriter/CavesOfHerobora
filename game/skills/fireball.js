@@ -1,41 +1,28 @@
+'use strict';
 
-module.exports = FireBall;
+var BaseSkill = require('./baseskill'); 
 
-var speed = 400;
-var time;
-var timeout = 500;
+var speed = 800;
+var power = 1;
 
-function FireBall(p) {
-    var game = FireBall.game;
-    time = game.time.now + timeout;
+function Fireball(game, from, to) {
+    BaseSkill.call(this, game, from, to, 'fireball');
+    this.scale.setTo(0.1, 0.1);
+    game.physics.arcade.moveToObject(this, to, speed);
 
-    var fireball = game.add.sprite(p.x, p.y, 'fireball');
+    this.body.rotation = game.physics.arcade.angleBetween(this, to);
     
-    game.physics.arcade.enable(fireball);
-    game.physics.arcade.moveToPointer(fireball, speed);
-    fireball.body.rotation = game.physics.arcade.angleToPointer(fireball);
-
-    fireball.damage = damage;
-
-    return fireball;
+    this.power = power;
 }
 
-FireBall.load = function(game) {
-    var fireball_texture = [
-        '.77.',
-        '7337',
-        '7337',
-        '.77.'
-    ];
-    game.create.texture('fireball', fireball_texture, 6, 6, 0);
-    this.game = game;
-    time = game.time.now;
-};
+Fireball.prototype = Object.create(BaseSkill.prototype);
+Fireball.prototype.constructor = Fireball;
 
-FireBall.ready = function() {
-    return time < this.game.time.now;
+Fireball.prototype.impact = function(mob){
+    mob.damage(this.power);
+    this.kill();
 }
 
-function damage() {
-    return 1;
-}
+
+Fireball.prototype.timeout = 1000;
+module.exports = Fireball;

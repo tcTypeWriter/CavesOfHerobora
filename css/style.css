@@ -3,79 +3,107 @@
 }
 
 body{
-    background: rgba(125, 125, 0, 0.4);
+    background: grey;
 }
-
 
 #game {
     display: block;
-    position: relative;
-    width: 1010px;
+    width: 900px;
     height: 600px;
+    margin: 2em auto;
+}
+
+#canvas {
+    display: block;
+    float: left;
+    position: relative;
+    left: 0; top: 0;
+    width: 800px;
+    height: 600px;
+}
+
+#book-buttons {
+    display: block;
+    float: left;
+    position: relative;
+    left: 0; top: 0;
+    width: 100px;
+}
+
+#book-buttons button{
+    display: block;
+    position: relative;
+    top: 0; left:0;
     margin: 1em auto;
-    border: 1px solid rgba(55,55,55, 0.5);
+    font-size: 0.9em;
 }
 
-#left {
+#book {
     display: block;
-    position: relative;
-    float: left;
-    width: 800px;
-    height: 600px;
-}
-
-#right{
-    display: block;
-    position: relative;
-    float: left;
-    width: 200px;
-    height: 600px;
-    border-left: 10px solid rgba(0, 0, 0, 0.7);
-    background: #83820F;
-}
-
-#right h1 {
-    text-align: center;
-    color: #fff;
-    font-size: 2em;
-}
-
-#right div{
-    position: relative;
-    display: block;
-    text-align: center;
-    padding: 1em;
-}
-
-#right button {
-    display: block;
-    padding: 0.5em;
-    margin: auto;
-    background: #C6C672;
-    font-size: 1.5em;
-}
-
-#right button:hover {
-    background: #C6C542;
-}
-
-
-#canvas{
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 800px;
-    height: 600px;
 }
 
-#gameover {
-    position: absolute;
-    top: 0;
-    left: 0;
+#book .chapter {
+    display: block;
+    position: relative;
+    top: 0; left: 0;
     width: 800px;
-    height: 400px;
-    padding-top: 200px;
-    background: rgba(0, 0, 0, 0.7);
+    height: 600px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.chapter h1 {
+    position: relative;
+    left: 0; top: 0;
+    margin: 0em 0 0.5em 3em;
     color: white;
-    text-align: center;
+}
+
+.chapter ul {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    list-style: none;
+}
+
+.chapter li {
+    display: block;
+    position: relative;
+    width: 700px;
+    margin: 5px 50px 5px 50px;
+    padding: 5px 0 5px 0;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.chapter li:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.chapter li h2{
+    display: block;
+    position: relative;
+    margin: 0.5em 0 0 3em;
+}
+
+.chapter li img{
+    display: block;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    float: left;
+    background: black;
+}
+
+.chapter li div{
+    display: block;
+    position: relative;
+    width: 550px;
+    padding: 25px;
+    float: left;
 }

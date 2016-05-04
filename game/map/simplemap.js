@@ -1,57 +1,36 @@
+'use strict';
 
-module.exports = SimpleMap;
+var roomFactory = require('./rooms/roomFactory');
 
-function SimpleMap(mobsCreator, player) {
-    this.mobsCreator = mobsCreator;
-    this.player = player;
+/*
+    Пример создания карты,
+    карта состоит из комнат, каждая комната саа по себе - state,
+    Как отдельного обьекта, карты не существует, она просто наследуется от какой либо комнаты,
+    а также создает еще N-ое кол-во комнат и связывает, остальная магия будет происходить в комнатах
+*/
 
-    player.map = this;
-}
+function SimpleMap(game) {
+    roomFactory.SimpleRoom.call(this, game);
+    this.key = "play";
 
-
-SimpleMap.prototype.load = function(game) {
-    var mobs = this.mobs = createGroup();
-    var playerSkills = this.playerSkills = createGroup();
-    var mobsSkills = this.mobsSkills = createGroup();
-    var items = this.items = createGroup();
-
-    playerSkills.setAll('outOfBoundsKill', true);
-
-    mobs.add(this.mobsCreator.Bee(this.player, 150, 150));
-
-    function createGroup() {
-        var grp = game.add.group();
-        grp.enableBody = true;
-        grp.physicsBodyType = Phaser.Physics.ARCADE;
-        grp.setAll('anchor.x', 0.5);
-        grp.setAll('anchor.y', 0.5);
-        return grp;
+    var rooms = [{}];
+    for (var i = 1; i < 5; i++) {
+        var key = "room_" + i;
+        rooms[i] = new roomFactory.SimpleRoom(game, key);
+        game.state.add(key, rooms[i]);
     }
+    
+    /*    3 
+          |
+        1-0-2
+          |
+          4
+    */
+    this.concat(rooms[1], "left");
+    this.concat(rooms[2], "right");
+    this.concat(rooms[3], "up");
+    this.concat(rooms[4], "down");
 }
 
-
-SimpleMap.prototype.update = function(game) {
-    this.mobs.forEachAlive(function(mob) {
-        mob.Update(game);
-    });
-
-    game.physics.arcade.collide(this.player.sprite, this.mobs);
-    game.physics.arcade.overlap(this.playerSkills, this.mobs, hit, null, this);
-
-    game.physics.arcade.overlap(this.player, this.mobs, mobHit, null, this);
-}
-
-SimpleMap.prototype.gameover = function() {
-    return this.mobs.countLiving() == 0;
-}
-
-
-
-function hit(skill, mob) {
-    mob.isHurted(skill.damage());
-    skill.kill();
-}
-
-function mobHit(player, mob) {
-    player.hp[0]--;
-}
+SimpleMap.prototype = Object.create(roomFactory.SimpleRoom.prototype);
+SimpleMap.prototype.constructor = SimpleMap;

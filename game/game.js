@@ -1,32 +1,25 @@
-var game, model;
+'use strict';
 
-module.exports = function(m){
-    game = new Phaser.Game(800, 600, Phaser.CANVAS, 'canvas', { create: create, update: update});
-    model = m;
-}
+var BootState = require('./states/boot');  
+var PreloadState = require('./states/preload');
+var ChoosePlayer = require('./states/chooseplayer');
+var GameOver = require('./states/gameover');  
 
-function create() {
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.stage.backgroundColor = '#ffffff';
+var mapFactory = require('./map/mapfactory');
+var game;
 
-    model.player.load(game);
-    for(var key in model.mobsCreator){
-        model.mobsCreator[key].load(game);
-    }
+window.onload = function () {
+    game = new Phaser.Game(800, 600, Phaser.AUTO, 'canvas');
+    
+    game.state.add('boot', BootState);
+    game.state.add('gameover', GameOver);
+    game.state.add('chooseplayer', ChoosePlayer);
+    game.state.add('play', mapFactory.SimpleMap);
+    game.state.add('preload', PreloadState);  
+      
+    game.state.start('boot');
+};
 
-    for(var key in model.skillsCreator){
-        model.skillsCreator[key].load(game);
-    }
-
-    model.map.load(game);
-}
-
-function update() {
-    model.player.update(game);
-    model.map.update(game);
-
-    if(model.map.gameover()){
-        model.view = 'gameover';
-        model.$digest();
-    }
-}
+module.exports = function () {
+    return game;
+};

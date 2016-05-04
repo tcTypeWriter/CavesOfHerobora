@@ -1,7 +1,6 @@
+'use strict';
 
-module.exports = Character;
-
-function Character(argument) {
+function Character() {
     this.exp = new State(10, 100, 1 , "violet");
     this.strength = new State(10, 100, 1, "red");
     this.dexterity = new State(15, 100, 1, "blue");
@@ -15,3 +14,5 @@ function State(val, max, lvl, color)
     this.lvl = lvl;
     this.color = color;
 }
+
+module.exports = Character;

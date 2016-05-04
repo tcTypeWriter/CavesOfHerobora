@@ -1,27 +1,29 @@
-require('style.css');
-require('interface.css');
-require('inventory.css');
-require('character.css');
+'use strict';
 
-var angular = require('angular');
-var engine = require('./game.js');
+document.oncontextmenu = function (){
+    return false;
+};
 
-var SimpleMap = require('./map/SimpleMap.js');
+var Book = require('./book/book.js');
+var Game = require('./game.js');
 
-var Player = require('./player/player.js');
-var mobsCreator =   require('./mobs/mobsCreator.js');
-var skillsCreator = require('./skills/skillsCreator.js');
+var game_module = angular.module('game', []);
 
-var game = angular.module('game', []);
+game_module.controller('Book', Book);
 
-game.controller("main", ["$scope", function ($scope) {
-    $scope.view = 'game';
+game_module.controller('bookButtonsController', ['$scope', '$rootScope', function($scope, $rootScope){
 
-    $scope.player = new Player();
-    $scope.mobsCreator = mobsCreator;
-    $scope.skillsCreator = skillsCreator;
 
-    $scope.map = new SimpleMap($scope.mobsCreator, $scope.player);
+    $scope.open = function(chapter){
+        var game = Game();
+        if($rootScope.chapter === chapter){
+            $rootScope.chapter = undefined;
+            game.paused = false;
+            return;
+        }
 
-    engine($scope);
+        $rootScope.chapter = chapter;
+        game.paused = true;
+    };
+
 }]);

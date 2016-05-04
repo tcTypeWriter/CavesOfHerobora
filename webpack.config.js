@@ -2,8 +2,6 @@
 
 const NODE_ENV = process.env.NODE_ENV || 'dev';
 
-var path = require('path');
-var webpack = require('webpack');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
@@ -15,8 +13,7 @@ module.exports = {
     },
 
     watch: NODE_ENV === 'dev',
-    devtool: NODE_ENV === 'dev' ? "source-map" : null,
-
+  
     resolve:{
         modulesDirectories: ["libs", "css"]
     },
