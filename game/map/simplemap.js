@@ -14,12 +14,12 @@ SimpleMap.prototype.load = function(game) {
     var playerSkills = this.playerSkills = createGroup();
     var mobsSkills = this.mobsSkills = createGroup();
     var items = this.items = createGroup();
-    
+
     playerSkills.setAll('outOfBoundsKill', true);
 
-    mobs.add( this.mobsCreator.Bee(this.player, 150, 150) );
+    mobs.add(this.mobsCreator.Bee(this.player, 150, 150));
 
-    function createGroup(){
+    function createGroup() {
         var grp = game.add.group();
         grp.enableBody = true;
         grp.physicsBodyType = Phaser.Physics.ARCADE;
@@ -31,13 +31,14 @@ SimpleMap.prototype.load = function(game) {
 
 
 SimpleMap.prototype.update = function(game) {
-    this.mobs.forEachAlive(function(mob){
+    this.mobs.forEachAlive(function(mob) {
         mob.Update(game);
     });
 
     game.physics.arcade.collide(this.player.sprite, this.mobs);
-    game.physics.arcade.over
     game.physics.arcade.overlap(this.playerSkills, this.mobs, hit, null, this);
+
+    game.physics.arcade.overlap(this.player, this.mobs, mobHit, null, this);
 }
 
 SimpleMap.prototype.gameover = function() {
@@ -46,7 +47,11 @@ SimpleMap.prototype.gameover = function() {
 
 
 
-function hit(skill, mob){
+function hit(skill, mob) {
     mob.isHurted(skill.damage());
     skill.kill();
+}
+
+function mobHit(player, mob) {
+    player.hp[0]--;
 }
