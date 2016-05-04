@@ -41,6 +41,8 @@ function BasePlayer(game, x, y, sprite_key, player_model) {
                                     'two': Phaser.Keyboard.TWO,
                                     'three': Phaser.Keyboard.THREE
                                 });
+    this.cursorKeys = game.input.keyboard.createCursorKeys();
+
     function setPhysics(){
         game.physics.enable(self);
         self.anchor.set(0.5);
@@ -55,22 +57,16 @@ function BasePlayer(game, x, y, sprite_key, player_model) {
         self.events.onCastSkill.add(notReady);
 
         function notReady(){
-            self.ready = false;
+            self.model.ready = false;
             game.time.events.add(250, isReady, self);
 
-            function isReady(){ self.ready = true; }
+            function isReady(){ self.model.ready = true; }
         }
     }
 }
 
 BasePlayer.prototype = Object.create(Phaser.Sprite.prototype);
 BasePlayer.prototype.constructor = BasePlayer;
-
-BasePlayer.prototype.restoreSkills = function(){
-    this.autoSkill = this.model.autoSkill;
-    this.activeSkill = this.model.activeSkill;
-    this.skillSet = this.model.skillSet;
-};
 
 BasePlayer.prototype.getItem = function(item){
     var take = this.keys.take;
@@ -127,16 +123,33 @@ BasePlayer.prototype.update = function(){
     }
 
     function tryUseSkill(){
+        var cursorKeys = self.cursorKeys;
 
-        if(pointer.leftButton.isDown && self.activeSkill.ready() && self.model.ready){
-            // debugger;
-            var skill = self.activeSkill(self.game, self, pointer);
-            self.events.onCastSkill.dispatch(skill);
-        }
+        if(pointer.leftButton.isDown)
+            useActiveSkill(pointer);
+
+        if(cursorKeys.up.isDown)
+            useActiveSkill({x: self.x, y: self.y - 200});
+        if(cursorKeys.right.isDown)
+            useActiveSkill({x: self.x + 200, y: self.y});
+        if(cursorKeys.down.isDown)
+            useActiveSkill({x: self.x, y: self.y + 200});
+        if(cursorKeys.left.isDown)
+            useActiveSkill({x: self.x - 200, y: self.y});
     
         if(pointer.rightButton.isDown)
             restoreSkill();
     }
+
+
+    function useActiveSkill(to)
+    {
+         if(self.activeSkill.ready() && self.model.ready){
+            var skill = self.activeSkill(self.game, self, to);
+            self.events.onCastSkill.dispatch(skill);
+        }  
+    }
+
 
     function restoreSkill(){ 
         self.activeSkill = self.autoSkill; 
@@ -202,6 +215,11 @@ BasePlayer.prototype.setModel = function(model) {
     this.restoreSkills();
 };
 
+BasePlayer.prototype.restoreSkills = function(){
+    this.autoSkill = this.model.autoSkill;
+    this.activeSkill = this.model.activeSkill;
+    this.skillSet = this.model.skillSet;
+};
 
 
 
