@@ -162,8 +162,11 @@ BasePlayer.prototype.update = function(){
 
         game.debug.text(hpInfo(), x, y, color);
         y += 20;
+        game.debug.text("speed: " + self.model.speed, x, y, color);
+        y += 20;
         game.debug.text(activeSkillInfo(), x, y, color);
-       
+
+
         for(var i = 0; i < self.skillSet.length; i++)
             game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
 
