@@ -41,7 +41,12 @@ function BasePlayer(game, x, y, sprite_key, player_model) {
                                     'two': Phaser.Keyboard.TWO,
                                     'three': Phaser.Keyboard.THREE
                                 });
-    this.cursorKeys = game.input.keyboard.createCursorKeys();
+    this.cursorKeys = game.input.keyboard.addKeys({
+                                    'up': Phaser.Keyboard.I,
+                                    'left': Phaser.Keyboard.J,
+                                    'down': Phaser.Keyboard.K,
+                                    'right': Phaser.Keyboard.L
+                                });
 
     function setPhysics(){
         game.physics.enable(self);
