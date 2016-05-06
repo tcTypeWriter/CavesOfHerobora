@@ -2,13 +2,13 @@
 
 var BaseSkill = require('./baseskill'); 
 
-var speed = 200;
+var speed = 1000;
 var power = 1;
-var timeOfLive = 50;
+var timeOfLive = 10;
 
 function Bite(game, from, to) {
     BaseSkill.call(this, game, from, to, 'bite');
-    this.scale.setTo(0.1, 0.1);
+    this.scale.setTo(0, 0);
 
     game.physics.arcade.moveToObject(this, to, speed);
     this.rotation = game.physics.arcade.angleBetween(this, to);
@@ -25,5 +25,5 @@ Bite.prototype.impact = function(mob){
     this.kill();
 }
 
-
+Bite.prototype.timeout = 500;
 module.exports = Bite;
