@@ -26,13 +26,14 @@ Spider.prototype.Name = "Spider";
 
 Spider.prototype.update = function(){ 
     var vector = {
-        x:random(-20, 20),
-        y:random(-20, 20)
+        x:random(-100, 100),
+        y:random(-100, 100)
     };
     
-    this.physics.moveToXY(this, this.state.base.x += vector.x, this.state.base.y += vector.y, 200);
+    this.physics.accelerateToXY(this, this.x + vector.x, this.y + vector.y, 1000);
     
-    if(this.physics.distanceBetween(this.player, this) < 100 && 
+    
+    if(this.physics.distanceBetween(this.player, this) < 50 && 
         this.skill.ready()){
         var skill = this.skill(this.game, {
                                                         x: this.x + this.width / 2, 
