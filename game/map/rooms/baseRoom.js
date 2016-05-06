@@ -1,16 +1,16 @@
 'use strict';
 
-var playersFactory = require('../../player/playersfactory');
+var playersFactory = require('../../creatures/player/playersfactory');
 var itemFactory = require('../../items/itemfactory');
 var obstacleFactory = require('../../obstacles/obstaclefactory');
-var monstersFactory = require('../../mobs/mobfactory');
+var monstersFactory = require('../../creatures/monsters/mobfactory');
 
 var playerPositions = {
         center: {x: 400, y: 300},
-        left:   {x: 700, y: 300},
-        down:   {x: 400, y: 100},
-        right:  {x: 100, y: 300},
-        up:     {x: 400, y: 500}
+        left:   {x: 100, y: 300},
+        down:   {x: 400, y: 500},
+        right:  {x: 700, y: 300},
+        up:     {x: 400, y: 100}
     };
 
 var invertPosition = {
@@ -27,6 +27,10 @@ function BaseRoom(game, key) {
     this.game = game;
 
     this.model = {
+        player: {
+            position: 'center',
+            data: {}
+        },
         monsters: {},
         items: {},
         obstacles: {
@@ -48,11 +52,12 @@ function BaseRoom(game, key) {
 }
 
 BaseRoom.prototype = {
-    init: function(position, player_model){
-        position = position || 'center';
-        
-        this.player_model = player_model;
-        this.player_position = playerPositions[position];
+    init: function(position, player_data){
+        var relative_position = invertPosition[position] || 'center';
+        this.model.player.data = player_data || {};
+        this.model.player.data.x = undefined;
+        this.model.player.data.y = undefined;
+        this.model.player.position = playerPositions[relative_position];
     },
 
     create: function() {
@@ -88,12 +93,13 @@ BaseRoom.prototype = {
         }
 
         function setPlayer(){
-            var p = self.player_position,
-                type = self.player_model.name;
+            var player_model = self.model.player, 
+                position = player_model.position,
+                type = player_model.data.name || 'Wizard';
 
-            self.player = new playersFactory[type](self.game, p.x, p.y);
+            self.player = new playersFactory[type](self.game, position.x, position.y);
             
-            self.player.setModel(self.player_model);
+            self.player.setModel(player_model.data);
 
             game.add.existing(self.player);
 
@@ -107,7 +113,6 @@ BaseRoom.prototype = {
             function startGameOver(){
                 self.game.state.start('gameover');
             }
-
         }
 
         function setDoors(){
@@ -195,7 +200,7 @@ BaseRoom.prototype = {
 
         function changeRoom(player, door){
             if(space.isDown)
-                door.go(player.model);
+                door.go(player.getModel());
         }
     },
 
