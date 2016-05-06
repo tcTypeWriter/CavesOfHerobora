@@ -34,3 +34,5 @@ function SimpleMap(game) {
 
 SimpleMap.prototype = Object.create(roomFactory.SimpleRoom.prototype);
 SimpleMap.prototype.constructor = SimpleMap;
+
+module.exports = SimpleMap;
