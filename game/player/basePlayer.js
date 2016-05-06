@@ -51,7 +51,7 @@ function BasePlayer(game, x, y, sprite_key, player_model) {
     function setPhysics(){
         game.physics.enable(self);
         self.anchor.set(0.5);
-        self.scale.setTo(0.4);
+        self.scale.setTo(0.3);
 
         self.body.collideWorldBounds = true;
         self.body.bounce.setTo(0, 0);
