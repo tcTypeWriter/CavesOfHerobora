@@ -35,10 +35,13 @@ Stump.prototype.update = function() {
     if(!this.alive) return;
     
 
-        
+        if(this.physics.distanceToXY(this.player, this.x, this.y) > 20){
         this.body.velocity.x = speed*(this.player.body.x-this.x) / (Math.sqrt(Math.pow((this.x - this.player.body.x),2) + Math.pow((this.y - this.player.body.y),2)));
         this.body.velocity.y = speed*(this.player.body.y-this.y) / (Math.sqrt(Math.pow((this.x - this.player.body.x),2) + Math.pow((this.y - this.player.body.y),2)));
-
+        }else {
+            this.body.velocity.x = 0;
+            this.body.velocity.y = 0;
+        }
 
 };
 

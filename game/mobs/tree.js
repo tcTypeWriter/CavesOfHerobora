@@ -14,7 +14,7 @@ function Tree(game, point, player) {
     var position = {x: point.x + radius, y: point.y};
 
     BaseMonster.call(this, game, position, player, 'tree');
-    this.scale = new Phaser.Point(0.4, 0.4);
+    this.scale = new Phaser.Point(0.8, 0.8);
 
 
     this.body.velocity.y = lowspeed;
@@ -23,9 +23,7 @@ function Tree(game, point, player) {
 
     this.health = this.maxHealth = 100;
     this.skill = skillFactory.createSkill('Bolt', game);
-
-   
-}
+    }
 
 Tree.prototype = Object.create(BaseMonster.prototype);
 Tree.prototype.constructor = Tree;
@@ -45,6 +43,9 @@ Tree.prototype.update = function() {
     } else if(this.physics.distanceToXY(this.player, this.x, this.y) < 195){
         this.body.velocity.x = -treeXVelocity;
         this.body.velocity.y = -treeYVelocity;  
+    }else if((this.physics.distanceToXY(this.player, this.x, this.y) >= 195)||(this.physics.distanceToXY(this.player, this.x, this.y) <= 205)){
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;  
     }
 };
 
