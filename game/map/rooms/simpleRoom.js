@@ -1,33 +1,15 @@
 'use strict';
 
 var BaseRoom = require('./baseroom');
+var roomData = require('./roomData');
 
 function SimpleRoom(game, key) {
     BaseRoom.call(this, game, key);
-    this.model.monsters = {
-        Bat: [
-            {x: 100, y: 100},
-        ],
-        Tree: [
-            {x: 100, y: 300}
-        ],
-        Stump: [
-            {x: 400, y: 400}
-        ],
-        Spider: [
-            {x: 500, y: 300}
-        ],
-        Minotaur: [
-            {x: 650, y: 200}
-        ]
-    };
+    var data = roomData[key];
 
-    this.model.items = {
-        HealthPotion: [
-            {x: 400, y: 400}
-        ]
-    };
-
+    this.model.monsters = data.monsters || this.model.monsters;
+    this.model.items = data.items || this.model.items;
+    
     this.background = 'brick2';
 }
 

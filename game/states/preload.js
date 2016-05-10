@@ -1,7 +1,5 @@
 'use strict';
 
-var playersFactory = require('../player/playersfactory');
-
 function Preload() {
     this.asset = null;
     this.ready = false;
@@ -66,7 +64,7 @@ Preload.prototype = {
 
     update: function() {
         if(!!this.ready) {
-            this.game.state.start('play');
+            this.game.state.start('empty');
         }
     },
 

@@ -1,7 +1,5 @@
 'use strict';
 
-var playersFactory = require('../player/playersfactory');
-
 function ChoosePlayer() {}
 
 ChoosePlayer.prototype = {
@@ -28,15 +26,15 @@ ChoosePlayer.prototype = {
         this.player = null;
       },
     update: function () {
-        var keys = this.keys;
-        if(keys.a.isDown)
-            this.player = new playersFactory.Warrior(this.game, 0, 0);
-        if(keys.d.isDown)
-            this.player = new playersFactory.Wizard(this.game, 0, 0);
+        // var keys = this.keys;
+        // if(keys.a.isDown)
+        //     this.player = new playersFactory.Warrior(this.game, 0, 0);
+        // if(keys.d.isDown)
+        //     this.player = new playersFactory.Wizard(this.game, 0, 0);
 
-        if(this.player) {
-            this.game.state.start('play', true, false, 'center', this.player);
-        }
+        // if(this.player) {
+        //     this.game.state.start('play', true, false, 'center', this.player);
+        // }
     }
 };
 

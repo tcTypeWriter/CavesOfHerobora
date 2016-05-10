@@ -1,9 +1,9 @@
 'use strict';
 
-var playersFactory = require('../../creatures/player/playersfactory');
-var itemFactory = require('../../items/itemfactory');
-var obstacleFactory = require('../../obstacles/obstaclefactory');
-var monstersFactory = require('../../creatures/monsters/mobfactory');
+var playersFactory = require('playersfactory');
+var itemFactory = require('itemfactory');
+var obstacleFactory = require('obstaclefactory');
+var monstersFactory = require('mobfactory');
 
 var playerPositions = {
         center: {x: 400, y: 300},
@@ -231,6 +231,34 @@ BaseRoom.prototype = {
         room.join[arcPosition] = this;
     },
 
+    playerCastSkill: function(skill){
+        var skillEvent = {
+            onCastSkill: this.playerCastSkill,
+            onCastItem: this.castItem,
+            onCastMonster: this.onCastMonster
+        };
+
+        for(var event in skillEvent)
+            if(skill.events[event])
+                skill.events[event].add(skillEvent[event], this);
+
+        this.playerSkills.add(skill);
+    },
+
+    monsterCastSkill: function(skill){
+        var skillEvent = {
+            onCastSkill: this.monsterCastSkill,
+            onCastItem: this.castItem,
+            onCastMonster: this.onCastMonster
+        };
+
+        for(var event in skillEvent)
+            if(skill.events[event])
+                skill.events[event].add(skillEvent[event], this);
+
+        this.monstersSkills.add(skill);
+    },
+
     debug: function(fisics){
         var game = this.game;
         var x = 10, y = 10;
@@ -278,7 +306,7 @@ BaseRoom.prototype = {
 
         function mobsInfo(){
             return "monsters: " + st.monsters.countLiving() + "/" +
-                              st.monsters.length;
+                                  st.monsters.length;
         }
     }
 };
