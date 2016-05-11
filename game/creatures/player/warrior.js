@@ -1,6 +1,6 @@
 'use strict';
 
-var skillFactory = require('../../skills/skillFactory');
+var skillFactory = require('skillfactory');
 var BasePlayer = require('./baseplayer');
 
   

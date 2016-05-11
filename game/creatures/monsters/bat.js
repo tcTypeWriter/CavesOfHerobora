@@ -7,7 +7,7 @@ var attack_distance = 200;
 var radius = 20;
 
 
-var skillFactory = require('skillFactory');
+var skillFactory = require('skillfactory');
 var BaseMonster = require('./baseMonster');
 
 function Bat(game, point, player) {

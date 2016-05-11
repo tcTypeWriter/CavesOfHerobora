@@ -2,7 +2,7 @@
 
 var speed = 100;
 
-var skillFactory = require('skillFactory');
+var skillFactory = require('skillfactory');
 var BaseMonster = require('./baseMonster');
 
 function Stump(game, point, player) {
