@@ -10,10 +10,11 @@ function Wizard(game, x, y) {
 
     var Fireball = skillFactory.createSkill('Fireball', game),
         Bolt = skillFactory.createSkill('Bolt', game),
-        Cobble = skillFactory.createSkill('Cobble', game);
+        Cobble = skillFactory.createSkill('Cobble', game),
+        Fireworks = skillFactory.createSkill('Fireworks', game);
   
     this.skill = this.defaultSkill = Fireball;
-    this.skillSet = [ Bolt, Cobble ];
+    this.skillSet = [ Bolt, Cobble, Fireworks ];
 }
 
 Wizard.prototype = Object.create(BasePlayer.prototype);

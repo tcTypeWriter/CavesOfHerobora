@@ -103,12 +103,8 @@ BaseRoom.prototype = {
 
             game.add.existing(self.player);
 
-            self.player.events.onCastSkill.add(playerCastSkill);
+            self.player.events.onCastSkill.add(self.playerCastSkill, self);
             self.player.events.onKilled.add(startGameOver);
-
-            function playerCastSkill(skill){
-                self.playerSkills.add(skill);
-            }
 
             function startGameOver(){
                 self.game.state.start('gameover');
