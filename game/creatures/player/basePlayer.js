@@ -11,9 +11,13 @@ function BasePlayer(game, x, y, sprite_key) {
     this.health = this.maxHealth = 10;
     this.skill = this.defaultSkill = function(){};
 
+
+    
+
     var self = this;
 
     setKeys();
+    setOnCastInterraptor();
   
     function setKeys(){
         self.keys = game.input.keyboard.addKeys({
@@ -33,6 +37,20 @@ function BasePlayer(game, x, y, sprite_key) {
                                         'down': Phaser.Keyboard.K,
                                         'right': Phaser.Keyboard.L
                                     });
+    }
+
+    function setOnCastInterraptor(){
+        self.readyToCast = true;
+        self.events.onCastSkill.add(notReady);
+
+        function notReady(){
+            self.readyToCast = false;
+            setTimeout(isReady, 100);
+        }
+
+        function isReady(){
+            self.readyToCast = true;
+        }
     }
 }
 
@@ -114,7 +132,7 @@ BasePlayer.prototype.update = function(){
 
 
     function castSkill(to){
-         if(self.skill.ready()){
+         if(self.skill.ready() && self.readyToCast){
             var skill = self.skill(self.game, self, to);
             self.events.onCastSkill.dispatch(skill);
         }  
