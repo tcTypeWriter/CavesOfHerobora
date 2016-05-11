@@ -16,9 +16,9 @@ function Bat(game, point, player) {
     BaseMonster.call(this, game, position, player, 'bat');
     this.scale = new Phaser.Point(0.4, 0.4);
 
-    this.body.setSize(90, 76, 19, 0);
+    this.body.setSize(100, 76, 0, -20);
 
-    this.body.mass = 8;
+    this.body.mass = 0;
 
     this.health = this.maxHealth = 5;
     this.skill = skillFactory.createSkill('Bolt', game);

@@ -29,7 +29,7 @@ Creature.prototype.damage = function (amount) {
 
     if (this.alive && !this.immune)
     {
-        this.immune = true;
+        //this.immune = true;
         this.health -= amount;
 
         this.game.time.events.add(this.immuneTime, resetImmune);

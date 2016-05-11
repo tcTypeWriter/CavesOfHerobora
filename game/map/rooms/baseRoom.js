@@ -186,6 +186,8 @@ BaseRoom.prototype = {
 
         collide(this.obstacles, this.player);
         collide(this.obstacles, this.monsters);
+        
+        collide(this.player, this.monsters);
 
         this.monsters.sort('y');
         this.debug(true);

@@ -56,7 +56,7 @@ BasePlayer.prototype.update = function(){
 
     function updateDirect(){
         var velocityX = self.body.velocity.x;
-        var direct = velocityX <= 0 ? -1 : 1;
+        var direct = velocityX <= 0 ? 1 : -1;
         self.scale.x = direct * Math.abs(self.scale.x);    
     }
 

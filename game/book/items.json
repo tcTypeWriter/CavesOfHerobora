@@ -1,6 +1,12 @@
 {
     "HealthPotion": {
-        "name": "Целебное зелье",
-        "description": "Целебное зелье описание"
+        "name": "Зелье лечения",
+        "img": "assets/hpPotion.png",
+        "description": "Восстанавливает 3 единицы здоровья"
+    },
+    "Steel Sword": {
+    	"name": "Стальной меч",
+    	"img": "assets/sword.png",
+    	"description": "Одноручный клинок из стали, наносящий 2 единицы урона"
     }
 }
