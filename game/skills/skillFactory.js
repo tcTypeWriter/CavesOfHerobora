@@ -35,6 +35,13 @@ module.exports = {
             return lastTime + timeout > now ? lastTime + timeout - now : "OK";
         };
 
+        result.reduce = function(percent){
+            var timeLeft = game.time.now - lastTime;
+            if(timeLeft <= 0) return;
+
+            lastTime = timeLeft * percent / 100;
+        };
+
         result.Name = skillName;
 
         return result;

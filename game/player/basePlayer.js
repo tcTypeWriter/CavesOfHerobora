@@ -41,7 +41,12 @@ function BasePlayer(game, x, y, sprite_key, player_model) {
                                     'two': Phaser.Keyboard.TWO,
                                     'three': Phaser.Keyboard.THREE
                                 });
-    this.cursorKeys = game.input.keyboard.createCursorKeys();
+    this.cursorKeys = game.input.keyboard.addKeys({
+                                    'up': Phaser.Keyboard.I,
+                                    'left': Phaser.Keyboard.J,
+                                    'down': Phaser.Keyboard.K,
+                                    'right': Phaser.Keyboard.L
+                                });
 
     function setPhysics(){
         game.physics.enable(self);
@@ -162,8 +167,11 @@ BasePlayer.prototype.update = function(){
 
         game.debug.text(hpInfo(), x, y, color);
         y += 20;
+        game.debug.text("speed: " + self.model.speed, x, y, color);
+        y += 20;
         game.debug.text(activeSkillInfo(), x, y, color);
-       
+
+
         for(var i = 0; i < self.skillSet.length; i++)
             game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
 

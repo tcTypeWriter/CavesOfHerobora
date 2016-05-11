@@ -4,6 +4,7 @@ var BaseItem = function(game, position, sprite_key) {
     Phaser.Sprite.call(this, game, position.x, position.y, sprite_key);
     game.physics.enable(this);
     this.anchor.set(0.5);
+    this.game = game;
     this.state = {};
 };
 

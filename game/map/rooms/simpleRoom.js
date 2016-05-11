@@ -9,7 +9,7 @@ function SimpleRoom(game, key) {
             {x: 100, y: 100},
         ],
         Tree: [
-            {x:100, y: 300}
+            {x: 100, y: 300}
         ],
         Stump: [
             {x: 400, y: 400}

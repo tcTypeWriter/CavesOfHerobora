@@ -17,7 +17,6 @@ function Bat(game, point, player) {
     this.scale = new Phaser.Point(0.4, 0.4);
 
     this.body.setSize(90, 76, 19, 0);
-    this.body.velocity.y = lowspeed;
 
     this.body.mass = 8;
 
@@ -42,7 +41,7 @@ Bat.prototype.update = function() {
         x = base.x,
         y = base.y;
     
-    if(state.urge === 'swirl'){
+/*    if(state.urge === 'swirl'){
         this.physics.accelerateToObject(this, base, lowspeed);
     } else if(state.urge === 'chase'){
         this.physics.accelerateToObject(this, this.player, speed);
@@ -57,7 +56,7 @@ Bat.prototype.update = function() {
         state.urge = 'swirl';
     } else if (state.urge === 'chase' || this.physics.distanceToXY(this, x, y) > vision_distance*0.7){
         state.urge = 'back';
-    }
+    }*/
 
 
     if(this.physics.distanceBetween(this.player, this) < attack_distance && 
