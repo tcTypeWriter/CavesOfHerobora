@@ -48,7 +48,9 @@ Preload.prototype = {
 
         function loadItemsAssets(){
             load.image('door', 'assets/openDoor.png');
-            load.image('healthPotion', 'assets/hpPotion.png');            
+            load.image('healthPotion', 'assets/hpPotion.png'); 
+            load.image('speedPotion', 'assets/speedPotion.png'); 
+            load.image('calldownPotion', 'assets/cdPotion.png');            
         }
 
         function loadObstaclesAssets(){

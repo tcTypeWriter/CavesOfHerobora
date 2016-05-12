@@ -44,10 +44,8 @@ e.createSkill = function(skillName, game){
     };
 
     result.reduce = function(percent){
-        var timeLeft = game.time.now - lastTime;
-        if(timeLeft <= 0) return;
-
-        lastTime = timeLeft * percent / 100;
+        timeout *= (100 - percent) / 100;
+        timeout = Math.round(timeout);
     };
 
     result.Name = skillName;

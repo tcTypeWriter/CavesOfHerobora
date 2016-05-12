@@ -181,7 +181,7 @@ BaseRoom.prototype = {
         collide(this.obstacles, this.monsters);
         
         this.monsters.sort('y');
-        this.debug(true);
+        this.debug();
 
         function hit(monster, skill){
             skill.impact(monster);
