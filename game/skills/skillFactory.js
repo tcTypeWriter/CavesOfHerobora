@@ -5,6 +5,8 @@ var Bolt = require('./bolt');
 var Cobble = require('./cobble');
 var Bite = require('./bite');
 var Fireworks = require('./fireworks');
+var Yapona_mat = require('./yapona_mat');
+var Recoil = require('./recoil');
 
 var Sword = require('./sword');
 
@@ -13,12 +15,14 @@ var Natures_call = require('./natures_call');
 
 var e = module.exports;
 
+e.Recoil = Recoil;
 e.Fireball = Fireball;
 e.Bolt = Bolt;
 e.Cobble = Cobble;
 e.Bite = Bite;
 e.Fireworks = Fireworks;
-    
+e.Yapona_mat = Yapona_mat;
+
 e.Sword = Sword;
 
 e.Natures_call = Natures_call;

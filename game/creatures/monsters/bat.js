@@ -17,7 +17,8 @@ function Bat(game, point, player) {
 
     this.health = this.maxHealth = 5;
 
-    this.skill = skillFactory.createSkill('Bolt', game);
+    this.skill = skillFactory.createSkill('Yapona_mat', game);
+    this.recoilSkill = skillFactory.createSkill('Recoil', game);
 
     this.state = {
         base: point,
@@ -65,8 +66,11 @@ Bat.prototype.update = function() {
         self.physics.moveToObject(self, p, speed);
     }
 
-    if(this.physics.distanceBetween(this.player, this) < attack_distance && 
-        this.skill.ready()){
+    if(this.recoilSkill.ready()){
+        var recoilSkill = this.recoilSkill(this.game, this, this.player);
+        this.events.onCastSkill.dispatch(recoilSkill);
+    }
+    if(recoilSkill.alive){
         var skill = this.skill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skill);
     }
