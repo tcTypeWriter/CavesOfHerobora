@@ -9,6 +9,10 @@ function SimpleRoom(game, key) {
 
     this.model.monsters = data.monsters || this.model.monsters;
     this.model.items = data.items || this.model.items;
+
+    if(key === 'empty'){
+        this.model.obstacles.Wall.push({x:100, y:100, width:80, height:80});
+    }
     
     this.background = 'brick2';
 }

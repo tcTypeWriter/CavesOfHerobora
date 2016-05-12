@@ -17,10 +17,14 @@ function SimpleMap(game) {
     var rooms = [{}];
     for (var i = 1; i < 5; i++) {
         rooms[i] = new roomFactory.SimpleRoom(game, rooms_name[i]);
-        game.state.add(rooms_name[i], rooms[i]);
     }
     
-    /*    1 
+
+    var bossRoom = new roomFactory.BossRoom(game, 'bat_boss');
+
+    rooms[1].concat(bossRoom, "right");
+
+    /*    1-bossroom 
           |
         4-0-2
           |

@@ -8,44 +8,49 @@ var Fireworks = require('./fireworks');
 
 var Sword = require('./sword');
 
-module.exports = {
-    Fireball: Fireball,
-    Bolt: Bolt,
-    Cobble: Cobble,
-    Bite: Bite,
-    Fireworks: Fireworks,
+var Natures_call = require('./natures_call');
+
+
+var e = module.exports;
+
+e.Fireball = Fireball;
+e.Bolt = Bolt;
+e.Cobble = Cobble;
+e.Bite = Bite;
+e.Fireworks = Fireworks;
     
-    Sword: Sword,
+e.Sword = Sword;
 
-    createSkill: function(skillName, game){
-        var skill = this[skillName];
+e.Natures_call = Natures_call;
 
-        var lastTime = 0,
-            timeout = skill.prototype.timeout;
+e.createSkill = function(skillName, game){
+    var skill = this[skillName];
 
-        var result = function(_game, _from, _to){
-                lastTime = game.time.now;
-                return new skill(_game, _from, _to);
-        };
+    var lastTime = 0,
+        timeout = skill.prototype.timeout;
 
-        result.ready = function() {
-            return lastTime + timeout < game.time.now;
-        };
+    var result = function(_game, _from, _to){
+            lastTime = game.time.now;
+            return new skill(_game, _from, _to);
+    };
 
-        result.calldown = function() {
-            var now = game.time.now;
-            return lastTime + timeout > now ? lastTime + timeout - now : "OK";
-        };
+    result.ready = function() {
+        return lastTime + timeout < game.time.now;
+    };
 
-        result.reduce = function(percent){
-            var timeLeft = game.time.now - lastTime;
-            if(timeLeft <= 0) return;
+    result.calldown = function() {
+        var now = game.time.now;
+        return lastTime + timeout > now ? lastTime + timeout - now : "OK";
+    };
 
-            lastTime = timeLeft * percent / 100;
-        };
+    result.reduce = function(percent){
+        var timeLeft = game.time.now - lastTime;
+        if(timeLeft <= 0) return;
 
-        result.Name = skillName;
+        lastTime = timeLeft * percent / 100;
+    };
 
-        return result;
-    }
+    result.Name = skillName;
+
+    return result;
 };

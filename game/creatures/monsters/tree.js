@@ -2,15 +2,15 @@
 
 var speed = 100;
 
-var skillFactory = require('skillFactory');
 var BaseMonster = require('./baseMonster');
+var skillFactory = require('skillFactory');
 
 function Tree(game, point, player) {
     BaseMonster.call(this, game, point, player, 'tree');
     this.scale.setTo(0.8, 0.8);
 
     this.health = this.maxHealth = 100;
-    this.skill = skillFactory.createSkill('Bolt', game);
+    this.skill = skillFactory.createSkill('Natures_call', game);
 }
 
 Tree.prototype = Object.create(BaseMonster.prototype);
@@ -31,6 +31,16 @@ Tree.prototype.update = function() {
 
     } else {
         this.body.velocity.setTo(0, 0);  
+    }
+
+    if(this.skill.ready()){
+        var position = {
+            x: this.x + 100,
+            y: this.y + 100
+        };
+        debugger;
+        var skill = this.skill(this.game, position, this.player);
+        this.events.onCastSkill.dispatch(skill);
     }
 };
 

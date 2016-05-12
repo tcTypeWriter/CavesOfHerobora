@@ -1,7 +1,9 @@
 'use strict';
 
 var SimpleRoom = require('./simpleRoom');
+var BossRoom = require('./bossRoom');
 
 module.exports = {
-    SimpleRoom: SimpleRoom
+    SimpleRoom: SimpleRoom,
+    BossRoom: BossRoom
 };

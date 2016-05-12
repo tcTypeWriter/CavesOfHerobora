@@ -26,6 +26,8 @@ function BaseRoom(game, key) {
     this.key = key;
     this.game = game;
 
+    game.state.add(key, this);
+
     this.model = {
         player: {
             position: 'center',
@@ -158,23 +160,18 @@ BaseRoom.prototype = {
                         monster = new monstersFactory[monsterType](game, monsterModel, self.player);
 
                     monster.setModel(monsterModel);
-                    monster.events.onCastSkill.add(monsterCastSkill);
+                    monster.events.onCastSkill.add(self.monsterCastSkill, self);
                     monsters.add(monster);
-            }
-
-            function monsterCastSkill(skill){
-                self.monstersSkills.add(skill);
             }      
         }
     },
 
     update: function() {
-        var space = this.space,
-            arcade = this.physics.arcade,
+        var arcade = this.physics.arcade,
             overlap = this.physics.arcade.overlap.bind(arcade),
             collide = this.physics.arcade.collide.bind(arcade);
 
-        overlap(this.player, this.doors, changeRoom);
+        overlap(this.player, this.doors, this.changeRoom, null,  this);
         overlap(this.player, this.items, getItem);
 
         overlap(this.monsters, this.playerSkills, hit);
@@ -193,11 +190,11 @@ BaseRoom.prototype = {
         function getItem(player, item){
             player.getItem(item);
         }
+    },
 
-        function changeRoom(player, door){
-            if(space.isDown)
-                door.go(player.getModel());
-        }
+    changeRoom: function(player, door){
+        if(this.space.isDown)
+            door.go(player.getModel());
     },
 
     shutdown: function() {
@@ -255,6 +252,12 @@ BaseRoom.prototype = {
         this.monstersSkills.add(skill);
     },
 
+    onCastMonster: function(monster) {
+        debugger;
+        monster.events.onCastSkill.add(this.monsterCastSkill, this);
+        this.monsters.add(monster);
+    },
+
     debug: function(fisics){
         var game = this.game;
         var x = 10, y = 10;
@@ -268,6 +271,8 @@ BaseRoom.prototype = {
         game.debug.text(skillsInfo(), x, y, color);
         y += 18;
         game.debug.text(mobsInfo(), x, y, color);
+
+        this.additionalDebug(y + 18);
 
         if(fisics){
             game.debug.body(this.player);
@@ -304,7 +309,8 @@ BaseRoom.prototype = {
             return "monsters: " + st.monsters.countLiving() + "/" +
                                   st.monsters.length;
         }
-    }
+    },
+    additionalDebug: function(y){}
 };
 
 module.exports = BaseRoom;

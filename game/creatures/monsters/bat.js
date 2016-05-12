@@ -6,7 +6,6 @@ var vision_distance = 250;
 var attack_distance = 200;
 var radius = 20;
 
-
 var skillFactory = require('skillFactory');
 var BaseMonster = require('./baseMonster');
 
