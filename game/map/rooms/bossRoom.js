@@ -29,12 +29,27 @@ BaseRoom.prototype.addingMonster = function(monster, monsterModel){
     }
 };
 
+
+BossRoom.prototype.create = function() {
+    BaseRoom.prototype.create.call(this);
+
+    var self = this;
+
+    self.doors.forEachAlive(function(door){
+        door.close(condition);
+    });
+
+    function condition(){
+        return self.monsters.countLiving() === 0;
+    }
+};
+
 BossRoom.prototype.changeRoom = function(player, door){
-    if(this.space.isDown && this.monsters.countLiving() === 0)
+    if(this.space.isDown)
         door.go(player.getModel());
 };
 
-BossRoom.prototype.additionalDebug = function(y){
+BossRoom.prototype.additionalDebug = function(){
     var game = this.game;
     var st = this;
 

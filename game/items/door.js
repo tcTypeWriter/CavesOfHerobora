@@ -5,10 +5,12 @@ var Door = function(game, position, room) {
     game.physics.enable(this);
     this.anchor.set(0.5);
 
+    this.game = game;
+
     this.room = room;
     this.state = game.state;
 
-
+    this.open = true;
 
     var width = this.width,
         height = this.height;
@@ -39,9 +41,25 @@ Door.prototype = Object.create(Phaser.Sprite.prototype);
 Door.prototype.constructor = Door;
 
 Door.prototype.go = function(player_model){
-    this.state.start(this.room.key, true, false, 
+    if(this.open){
+        this.state.start(this.room.key, true, false, 
                                     this.door_position, 
                                     player_model);
+    }
+};
+
+Door.prototype.close = function(condition){
+    this.open = false;
+    this.condition = condition;
+    this.closeSprite = this.game.add.sprite(this.x - this.width / 2,
+                                            this.y - this.height / 2, 'closedDoor');
+};
+
+Door.prototype.update = function(){
+    if(this.condition && this.condition()){
+        this.open = true;
+        this.closeSprite.destroy();
+    }
 };
 
 module.exports = Door;
