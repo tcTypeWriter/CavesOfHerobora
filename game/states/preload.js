@@ -36,14 +36,16 @@ Preload.prototype = {
             load.image('tree', 'assets/monsters/oak.png'); 
             load.image('stump', 'assets/monsters/stump.png');                
             load.image('spider', 'assets/monsters/spider.png');    
-            load.image('minotaur', 'assets/monsters/minotaur.png');                
+            load.image('minotaur', 'assets/monsters/minotaur.png');   
+            load.image('death', 'assets/monsters/death.png');                 
         }
 
         function loadSkillsAssets(){
             load.image('fireball', 'assets/fireball.png');
             load.image('sword', 'assets/sword.png');
             load.image('bolt', 'assets/fierball.png');
-            load.image('cobble', 'assets/bril.png');            
+            load.image('cobble', 'assets/bril.png'); 
+            load.image('deathball', 'assets/deathball.png');            
         }
 
         function loadItemsAssets(){

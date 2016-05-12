@@ -5,6 +5,7 @@ var Bolt = require('./bolt');
 var Cobble = require('./cobble');
 var Bite = require('./bite');
 var Fireworks = require('./fireworks');
+var Deathball = require('./deathball');
 
 var Sword = require('./sword');
 
@@ -14,6 +15,7 @@ module.exports = {
     Cobble: Cobble,
     Bite: Bite,
     Fireworks: Fireworks,
+    Deathball: Deathball,
     
     Sword: Sword,
 

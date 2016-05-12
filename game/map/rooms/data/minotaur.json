@@ -1,6 +1,6 @@
 {
     "monsters": {
-        "Minotaur":[
+        "Death":[
             {"x":400, "y": 300}
         ]
     }

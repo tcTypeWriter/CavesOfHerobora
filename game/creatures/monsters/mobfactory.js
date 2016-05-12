@@ -5,11 +5,13 @@ var Tree = require('./tree');
 var Stump = require('./stump');
 var Spider = require('./spider');
 var Minotaur = require('./minotaur');
+var Death = require('./death');
 
 module.exports = {
     Bat: Bat,
     Tree: Tree,
     Stump: Stump,
     Spider: Spider,
-    Minotaur: Minotaur
+    Minotaur: Minotaur,
+    Death: Death
 };
