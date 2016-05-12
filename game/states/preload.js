@@ -21,6 +21,7 @@ Preload.prototype = {
         loadSkillsAssets();
         loadItemsAssets();
         loadObstaclesAssets();
+        loadInterfaceAssets();
 
         function loadBackgroundAssets(){
             load.image('floor', 'assets/dungeon_sheet-1-1.png');            
@@ -57,6 +58,11 @@ Preload.prototype = {
             load.image('brick', 'assets/brick.png');
             load.image('brick1', 'assets/brick1.png');
             load.image('brick2', 'assets/brick2.png');            
+        }
+
+        function loadInterfaceAssets(){
+            load.image('hp', 'assets/hp.png');
+            load.image('hpBar', 'assets/hpBar.png');
         }
     },
 

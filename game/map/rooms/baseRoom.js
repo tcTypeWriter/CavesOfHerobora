@@ -162,9 +162,13 @@ BaseRoom.prototype = {
                     monster.setModel(monsterModel);
                     monster.events.onCastSkill.add(self.monsterCastSkill, self);
                     monsters.add(monster);
+
+                    self.addingMonster(monster, monsterModel);
             }      
         }
     },
+
+    addingMonster: function(monster, monsterModel){},
 
     update: function() {
         var arcade = this.physics.arcade,
@@ -253,7 +257,6 @@ BaseRoom.prototype = {
     },
 
     onCastMonster: function(monster) {
-        debugger;
         monster.events.onCastSkill.add(this.monsterCastSkill, this);
         this.monsters.add(monster);
     },

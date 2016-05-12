@@ -16,8 +16,33 @@ function BossRoom(game, key) {
 BossRoom.prototype = Object.create(BaseRoom.prototype);
 BossRoom.prototype.constructor = BossRoom;
 
+BaseRoom.prototype.addingMonster = function(monster, monsterModel){
+    if(monsterModel.boss){
+        this.boss = monster;
+        this.boss_name = monsterModel.boss;
+
+        this.hpBar = this.game.add.sprite(250, 570, 'hpBar');
+        this.hpBar.scale.setTo(3, 1);
+
+        this.hp = this.game.add.sprite(255, 574, 'hp');
+        this.hp.width = this.hpBar.width - 10;
+    }
+};
+
 BossRoom.prototype.changeRoom = function(player, door){
     if(this.space.isDown && this.monsters.countLiving() === 0)
         door.go(player.getModel());
 };
+
+BossRoom.prototype.additionalDebug = function(y){
+    var game = this.game;
+    var st = this;
+
+    var color = game.debug.color = 'white';
+
+    game.debug.text(st.boss_name, 170, 580, color);
+
+    st.hp.width = (st.hpBar.width - 10) * (st.boss.health / st.boss.maxHealth);
+};
+
 module.exports = BossRoom;
