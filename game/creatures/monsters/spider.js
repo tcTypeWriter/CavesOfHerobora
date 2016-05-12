@@ -1,6 +1,6 @@
 'use strict';
 
-var attack_distance = 50;
+var attack_distance = 30;
 
 var BaseMonster = require('./baseMonster');
 var skillFactory = require('skillFactory');
@@ -19,7 +19,7 @@ function Spider(game, point, player) {
         base: point
     };
 
-    this.health = this.maxHealth = 5;
+    this.health = this.maxHealth = 1;
 }
 
 Spider.prototype = Object.create(BaseMonster.prototype);
@@ -27,12 +27,14 @@ Spider.prototype.constructor = BaseMonster;
 Spider.prototype.Name = "Spider";
 
 Spider.prototype.update = function () {
+    if (!this.alive) return;
+
     var vector = {
-        x: random(-100, 100),
-        y: random(-100, 100)
+        x: random(-10, 10),
+        y: random(-10, 10)
     };
 
-    this.physics.accelerateToXY(this, this.x + vector.x, this.y + vector.y, 1000);
+    this.physics.accelerateToXY(this, this.x + vector.x, this.y + vector.y, 3000);
 
 
     if (this.physics.distanceBetween(this.player, this) < attack_distance &&
