@@ -20,18 +20,18 @@ BaseRoom.prototype.addingMonster = function(monster, monsterModel){
     if(monsterModel.boss){
         this.boss = monster;
         this.boss_name = monsterModel.boss;
-
-        this.hpBar = this.game.add.sprite(250, 570, 'hpBar');
-        this.hpBar.scale.setTo(3, 1);
-
-        this.hp = this.game.add.sprite(255, 574, 'hp');
-        this.hp.width = this.hpBar.width - 10;
     }
 };
 
 
 BossRoom.prototype.create = function() {
     BaseRoom.prototype.create.call(this);
+
+    this.hpBar = this.game.add.sprite(250, 570, 'hpBar');
+    this.hpBar.scale.setTo(3, 1);
+
+    this.hp = this.game.add.sprite(255, 574, 'hp');
+    this.hp.width = this.hpBar.width - 10;
 
     var self = this;
 
@@ -42,6 +42,8 @@ BossRoom.prototype.create = function() {
     function condition(){
         return self.monsters.countLiving() === 0;
     }
+
+
 };
 
 BossRoom.prototype.changeRoom = function(player, door){
