@@ -1,7 +1,7 @@
 'use strict';
 
 var BaseSkill = require('./baseskill'); 
-var skillFactory = require('skillfactory');
+var skillFactory = require('./skillfactory');
 
 var speed = 700;
 var power = 1;

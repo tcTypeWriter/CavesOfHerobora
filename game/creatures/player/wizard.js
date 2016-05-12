@@ -1,6 +1,6 @@
 'use strict';
 
-var skillFactory = require('skillfactory');
+var skillFactory = require('skillFactory');
 var BasePlayer = require('./baseplayer');
 
 function Wizard(game, x, y) {
