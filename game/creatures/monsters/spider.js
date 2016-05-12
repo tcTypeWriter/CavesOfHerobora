@@ -3,7 +3,7 @@
 var attack_distance = 50;
 
 var BaseMonster = require('./baseMonster');
-var skillFactory = require('../skills/skillFactory');
+var skillFactory = require('skillFactory');
 
 function random(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;

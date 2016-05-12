@@ -21,7 +21,7 @@ Fireball.prototype.constructor = Fireball;
 Fireball.prototype.impact = function(mob){
     mob.damage(this.power);
     this.kill();
-}
+};
 
 
 Fireball.prototype.timeout = 500;

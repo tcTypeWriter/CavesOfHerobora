@@ -1,7 +1,5 @@
 'use strict';
 
-var playersFactory = require('../player/playersfactory');
-
 function Preload() {
     this.asset = null;
     this.ready = false;
@@ -65,11 +63,8 @@ Preload.prototype = {
     },
 
     update: function() {
-        // отладка, пропускаем меню
-        this.player = new playersFactory.Wizard(this.game, 0, 0).model;
-
         if(!!this.ready) {
-            this.game.state.start('play', true, false, 'center', this.player);
+            this.game.state.start('empty');
         }
     },
 

@@ -1,16 +1,16 @@
 'use strict';
 
-var playersFactory = require('../../player/playersfactory');
-var itemFactory = require('../../items/itemfactory');
-var obstacleFactory = require('../../obstacles/obstaclefactory');
-var monstersFactory = require('../../mobs/mobfactory');
+var playersFactory = require('playersfactory');
+var itemFactory = require('itemfactory');
+var obstacleFactory = require('obstaclefactory');
+var monstersFactory = require('mobfactory');
 
 var playerPositions = {
         center: {x: 400, y: 300},
-        left:   {x: 700, y: 300},
-        down:   {x: 400, y: 100},
-        right:  {x: 100, y: 300},
-        up:     {x: 400, y: 500}
+        left:   {x: 100, y: 300},
+        down:   {x: 400, y: 500},
+        right:  {x: 700, y: 300},
+        up:     {x: 400, y: 100}
     };
 
 var invertPosition = {
@@ -27,6 +27,10 @@ function BaseRoom(game, key) {
     this.game = game;
 
     this.model = {
+        player: {
+            position: 'center',
+            data: {}
+        },
         monsters: {},
         items: {},
         obstacles: {
@@ -48,11 +52,12 @@ function BaseRoom(game, key) {
 }
 
 BaseRoom.prototype = {
-    init: function(position, player_model){
-        position = position || 'center';
-        
-        this.player_model = player_model;
-        this.player_position = playerPositions[position];
+    init: function(position, player_data){
+        var relative_position = invertPosition[position] || 'center';
+        this.model.player.data = player_data || {};
+        this.model.player.data.x = undefined;
+        this.model.player.data.y = undefined;
+        this.model.player.position = playerPositions[relative_position];
     },
 
     create: function() {
@@ -88,26 +93,22 @@ BaseRoom.prototype = {
         }
 
         function setPlayer(){
-            var p = self.player_position,
-                type = self.player_model.name;
+            var player_model = self.model.player, 
+                position = player_model.position,
+                type = player_model.data.name || 'Wizard';
 
-            self.player = new playersFactory[type](self.game, p.x, p.y);
+            self.player = new playersFactory[type](self.game, position.x, position.y);
             
-            self.player.setModel(self.player_model);
+            self.player.setModel(player_model.data);
 
             game.add.existing(self.player);
 
-            self.player.events.onCastSkill.add(playerCastSkill);
+            self.player.events.onCastSkill.add(self.playerCastSkill, self);
             self.player.events.onKilled.add(startGameOver);
-
-            function playerCastSkill(skill){
-                self.playerSkills.add(skill);
-            }
 
             function startGameOver(){
                 self.game.state.start('gameover');
             }
-
         }
 
         function setDoors(){
@@ -181,7 +182,7 @@ BaseRoom.prototype = {
 
         collide(this.obstacles, this.player);
         collide(this.obstacles, this.monsters);
-
+        
         this.monsters.sort('y');
         this.debug(true);
 
@@ -195,7 +196,7 @@ BaseRoom.prototype = {
 
         function changeRoom(player, door){
             if(space.isDown)
-                door.go(player.model);
+                door.go(player.getModel());
         }
     },
 
@@ -224,6 +225,34 @@ BaseRoom.prototype = {
         
         this.join[position] = room;
         room.join[arcPosition] = this;
+    },
+
+    playerCastSkill: function(skill){
+        var skillEvent = {
+            onCastSkill: this.playerCastSkill,
+            onCastItem: this.castItem,
+            onCastMonster: this.onCastMonster
+        };
+
+        for(var event in skillEvent)
+            if(skill.events[event])
+                skill.events[event].add(skillEvent[event], this);
+
+        this.playerSkills.add(skill);
+    },
+
+    monsterCastSkill: function(skill){
+        var skillEvent = {
+            onCastSkill: this.monsterCastSkill,
+            onCastItem: this.castItem,
+            onCastMonster: this.onCastMonster
+        };
+
+        for(var event in skillEvent)
+            if(skill.events[event])
+                skill.events[event].add(skillEvent[event], this);
+
+        this.monstersSkills.add(skill);
     },
 
     debug: function(fisics){
@@ -273,7 +302,7 @@ BaseRoom.prototype = {
 
         function mobsInfo(){
             return "monsters: " + st.monsters.countLiving() + "/" +
-                              st.monsters.length;
+                                  st.monsters.length;
         }
     }
 };

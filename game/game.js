@@ -5,7 +5,7 @@ var PreloadState = require('./states/preload');
 var ChoosePlayer = require('./states/chooseplayer');
 var GameOver = require('./states/gameover');  
 
-var mapFactory = require('./map/mapfactory');
+var mapFactory = require('mapfactory');
 var game;
 
 window.onload = function () {
@@ -14,7 +14,7 @@ window.onload = function () {
     game.state.add('boot', BootState);
     game.state.add('gameover', GameOver);
     game.state.add('chooseplayer', ChoosePlayer);
-    game.state.add('play', mapFactory.SimpleMap);
+    game.state.add('empty', mapFactory.SimpleMap);
     game.state.add('preload', PreloadState);  
       
     game.state.start('boot');
