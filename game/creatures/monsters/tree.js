@@ -18,49 +18,68 @@ Tree.prototype = Object.create(BaseMonster.prototype);
 Tree.prototype.constructor = Tree;
 Tree.prototype.Name = "Tree";
 
-Tree.prototype.update = function() {
-    if(!this.alive) return;
-    
+Tree.prototype.update = function () {
+    if (!this.alive) return;
+
     var treeIsFar = this.physics.distanceToXY(this.player, this.x, this.y) > 205,
         treeIsClose = this.physics.distanceToXY(this.player, this.x, this.y) < 195;
 
-    if(treeIsFar || treeIsClose){
-        
+    if (treeIsFar || treeIsClose) {
+
         this.physics.moveToObject(this, this.player, speed);
-        if(treeIsClose)
+        if (treeIsClose)
             this.body.velocity.multiply(-1, -1);
 
     } else {
-        this.body.velocity.setTo(0, 0);  
+        this.body.velocity.setTo(0, 0);
     }
 
-    if(this.skill.ready()){
-        if(this.player < (this.x + this.width / 2)&&this.player > (this.x - this.width / 2)){}
+    if (this.skill.ready()) {
+        if (this.player.x < (this.x + this.width / 2) && this.player > (this.x - this.width / 2)) {
+            var position1 = {
+                x: this.x + this.width / 2 * ((this.player.x - this.x) / (Math.abs(this.player.x - this.x))),
+                y: this.y + this.height / 2 * ((this.player.y - this.y) / (Math.abs(this.player.y - this.y)))
+            };
+            var position2 = {
+                x: this.x,
+                y: this.y + this.height / 2 * ((this.player.y - this.y) / (Math.abs(this.player.y - this.y)))
+            };
+            var position3 = {
+                x: this.x - this.width / 2 * ((this.player.x - this.x) / (Math.abs(this.player.x - this.x))),
+                y: this.y + this.height / 2 * ((this.player.y - this.y) / (Math.abs(this.player.y - this.y)))
+            };
+        }
+        /*if(this.player.y < (this.y + this.height / 2)&&this.player > (this.y - this.height / 2)){
         var position1 = {
             x: this.x + this.width / 2*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))),
             y: this.y + this.height / 2*((this.player.y-this.y)/(Math.abs(this.player.y-this.y)))
         };
         var position2 = {
-            x: this.x,
-            y: this.y + this.height / 2*((this.player.y-this.y)/(Math.abs(this.player.y-this.y)))
+            x: this.x + this.width / 2*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))),
+            y: this.y
         };
         var position3 = {
-            x: this.x - this.width / 2*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))),
-            y: this.y + this.height / 2*((this.player.y-this.y)/(Math.abs(this.player.y-this.y)))
-        }
-        
+            x: this.x + this.width / 2*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))),
+            y: this.y - this.height / 2*((this.player.y-this.y)/(Math.abs(this.player.y-this.y)))
+        };
+        }*/
+
         debugger;
-        var skill = this.skill(this.game, position1, position2, position3, this.player);
-        this.events.onCastSkill.dispatch(skill);
-        
+        var skill1 = this.skill(this.game, position1, this.player);
+        this.events.onCastSkill.dispatch(skill1);
+        var skill2 = this.skill(this.game, position2, this.player);
+        this.events.onCastSkill.dispatch(skill2);
+        var skill3 = this.skill(this.game, position3, this.player);
+        this.events.onCastSkill.dispatch(skill3);
+
     }
-    
-    if(this.physics.distanceBetween(this.player, this) < attack_distance && 
-        this.skillForKill.ready()){
+
+    if (this.physics.distanceBetween(this.player, this) < attack_distance &&
+        this.skillForKill.ready()) {
         var skillForKill = this.skillForKill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skillForKill);
     }
-    
+
 };
 
 module.exports = Tree;

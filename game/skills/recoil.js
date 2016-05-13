@@ -4,7 +4,7 @@ var BaseSkill = require('./baseskill');
 var timeOfLive = 1000;
 
 function Recoil(game, from, to) {
-    BaseSkill.call(this, game, from, to, 'recoil');
+    BaseSkill.call(this, game, from, to, 'light');
 
     game.time.events.add(timeOfLive, this.destroy, this);
 }
