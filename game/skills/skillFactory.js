@@ -5,11 +5,11 @@ var Bolt = require('./bolt');
 var Cobble = require('./cobble');
 var Bite = require('./bite');
 var Fireworks = require('./fireworks');
+var Deathball = require('./deathball');
 
 var Sword = require('./sword');
 
 var Natures_call = require('./natures_call');
-
 
 var e = module.exports;
 
@@ -18,7 +18,8 @@ e.Bolt = Bolt;
 e.Cobble = Cobble;
 e.Bite = Bite;
 e.Fireworks = Fireworks;
-    
+e.Deathball = Deathball;
+
 e.Sword = Sword;
 
 e.Natures_call = Natures_call;
