@@ -7,7 +7,7 @@ var power = 1;
 var timeOfLive = 1000;
 
 function Yapona_mat(game, from, to) {
-    BaseSkill.call(this, game, from, to, 'yapona_mat');
+    BaseSkill.call(this, game, from, to, 'bolt');
     this.scale.setTo(0.3, 0.3);
 
     game.physics.arcade.moveToObject(this, to, speed);

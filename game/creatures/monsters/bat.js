@@ -70,10 +70,10 @@ Bat.prototype.update = function() {
         var recoilSkill = this.recoilSkill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(recoilSkill);
     }
-    if(recoilSkill.alive){
+    /*if(recoilSkill.alive){
         var skill = this.skill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skill);
-    }
+    }*/
 
 };
 
