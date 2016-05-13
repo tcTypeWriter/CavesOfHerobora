@@ -8,5 +8,15 @@
     	"name": "Стальной меч",
     	"img": "assets/sword.png",
     	"description": "Одноручный клинок из стали, наносящий 2 единицы урона"
+    },
+    "SpeedPotion": {
+        "name": "Зелье повышения скорости",
+        "img": "assets/speedPotion.png",
+        "description": "Увеличивает скорость передвижения персонажа на 3%"
+    },
+    "СalldownPotion": {
+        "name": "Зелье ускорения заклинаний",
+        "img": "assets/cdPotion.png",
+        "description": "Сокращает время восстановления заклинаний на 3%"
     }
 }
