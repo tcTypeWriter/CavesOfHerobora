@@ -4,7 +4,7 @@ var BaseSkill = require('./baseskill');
 
 var speed = 280;
 var power = 1;
-var time = 1500;
+var time = 2000;
 
 function Deathball(game, from, to) {
     this.target = to;
