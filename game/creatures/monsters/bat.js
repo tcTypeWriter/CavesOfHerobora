@@ -66,11 +66,10 @@ Bat.prototype.update = function() {
     }
 
     if(this.physics.distanceBetween(this.player, this) < attack_distance && 
-        this.skill.ready()){
+       this.skill.ready()){
         var skill = this.skill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skill);
     }
-
 };
 
 module.exports = Bat;
