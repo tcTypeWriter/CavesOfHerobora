@@ -21,25 +21,28 @@ function Spider(game, point, player) {
 
     this.health = this.maxHealth = 3;
 
-    this.updateMoving;
+    setTimeout(Spider.prototype.updateMoving.bind(this), 200);
 }
-
-Spider.prototype.updateMoving = function(){
-    if((Math.abs(this.player.x-this.x))>(Math.abs(this.player.y-this.y))){
-    this.physics.moveToXY(this, this.x + 1000*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))), this.y, 200);               
-    }else{
-    this.physics.moveToXY(this, this.x , this.y + 1000*((this.player.y-this.y)/(Math.abs(this.player.y-this.y))), 200);                
-    }
-    this.game.time.events.add(2000, this.updateMoving, this);
-};
-
 
 Spider.prototype = Object.create(BaseMonster.prototype);
 Spider.prototype.constructor = BaseMonster;
 Spider.prototype.Name = "Spider";
 
+Spider.prototype.updateMoving = function(){
+    if((Math.abs(this.player.x-this.x))>(Math.abs(this.player.y-this.y))){
+    this.physics.moveToXY(this, this.x + 50*((this.player.x-this.x)/(Math.abs(this.player.x-this.x))), this.y, 200);               
+    }else{
+    this.physics.moveToXY(this, this.x , this.y + 50*((this.player.y-this.y)/(Math.abs(this.player.y-this.y))), 200);                
+    }
+    this.game.time.events.add(500, this.stop, this);
+};
+
+Spider.prototype.stop = function(){
+    this.body.velocity.setTo(0, 0);
+    this.game.time.events.add(200, this.updateMoving, this);
+};
+
 Spider.prototype.update = function () {
-   
 
     if (this.physics.distanceBetween(this.player, this) < attack_distance &&
         this.skill.ready()) {
