@@ -9,7 +9,6 @@ function Natures_call(game, position, player) {
     this.scale.setTo(0, 0);
 
     this.position = position;
-
     this.player = player;
     
 
