@@ -44,18 +44,33 @@ Tree.prototype.update = function () {
     }
 
     function castSkill(){
-        var left = { x: self.x - self.width / 4 * 3 , y: self.y },
-            top = { x: self.x, y: self.y - self.height / 4 * 3},
-            right = { x: self.x + self.width / 4 * 3 , y: self.y },
-            bottom = { x: self.x, y: self.y + self.height / 4 * 3};
+        var distance = Math.max(self.width, self.height) - 30;
+        var perpDist = 40;
 
-        var position1 = self.player.x < self.x ? left : right;
-        var position2 = self.player.y < self.y ? top  : bottom;
+        var toPlayer = self.player.position.clone()
+                                           .subtract(self.x, self.y)
+                                           .normalize();
+        var perp = toPlayer.clone().rperp();
+        
+        var center = {
+                    x: self.x + distance*toPlayer.x, 
+                    y: self.y + distance*toPlayer.y
+            };
+        var left = {
+                    x: center.x + perpDist*perp.x, 
+                    y: center.y + perpDist*perp.y
+            };
+        var right  = {
+                    x: center.x - perpDist*perp.x, 
+                    y: center.y - perpDist*perp.y
+            };
 
-        var skill1 = self.skill(self.game, position1, self.player);
-        self.events.onCastSkill.dispatch(skill1);
-        var skill2 = self.skill(self.game, position2, self.player);
-        self.events.onCastSkill.dispatch(skill2);
+        var skill = self.skill(self.game, center, self.player);
+        self.events.onCastSkill.dispatch(skill);
+        skill = self.skill(self.game, left, self.player);
+        self.events.onCastSkill.dispatch(skill);
+        skill = self.skill(self.game, right, self.player);
+        self.events.onCastSkill.dispatch(skill);
     }
 
     // if (this.physics.distanceBetween(this.player, this) < attack_distance &&
