@@ -10,6 +10,7 @@ function SkeletonKing(game, point, player) {
     this.scale.setTo(0.4, 0.4);
 
     this.skill = skillFactory.createSkill('SkeletonSpawn', game);
+    this.attack = skillFactory.createSkill('SkeletonBall', game);
 
     this.timer = null;
 
@@ -26,9 +27,14 @@ SkeletonKing.prototype.update = function () {
 
     var self = this;
 
+    if (this.attack.ready()) {
+        var fireball = self.attack(self.game, self, self.player);
+        self.events.onCastSkill.dispatch(fireball);
+    }
     if (this.physics.distanceToXY(this.player, this.x, this.y) > 250)
         this.physics.moveToObject(this, this.player, 100);
     else {
+
         this.body.velocity.setTo(0, 0);
     }
     var aliveSkeletons = 0;
