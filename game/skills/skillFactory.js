@@ -46,7 +46,7 @@ e.createSkill = function(skillName, game){
 
     result.calldown = function() {
         var now = game.time.now;
-        return lastTime + timeout > now ? lastTime + timeout - now : "OK";
+        return lastTime + timeout > now ? lastTime + timeout - now : "Ready";
     };
 
     result.reduce = function(percent){

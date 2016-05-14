@@ -263,7 +263,7 @@ BaseRoom.prototype = {
         this.monsters.add(monster);
     },
 
-    debug: function(fisics){
+    debug: function(fisics, debug){
         var game = this.game;
         var x = 10, y = 10;
         var st = this;
@@ -271,12 +271,15 @@ BaseRoom.prototype = {
         fisics = fisics || false;
         var color = game.debug.color = 'white';
         
-        game.debug.inputInfo(x, y, color);
-        y += 80;
-        game.debug.text(skillsInfo(), x, y, color);
-        y += 18;
-        game.debug.text(mobsInfo(), x, y, color);
-
+        if(debug){
+            game.debug.inputInfo(x, y, color);
+            y += 80;
+            game.debug.text(skillsInfo(), x, y, color);
+            y += 18;
+        }
+    
+        game.debug.text(mobsInfo(), 650, 30, color);
+        
         this.additionalDebug(y + 18);
 
         if(fisics){
