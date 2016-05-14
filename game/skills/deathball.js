@@ -4,11 +4,7 @@ var BaseSkill = require('./baseskill');
 
 var speed = 250;
 var power = 1;
-<<<<<<< HEAD
-var time = 2000;
-=======
 var time = 10000;
->>>>>>> master
 
 function Deathball(game, from, to) {
     this.target = to;
