@@ -2,7 +2,7 @@
 
 function Creature(game, x, y, sprite_key) {
     Phaser.Sprite.call(this, game, x, y, sprite_key);
-   
+
     this.game = game;
 
     game.physics.enable(this);
@@ -12,7 +12,7 @@ function Creature(game, x, y, sprite_key) {
 
     this.events.onCastSkill = new Phaser.Signal();
 
-    this.skill = function(){};
+    this.skill = function () { };
     this.skillSet = [];
     this.immune = false;
     this.state = {
@@ -25,34 +25,30 @@ Creature.prototype = Object.create(Phaser.Sprite.prototype);
 Creature.prototype.constructor = Creature;
 
 Creature.prototype.damage = function (amount) {
-    var self = this; 
+    var self = this;
 
-    if (this.alive && !this.immune)
-    {
+    if (this.alive && !this.immune) {
         this.immune = true;
         this.health -= amount;
 
         setTimeout(resetImmune, 250);
-        
-        if (this.health <= 0)
-        {
+
+        if (this.health <= 0) {
             this.kill();
         }
     }
     return this;
 
-    function resetImmune(){
+    function resetImmune() {
         self.immune = false;
     }
 
 };
 
 Creature.prototype.heal = function (amount) {
-    if (this.alive)
-    {
+    if (this.alive) {
         this.health += amount;
-        if (this.health > this.maxHealth)
-        {
+        if (this.health > this.maxHealth) {
             this.health = this.maxHealth;
         }
     }
@@ -60,27 +56,27 @@ Creature.prototype.heal = function (amount) {
     return this;
 };
 
-Creature.prototype.getModel = function() {
+Creature.prototype.getModel = function () {
     return {
         x: this.x,
         y: this.y,
 
         health: this.health,
         maxHealth: this.maxHealth,
-        
+
         skill: this.skill,
         skillSet: this.skillSet,
-        state: this.state        
+        state: this.state
     };
 };
 
-Creature.prototype.setModel = function(data){
+Creature.prototype.setModel = function (data) {
     this.x = data.x || this.x;
     this.y = data.y || this.y;
 
     this.health = data.health || this.health;
     this.maxHealth = data.maxHealth || this.maxHealth;
-    
+
     this.skill = data.skill || this.skill;
     this.skillSet = data.skillSet || this.skillSet;
     this.state = data.state || this.state;

@@ -9,7 +9,7 @@ function Skeleton(game, point, player) {
     BaseMonster.call(this, game, point, player, 'skeleton');
     this.scale.setTo(0.3, 0.3);
 
-    this.health = this.maxHealth = 3;
+    this.health = this.maxHealth = 1;
 }
 
 Skeleton.prototype = Object.create(BaseMonster.prototype);
