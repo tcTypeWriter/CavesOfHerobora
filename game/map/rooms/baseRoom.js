@@ -133,6 +133,8 @@ BaseRoom.prototype = {
                 for(var i = 0; i < model[itemType].length; i++){
                     var data = model[itemType][i],
                         item = new itemFactory[itemType](game, data);
+
+                    item.setModel(data);
                     items.add(item);
                 }
         }
