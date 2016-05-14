@@ -13,8 +13,8 @@ function Warrior(game, x, y) {
     var Sword = skillFactory.createSkill('Sword', game),
         Cobble = skillFactory.createSkill('Cobble', game);
   
-    this.skill = this.defaultSkill = Sword;
-    this.skillSet = [ Cobble ];
+    this.skill = Sword;
+    this.skillSet = [ Sword, Cobble ];
 }
 
 Warrior.prototype = Object.create(BasePlayer.prototype);
