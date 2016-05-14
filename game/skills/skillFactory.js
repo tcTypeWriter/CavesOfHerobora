@@ -8,6 +8,8 @@ var Fireworks = require('./fireworks');
 var Deathball = require('./deathball');
 var Yapona_mat = require('./yapona_mat');
 
+var SkeletonSpawn = require('./skeletonSpawn');
+
 var Sword = require('./sword');
 
 var Natures_call = require('./natures_call');
@@ -21,6 +23,7 @@ e.Bite = Bite;
 e.Fireworks = Fireworks;
 e.Deathball = Deathball;
 e.Yapona_mat = Yapona_mat;
+e.SkeletonSpawn = SkeletonSpawn;
 
 e.Sword = Sword;
 

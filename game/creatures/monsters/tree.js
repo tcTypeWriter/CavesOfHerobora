@@ -11,6 +11,7 @@ function Tree(game, point, player) {
 
     this.health = this.maxHealth = 100;
     this.skill = skillFactory.createSkill('Natures_call', game);
+
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
 
     this.shooting = false;
@@ -27,11 +28,10 @@ Tree.prototype.update = function () {
     var self = this;
 
     move();
-    if(this.skill.ready())
+    if (this.skill.ready())
         castSkill();
 
-
-    function move(){
+    function move() {
         var treeIsFar = self.physics.distanceToXY(self.player, self.x, self.y) > 205,
             treeIsClose = self.physics.distanceToXY(self.player, self.x, self.y) < 195;
 
@@ -43,7 +43,7 @@ Tree.prototype.update = function () {
 
         } else {
             self.body.velocity.setTo(0, 0);
-        }        
+        }
     }
 
     function castSkill(){

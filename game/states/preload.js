@@ -38,7 +38,9 @@ Preload.prototype = {
             load.image('stump', 'assets/monsters/stump.png');                
             load.image('spider', 'assets/monsters/spider.png');    
             load.image('minotaur', 'assets/monsters/minotaur.png');   
-            load.image('death', 'assets/monsters/death.png');                 
+            load.image('death', 'assets/monsters/death.png'); 
+            load.image('skeletonKing', 'assets/monsters/skeletonKing.png');
+            load.image('skeleton', 'assets/monsters/armedSkeleton.png');                 
         }
 
         function loadSkillsAssets(){
