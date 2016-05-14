@@ -2,17 +2,14 @@
 
 var Creature = require('../creature');
 
-var buttons = {one:0, two: 1, three: 2};
-
 function BasePlayer(game, x, y, sprite_key) {
     Creature.call(this, game, x, y, sprite_key);
     this.scale.setTo(0.3);
 
     this.health = this.maxHealth = 10;
-    this.skill = this.defaultSkill = function(){};
+    this.skill = function(){};
 
-
-    
+    this.state.coins =  2;
 
     var self = this;
 
@@ -93,29 +90,16 @@ BasePlayer.prototype.update = function(){
     }
 
     function updateSkillSet(){
-        var keys = self.keys;
-
-        for(var button in buttons)
-            if(keys[button].isDown){
-                setSkillOnce(buttons[button]);
-                keys[button].isDown = false;
-            }
-    
-        function setSkillOnce(i){
-            if(!self.skillSet[i] || !self.skillSet[i].ready()) 
-                return;
-
-            self.skill = self.skillSet[i];
-            self.events.onCastSkill.addOnce(self.restoreSkill, self);
-        }
+        if(self.keys.one.isDown)
+            self.skill = self.skillSet[0];
+        if(self.keys.two.isDown)
+            self.skill = self.skillSet[1];
+        if(self.keys.three.isDown)
+            self.skill = self.skillSet[2];
     }
 
     function tryUseSkill(){
-        var pointer = self.game.input.activePointer,
-            cursorKeys = self.cursorKeys;
-
-        if(pointer.leftButton.isDown)
-            castSkill(pointer);
+        var cursorKeys = self.cursorKeys;
 
         if(cursorKeys.up.isDown)
             castSkill({x: self.x, y: self.y - 200});
@@ -125,9 +109,6 @@ BasePlayer.prototype.update = function(){
             castSkill({x: self.x, y: self.y + 200});
         if(cursorKeys.left.isDown)
             castSkill({x: self.x - 200, y: self.y});
-    
-        if(pointer.rightButton.isDown)
-            self.restoreSkill();
     }
 
 
@@ -140,38 +121,28 @@ BasePlayer.prototype.update = function(){
 
     function debug(){
         var game = self.game;
-        var x = 10, y = 400;
+        var x = 10, y = 20;
         var color = game.debug.color;
 
         game.debug.text(hpInfo(), x, y, color);
         y += 20;
         game.debug.text("speed: " + self.state.speed, x, y, color);
+        y = 20;
+        x += 140;
+        game.debug.text("coins: " + self.state.coins, x, y, color);
         y += 20;
         game.debug.text(activeSkillInfo(), x, y, color);
-
-
-        for(var i = 0; i < self.skillSet.length; i++)
-            game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
-
+        
         function hpInfo(){
-            return "player: " + self.health + "/" + 
+            return "health: " + self.health + "/" + 
                                 self.maxHealth;
         }
 
         function activeSkillInfo(){
-            return "activeSkill: " + self.skill.Name + "| " + 
+            return "skill: " + self.skill.Name + "|" + 
                                      self.skill.calldown();
         }
-
-        function skillInfo(i, skill){
-            return '[' + i + ']:' + skill.Name + "| " +
-                                    skill.calldown();
-        }
     }
-};
-
-BasePlayer.prototype.restoreSkill = function(){
-    this.skill = this.defaultSkill;
 };
 
 

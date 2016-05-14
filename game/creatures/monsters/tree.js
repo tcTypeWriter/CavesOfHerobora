@@ -11,6 +11,11 @@ function Tree(game, point, player) {
 
     this.health = this.maxHealth = 100;
     this.skill = skillFactory.createSkill('Natures_call', game);
+
+    this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
+
+    this.shooting = false;
+    this.game.time.events.add(5000, this.startShooting, this);
 }
 
 Tree.prototype = Object.create(BaseMonster.prototype);
@@ -71,12 +76,22 @@ Tree.prototype.update = function () {
         self.events.onCastSkill.dispatch(skill);
     }
 
-    // if (this.physics.distanceBetween(this.player, this) < attack_distance &&
-    //     this.skillForKill.ready()) {
-    //     var skillForKill = this.skillForKill(this.game, this, this.player);
-    //     this.events.onCastSkill.dispatch(skillForKill);
-    // }
+    if (this.physics.distanceBetween(this.player, this) < attack_distance &&
+        this.skillForKill.ready() && this.shoоting) {
+        var skillForKill = this.skillForKill(this.game, this, this.player);
+        this.events.onCastSkill.dispatch(skillForKill);
+    }
 
+};
+
+Tree.prototype.startShooting = function(){
+    this.shoоting = true;
+    this.game.time.events.add(2000, this.stopShooting, this);
+};
+
+Tree.prototype.stopShooting = function(){
+    this.shoоting = false;
+    this.game.time.events.add(5000, this.startShooting, this);
 };
 
 module.exports = Tree;

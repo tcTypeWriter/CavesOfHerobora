@@ -48,7 +48,8 @@ Preload.prototype = {
             load.image('sword', 'assets/sword.png');
             load.image('bolt', 'assets/fierball.png');
             load.image('cobble', 'assets/bril.png'); 
-            load.image('deathball', 'assets/deathball.png');            
+            load.image('deathball', 'assets/deathball.png');
+            load.image('light', 'assets/light.png');            
         }
 
         function loadItemsAssets(){

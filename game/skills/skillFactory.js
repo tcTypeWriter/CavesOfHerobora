@@ -7,7 +7,7 @@ var Bite = require('./bite');
 var Fireworks = require('./fireworks');
 var Deathball = require('./deathball');
 var Yapona_mat = require('./yapona_mat');
-var Recoil = require('./recoil');
+
 var SkeletonSpawn = require('./skeletonSpawn');
 
 var Sword = require('./sword');
@@ -16,7 +16,6 @@ var Natures_call = require('./natures_call');
 
 var e = module.exports;
 
-e.Recoil = Recoil;
 e.Fireball = Fireball;
 e.Bolt = Bolt;
 e.Cobble = Cobble;
@@ -47,7 +46,7 @@ e.createSkill = function(skillName, game){
 
     result.calldown = function() {
         var now = game.time.now;
-        return lastTime + timeout > now ? lastTime + timeout - now : "OK";
+        return lastTime + timeout > now ? lastTime + timeout - now : "Ready";
     };
 
     result.reduce = function(percent){
