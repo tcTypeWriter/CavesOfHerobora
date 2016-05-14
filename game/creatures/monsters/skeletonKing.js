@@ -30,25 +30,41 @@ SkeletonKing.prototype.Name = "SkeletonKing";
 
 SkeletonKing.prototype.update = function () {
     var self = this;
-
+    var deadKing;
     if (!this.alive && this.reincarnated) {
         clearTimeout(self.timer);
-        self.skeletonsSprites[0].kill();
-        self.skeletonsSprites[1].kill();
-        self.skeletonsSprites[2].kill();
+        if (self.skeletonsSprites[0])
+            self.skeletonsSprites[0].kill();
+
+        if (self.skeletonsSprites[1])
+            self.skeletonsSprites[1].kill();
+
+        if (self.skeletonsSprites[2])
+            self.skeletonsSprites[2].kill();
         return;
     }
     else if (!this.alive) {
-        if (self.reincarnateTimer == null)
+        if (self.reincarnateTimer == null) {
+            deadKing = self.game.add.sprite(self.x, self.y, 'skeletonKing');
+            deadKing.scale.setTo(0.4, 0.4);
+            deadKing.angle += 90;
+
             self.reincarnateTimer = setTimeout(reincarnate, 5000);
+        }
         clearTimeout(self.timer);
-        self.skeletonsSprites[0].kill();
-        self.skeletonsSprites[1].kill();
-        self.skeletonsSprites[2].kill();
+        if (self.skeletonsSprites[0])
+            self.skeletonsSprites[0].kill();
+
+        if (self.skeletonsSprites[1])
+            self.skeletonsSprites[1].kill();
+
+        if (self.skeletonsSprites[2])
+            self.skeletonsSprites[2].kill();
         return;
     }
 
     function reincarnate() {
+        deadKing.kill();
         var position = {
             x: self.x,
             y: self.y
