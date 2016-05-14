@@ -6,6 +6,7 @@ var Stump = require('./stump');
 var Spider = require('./spider');
 var Minotaur = require('./minotaur');
 var Death = require('./death');
+var SkeletonKing = require('./skeletonKing');
 
 module.exports = {
     Bat: Bat,
@@ -13,5 +14,6 @@ module.exports = {
     Stump: Stump,
     Spider: Spider,
     Minotaur: Minotaur,
-    Death: Death
+    Death: Death,
+    SkeletonKing: SkeletonKing,
 };

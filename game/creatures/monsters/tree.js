@@ -11,7 +11,7 @@ function Tree(game, point, player) {
 
     this.health = this.maxHealth = 100;
     this.skill = skillFactory.createSkill('Natures_call', game);
-   // this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
+    // this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
 }
 
 Tree.prototype = Object.create(BaseMonster.prototype);
@@ -24,11 +24,11 @@ Tree.prototype.update = function () {
     var self = this;
 
     move();
-    if(this.skill.ready())
+    if (this.skill.ready())
         castSkill();
 
 
-    function move(){
+    function move() {
         var treeIsFar = self.physics.distanceToXY(self.player, self.x, self.y) > 205,
             treeIsClose = self.physics.distanceToXY(self.player, self.x, self.y) < 195;
 
@@ -40,17 +40,17 @@ Tree.prototype.update = function () {
 
         } else {
             self.body.velocity.setTo(0, 0);
-        }        
+        }
     }
 
-    function castSkill(){
-        var left = { x: self.x - self.width / 4 * 3 , y: self.y },
-            top = { x: self.x, y: self.y - self.height / 4 * 3},
-            right = { x: self.x + self.width / 4 * 3 , y: self.y },
-            bottom = { x: self.x, y: self.y + self.height / 4 * 3};
+    function castSkill() {
+        var left = { x: self.x - self.width / 4 * 3, y: self.y },
+            top = { x: self.x, y: self.y - self.height / 4 * 3 },
+            right = { x: self.x + self.width / 4 * 3, y: self.y },
+            bottom = { x: self.x, y: self.y + self.height / 4 * 3 };
 
         var position1 = self.player.x < self.x ? left : right;
-        var position2 = self.player.y < self.y ? top  : bottom;
+        var position2 = self.player.y < self.y ? top : bottom;
 
         var skill1 = self.skill(self.game, position1, self.player);
         self.events.onCastSkill.dispatch(skill1);
