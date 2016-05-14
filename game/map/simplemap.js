@@ -12,10 +12,10 @@ var roomFactory = require('./rooms/roomFactory');
 function SimpleMap(game) {
     roomFactory.SimpleRoom.call(this, game, 'empty');
 
-    var rooms_name = ['', 'tree', 'spider', 'minotaur', 'bat'];
+    var rooms_name = ['', 'tree', 'spider', 'minotaur', 'bat' , 'death'];
 
     var rooms = [{}];
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 6; i++) {
         rooms[i] = new roomFactory.SimpleRoom(game, rooms_name[i]);
     }
     
@@ -27,13 +27,14 @@ function SimpleMap(game) {
     /*    1-bossroom 
           |
         4-0-2
-          |
-          3
+        | |
+        5 3
     */
     this.concat(rooms[1], "up");
     this.concat(rooms[2], "right");
     this.concat(rooms[3], "down");
     this.concat(rooms[4], "left");
+    rooms[4].concat(rooms[5], "down");
 }
 
 SimpleMap.prototype = Object.create(roomFactory.SimpleRoom.prototype);
