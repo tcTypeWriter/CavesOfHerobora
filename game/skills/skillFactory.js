@@ -9,6 +9,8 @@ var Deathball = require('./deathball');
 var Yapona_mat = require('./yapona_mat');
 
 var SkeletonSpawn = require('./skeletonSpawn');
+var SkeletonBall = require('./skeletonBall');
+var Reincarnation = require('./reincarnation');
 
 var Sword = require('./sword');
 
@@ -24,6 +26,8 @@ e.Fireworks = Fireworks;
 e.Deathball = Deathball;
 e.Yapona_mat = Yapona_mat;
 e.SkeletonSpawn = SkeletonSpawn;
+e.SkeletonBall = SkeletonBall;
+e.Reincarnation = Reincarnation;
 
 e.Sword = Sword;
 
