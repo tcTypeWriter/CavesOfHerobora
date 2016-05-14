@@ -1,6 +1,6 @@
 {
     "monsters": {
-        "Death":[
+        "SkeletonKing":[
             {"x":600, "y": 300}
         ]
     }

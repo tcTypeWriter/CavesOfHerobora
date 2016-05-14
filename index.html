@@ -12,7 +12,7 @@
             <div class="chapter" ng-switch-when="items">
                 <h1>Предметы</h1>
                 <ul>
-                    <li class="item" ng-repeat="item in book.items">
+                    <li class="item" ng-repeat="item in book.items" ng-show="item.show">
                         <h2>{{item.name}}</h2>
                         <img ng-src="{{item.img}}">
                         <div>{{item.description}}</div>
@@ -23,7 +23,7 @@
             <div class="chapter" ng-switch-when="skills">
                 <h1>Способости</h1>
                 <ul>
-                    <li class="item" ng-repeat="skill in book.skills">
+                    <li class="item" ng-repeat="skill in book.skills" ng-show="skill.show">
                         <h2>{{skill.name}}</h2>
                         <img ng-src="{{skill.img}}">
                         <div>{{skill.description}}</div>
@@ -34,7 +34,7 @@
             <div class="chapter" ng-switch-when="obstacles">
                 <h1>Окружение</h1>
                 <ul>
-                    <li class="item" ng-repeat="obstacle in book.obstacles">
+                    <li class="item" ng-repeat="obstacle in book.obstacles" ng-show="obstacle.show">
                         <h2>{{obstacle.name}}</h2>
                         <img ng-src="{{obstacle.img}}">
                         <div>{{obstacle.description}}</div>
@@ -45,7 +45,7 @@
             <div class="chapter" ng-switch-when="monsters">
                 <h1>Монтсры</h1>
                 <ul>
-                    <li class="item" ng-repeat="monster in book.monsters">
+                    <li class="item" ng-repeat="monster in book.monsters" ng-show="monster.show">
                         <h2>{{monster.name}}</h2>
                         <img ng-src="{{monster.img}}">
                         <div>{{monster.description}}</div>

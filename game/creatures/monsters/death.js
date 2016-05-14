@@ -25,6 +25,10 @@ Death.prototype.Name = "Death";
 Death.prototype.update = function () {
     if (!this.alive) return;
 
+    if (this.physics.distanceToXY(this.player, this.x, this.y) < 100) {
+        this.player.damage(1);
+    }
+
     if (this.physics.distanceToXY(this.player, this.x, this.y) > 250)
         this.physics.moveToObject(this, this.player, 100);
     else {

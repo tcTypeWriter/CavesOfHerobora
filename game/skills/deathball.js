@@ -2,15 +2,19 @@
 
 var BaseSkill = require('./baseskill');
 
-var speed = 280;
+var speed = 250;
 var power = 1;
+<<<<<<< HEAD
 var time = 2000;
+=======
+var time = 10000;
+>>>>>>> master
 
 function Deathball(game, from, to) {
     this.target = to;
 
     BaseSkill.call(this, game, from, to, 'deathball');
-    this.scale.setTo(0.1, 0.1);
+    this.scale.setTo(0.15, 0.15);
     game.physics.arcade.moveToObject(this, this.target, speed);
 
     this.body.rotation = game.physics.arcade.angleBetween(this, this.target);

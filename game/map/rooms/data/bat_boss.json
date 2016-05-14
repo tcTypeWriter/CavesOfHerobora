@@ -1,0 +1,7 @@
+{
+    "monsters": {
+        "Bat":[
+            {"x":400, "y": 300, "boss": "EvilBat"}
+        ]
+    }
+}

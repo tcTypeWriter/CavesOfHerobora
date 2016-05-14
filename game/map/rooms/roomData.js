@@ -6,6 +6,7 @@ var bat = require('json!./data/bat');
 var minotaur = require('json!./data/minotaur');
 var tree = require('json!./data/tree');
 
+var bat_boss = require('json!./data/bat_boss');
 
 
 module.exports = {
@@ -13,5 +14,6 @@ module.exports = {
     spider: spider,
     bat: bat,
     minotaur: minotaur,
-    tree: tree
+    tree: tree,
+    bat_boss: bat_boss
 };

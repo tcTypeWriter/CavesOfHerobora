@@ -6,7 +6,6 @@ var vision_distance = 250;
 var attack_distance = 200;
 var radius = 20;
 
-
 var skillFactory = require('skillFactory');
 var BaseMonster = require('./baseMonster');
 
@@ -67,11 +66,10 @@ Bat.prototype.update = function() {
     }
 
     if(this.physics.distanceBetween(this.player, this) < attack_distance && 
-        this.skill.ready()){
+       this.skill.ready()){
         var skill = this.skill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skill);
     }
-
 };
 
 module.exports = Bat;

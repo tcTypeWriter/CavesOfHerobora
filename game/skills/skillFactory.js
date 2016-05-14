@@ -6,48 +6,56 @@ var Cobble = require('./cobble');
 var Bite = require('./bite');
 var Fireworks = require('./fireworks');
 var Deathball = require('./deathball');
+var Yapona_mat = require('./yapona_mat');
+var Recoil = require('./recoil');
+var SkeletonSpawn = require('./skeletonSpawn');
 
 var Sword = require('./sword');
 
-module.exports = {
-    Fireball: Fireball,
-    Bolt: Bolt,
-    Cobble: Cobble,
-    Bite: Bite,
-    Fireworks: Fireworks,
-    Deathball: Deathball,
-    
-    Sword: Sword,
+var Natures_call = require('./natures_call');
 
-    createSkill: function(skillName, game){
-        var skill = this[skillName];
+var e = module.exports;
 
-        var lastTime = 0,
-            timeout = skill.prototype.timeout;
+e.Recoil = Recoil;
+e.Fireball = Fireball;
+e.Bolt = Bolt;
+e.Cobble = Cobble;
+e.Bite = Bite;
+e.Fireworks = Fireworks;
+e.Deathball = Deathball;
+e.Yapona_mat = Yapona_mat;
+e.SkeletonSpawn = SkeletonSpawn;
 
-        var result = function(_game, _from, _to){
-                lastTime = game.time.now;
-                return new skill(_game, _from, _to);
-        };
+e.Sword = Sword;
 
-        result.ready = function() {
-            return lastTime + timeout < game.time.now;
-        };
+e.Natures_call = Natures_call;
 
-        result.calldown = function() {
-            var now = game.time.now;
-            return lastTime + timeout > now ? lastTime + timeout - now : "OK";
-        };
+e.createSkill = function(skillName, game){
+    var skill = this[skillName];
 
-        result.reduce = function(percent){
-            var timeLeft = game.time.now - lastTime;
-            if(timeLeft <= 0) return;
+    var lastTime = 0,
+        timeout = skill.prototype.timeout;
 
-            lastTime = timeLeft * percent / 100;
-        };
+    var result = function(_game, _from, _to){
+            lastTime = game.time.now;
+            return new skill(_game, _from, _to);
+    };
 
-        result.Name = skillName;
+    result.ready = function() {
+        return lastTime + timeout < game.time.now;
+    };
 
-        return result;
-    }
+    result.calldown = function() {
+        var now = game.time.now;
+        return lastTime + timeout > now ? lastTime + timeout - now : "OK";
+    };
+
+    result.reduce = function(percent){
+        timeout *= (100 - percent) / 100;
+        timeout = Math.round(timeout);
+    };
+
+    result.Name = skillName;
+
+    return result;
 };

@@ -21,6 +21,7 @@ Preload.prototype = {
         loadSkillsAssets();
         loadItemsAssets();
         loadObstaclesAssets();
+        loadInterfaceAssets();
 
         function loadBackgroundAssets(){
             load.image('floor', 'assets/dungeon_sheet-1-1.png');            
@@ -37,7 +38,9 @@ Preload.prototype = {
             load.image('stump', 'assets/monsters/stump.png');                
             load.image('spider', 'assets/monsters/spider.png');    
             load.image('minotaur', 'assets/monsters/minotaur.png');   
-            load.image('death', 'assets/monsters/death.png');                 
+            load.image('death', 'assets/monsters/death.png'); 
+            load.image('skeletonKing', 'assets/monsters/skeletonKing.png');
+            load.image('skeleton', 'assets/monsters/armedSkeleton.png');                 
         }
 
         function loadSkillsAssets(){
@@ -50,13 +53,23 @@ Preload.prototype = {
 
         function loadItemsAssets(){
             load.image('door', 'assets/openDoor.png');
-            load.image('healthPotion', 'assets/hpPotion.png');            
+            load.image('closedDoor', 'assets/closedDoor.png');
+            load.image('healthPotion', 'assets/hpPotion.png'); 
+            load.image('speedPotion', 'assets/speedPotion.png'); 
+            load.image('calldownPotion', 'assets/cdPotion.png');  
+            load.image('roll', 'assets/roll.png');            
         }
 
         function loadObstaclesAssets(){
+            load.image('startup', 'assets/startRoom.png');
             load.image('brick', 'assets/brick.png');
             load.image('brick1', 'assets/brick1.png');
             load.image('brick2', 'assets/brick2.png');            
+        }
+
+        function loadInterfaceAssets(){
+            load.image('hp', 'assets/hp.png');
+            load.image('hpBar', 'assets/hpBar.png');
         }
     },
 
