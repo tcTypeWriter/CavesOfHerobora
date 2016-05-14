@@ -4,7 +4,7 @@ var BaseSkill = require('./baseskill');
 var Skeleton = require('skeleton');
 
 function SkeletonSpawn(game, position, player) {
-    BaseSkill.call(this, game, position, player, 'natures_call');
+    BaseSkill.call(this, game, position, player, 'light');
 
     this.scale.setTo(0, 0);
 

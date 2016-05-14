@@ -12,9 +12,8 @@ CalldownPotion.prototype.constructor = CalldownPotion;
 CalldownPotion.prototype.Name = "CalldownPotion";
 
 CalldownPotion.prototype.impact = function(player){
-    player.skillSet[0].reduce(3);    
-    player.skillSet[1].reduce(3);
-    player.skillSet[2].reduce(3);
+    for(var i = 0; i < player.skillSet.length; i++)
+        player.skillSet[i].reduce(3);    
     
     this.destroy();
 };

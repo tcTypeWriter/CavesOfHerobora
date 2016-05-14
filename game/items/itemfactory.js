@@ -6,6 +6,7 @@ var SpeedPotion = require('./speedpotion');
 var CalldownPotion = require('./calldownpotion');
 var Roll = require('./roll.js');
 var Coin = require('./coin.js');
+var SkillShop = require('./skillshop');
 
 module.exports = {
     Door: Door,
@@ -13,5 +14,6 @@ module.exports = {
     SpeedPotion: SpeedPotion,
     CalldownPotion: CalldownPotion,
     Roll: Roll,
-    Coin: Coin
+    Coin: Coin,
+    SkillShop: SkillShop
 };

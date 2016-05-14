@@ -22,6 +22,9 @@
         ],
         "Coin":[
             {"x": 350, "y": 350}
+        ],
+        "SkillShop":[
+            {"x": 450, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 2}
         ]
     }    
 }

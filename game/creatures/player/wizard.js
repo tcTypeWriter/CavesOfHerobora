@@ -8,12 +8,10 @@ function Wizard(game, x, y) {
     
     this.state.name = 'Wizard';
 
-    var Fireball = skillFactory.createSkill('Fireball', game),
-        Bolt = skillFactory.createSkill('Bolt', game),
-        Fireworks = skillFactory.createSkill('Fireworks', game);
+    var Fireball = skillFactory.createSkill('Fireball', game);
   
     this.skill = Fireball;
-    this.skillSet = [ Fireball, Bolt, Fireworks ];
+    this.skillSet = [ Fireball ];
 }
 
 Wizard.prototype = Object.create(BasePlayer.prototype);
