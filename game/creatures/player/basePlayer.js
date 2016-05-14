@@ -11,8 +11,7 @@ function BasePlayer(game, x, y, sprite_key) {
     this.health = this.maxHealth = 10;
     this.skill = this.defaultSkill = function(){};
 
-
-    
+    this.state.coins =  2;
 
     var self = this;
 
@@ -148,7 +147,8 @@ BasePlayer.prototype.update = function(){
         game.debug.text("speed: " + self.state.speed, x, y, color);
         y += 20;
         game.debug.text(activeSkillInfo(), x, y, color);
-
+        y += 20;
+        game.debug.text("coins: " + self.state.coins, x, y, color);
 
         for(var i = 0; i < self.skillSet.length; i++)
             game.debug.text(skillInfo(i + 1, self.skillSet[i]), x, y + (i+1)* 20, color);
