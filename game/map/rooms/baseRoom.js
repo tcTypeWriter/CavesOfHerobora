@@ -82,7 +82,7 @@ BaseRoom.prototype = {
             self.stage.backgroundColor = '#ffffff';        
             
             if(self.background)
-                self.add.tileSprite(0, 0, 800, 600, self.background);
+                self.add.tileSprite(50, 50, 800, 600, self.background);
         }
       
         function setGroups(){
@@ -133,6 +133,8 @@ BaseRoom.prototype = {
                 for(var i = 0; i < model[itemType].length; i++){
                     var data = model[itemType][i],
                         item = new itemFactory[itemType](game, data);
+
+                    item.setModel(data);
                     items.add(item);
                 }
         }

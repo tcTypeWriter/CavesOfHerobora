@@ -10,7 +10,7 @@ function SimpleRoom(game, key) {
     this.model.monsters = data.monsters || this.model.monsters;
     this.model.items = data.items || this.model.items;
     
-    this.background = 'brick2';
+    this.background = data.background || 'brick2';
 }
 
 SimpleRoom.prototype = Object.create(BaseRoom.prototype);

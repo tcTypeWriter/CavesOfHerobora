@@ -1,4 +1,6 @@
 {
+    "background": "startup",
+
     "items": {
         "HealthPotion":[
             {"x": 200, "y": 200},
@@ -14,6 +16,9 @@
             {"x": 600, "y": 200},
             {"x": 600, "y": 300},
             {"x": 600, "y": 400}        
+        ],
+        "Roll":[
+            {"x": 300, "y": 300, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"}
         ]
     }    
 }
