@@ -1,4 +1,6 @@
 {
+    "background": "startup",
+
     "items": {
         "HealthPotion":[
             {"x": 200, "y": 200},

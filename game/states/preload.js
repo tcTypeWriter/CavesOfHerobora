@@ -59,6 +59,7 @@ Preload.prototype = {
         }
 
         function loadObstaclesAssets(){
+            load.image('startup', 'assets/startRoom.png');
             load.image('brick', 'assets/brick.png');
             load.image('brick1', 'assets/brick1.png');
             load.image('brick2', 'assets/brick2.png');            
