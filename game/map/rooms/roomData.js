@@ -7,7 +7,7 @@ var minotaur = require('json!./data/minotaur');
 var tree = require('json!./data/tree');
 
 var bat_boss = require('json!./data/bat_boss');
-
+var death = require('json!./data/death.json');
 
 module.exports = {
     empty: empty,
@@ -15,5 +15,6 @@ module.exports = {
     bat: bat,
     minotaur: minotaur,
     tree: tree,
-    bat_boss: bat_boss
+    bat_boss: bat_boss,
+    death: death
 };

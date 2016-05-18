@@ -35,8 +35,8 @@ e.Sword = Sword;
 
 e.Natures_call = Natures_call;
 
-e.createSkill = function (skillName, game) {
-    var skill = this[skillName];
+e.createSkill = function(skillName, game){
+    var skill = e[skillName];
 
     var lastTime = 0,
         timeout = skill.prototype.timeout;
