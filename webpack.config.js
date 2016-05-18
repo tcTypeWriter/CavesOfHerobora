@@ -13,16 +13,16 @@ module.exports = {
     },
 
     watch: NODE_ENV === 'dev',
-  
-    resolve:{
-        modulesDirectories: ["libs", 
-                             "game/skills",
-                             "game/obstacles",
-                             "game/map",
-                             "game/items",
-                             "game/creatures/player",
-                             "game/creatures/monsters",
-                            ]
+
+    resolve: {
+        modulesDirectories: ["libs",
+            "game/skills",
+            "game/obstacles",
+            "game/map",
+            "game/items",
+            "game/creatures/player",
+            "game/creatures/monsters",
+        ]
     },
 
     module: {

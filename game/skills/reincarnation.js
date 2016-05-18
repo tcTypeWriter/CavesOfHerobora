@@ -19,7 +19,6 @@ Reincarnation.prototype.constructor = Reincarnation;
 
 Reincarnation.prototype.update = function () {
     var skeletonKing = new SkeletonKing(this.game, this.position, this.player);
-    skeletonKing.reincarnated = true;
     this.events.onCastMonster.dispatch(skeletonKing);
     this.kill();
 };

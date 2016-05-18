@@ -16,7 +16,7 @@ function SkeletonKing(game, point, player) {
     this.timer = null;
     this.reincarnateTimer = null;
 
-    this.health = this.maxHealth = 1;
+    this.health = this.maxHealth = 25;
 
     this.skeletons = [];
     this.skeletonsSprites = [];
@@ -35,10 +35,8 @@ SkeletonKing.prototype.update = function () {
         clearTimeout(self.timer);
         if (self.skeletonsSprites[0])
             self.skeletonsSprites[0].kill();
-
         if (self.skeletonsSprites[1])
             self.skeletonsSprites[1].kill();
-
         if (self.skeletonsSprites[2])
             self.skeletonsSprites[2].kill();
         return;
@@ -48,73 +46,80 @@ SkeletonKing.prototype.update = function () {
             deadKing = self.game.add.sprite(self.x, self.y, 'skeletonKing');
             deadKing.scale.setTo(0.4, 0.4);
             deadKing.angle += 90;
-
             self.reincarnateTimer = setTimeout(reincarnate, 5000);
         }
         clearTimeout(self.timer);
         if (self.skeletonsSprites[0])
             self.skeletonsSprites[0].kill();
-
         if (self.skeletonsSprites[1])
             self.skeletonsSprites[1].kill();
-
         if (self.skeletonsSprites[2])
             self.skeletonsSprites[2].kill();
         return;
     }
 
+    move();
+    castSkills();
+
     function reincarnate() {
-        deadKing.kill();
-        var position = {
-            x: self.x,
-            y: self.y
+        if (aliveSkeletonsCount() > 0) {
+            deadKing.kill();
+            var position = {
+                x: self.x,
+                y: self.y
+            }
+            var reincarnation = self.reincarnation(self.game, position, self.player);
+            self.events.onCastSkill.dispatch(reincarnation);
         }
-        var reincarnation = self.reincarnation(self.game, position, self.player);
-        self.events.onCastSkill.dispatch(reincarnation);
         self.reincarnated = true;
         self.reincarnateTimer = null;
     }
 
-    if (this.attack.ready()) {
-        var fireball = self.attack(self.game, self, self.player);
-        self.events.onCastSkill.dispatch(fireball);
-
-        var fireball2Target = {
-            x: self.player.x + 50,
-            y: self.player.y + 50
-        }
-        var fireball2 = self.attack(self.game, self, fireball2Target);
-        self.events.onCastSkill.dispatch(fireball2);
-
-        var fireball3Target = {
-            x: self.player.x - 50,
-            y: self.player.y - 50
-        }
-        var fireball3 = self.attack(self.game, self, fireball3Target);
-        self.events.onCastSkill.dispatch(fireball3);
-    }
-    if (this.physics.distanceToXY(this.player, this.x, this.y) > 250)
-        this.physics.moveToObject(this, this.player, 100);
-    else {
-
-        this.body.velocity.setTo(0, 0);
-    }
-    var aliveSkeletons = 0;
-    for (var i = 0; i < this.skeletons.length; i++) {
-        if (this.skeletons[i].alive) {
-            aliveSkeletons++;
-        }
-    }
-    if (aliveSkeletons > 0) {
-        this.body.velocity.setTo(0, 0);
-    }
-    if (aliveSkeletons == 0) {
-        if (self.skeletons.length == 0)
-            spawnSkeletons();
+    function move() {
+        if (self.physics.distanceToXY(self.player, self.x, self.y) > 250)
+            self.physics.moveToObject(self, self.player, 100);
         else
-            reincarnateSkeletons();
+            self.body.velocity.setTo(0, 0);
     }
+    function castSkills() {
+        if (self.attack.ready()) {
+            var fireball = self.attack(self.game, self, self.player);
+            self.events.onCastSkill.dispatch(fireball);
 
+            var fireball2Target = {
+                x: self.player.x + 50,
+                y: self.player.y + 50
+            }
+            var fireball2 = self.attack(self.game, self, fireball2Target);
+            self.events.onCastSkill.dispatch(fireball2);
+
+            var fireball3Target = {
+                x: self.player.x - 50,
+                y: self.player.y - 50
+            }
+            var fireball3 = self.attack(self.game, self, fireball3Target);
+            self.events.onCastSkill.dispatch(fireball3);
+        }
+        var aliveSkeletons = aliveSkeletonsCount();
+        if (aliveSkeletons > 0) {
+            self.body.velocity.setTo(0, 0);
+        }
+        if (aliveSkeletons == 0) {
+            if (self.skeletons.length == 0)
+                spawnSkeletons();
+            else
+                reincarnateSkeletons();
+        }
+    }
+    function aliveSkeletonsCount() {
+        var aliveSkeletonsCount = 0;
+        for (var i = 0; i < self.skeletons.length; i++) {
+            if (self.skeletons[i].alive) {
+                aliveSkeletonsCount++;
+            }
+        }
+        return aliveSkeletonsCount;
+    }
     function spawnSkeletons() {
         var position1 = {
             x: random(100, 700),
@@ -194,8 +199,6 @@ SkeletonKing.prototype.update = function () {
                 self.timer = null;
             }, 5000);
         }
-
-
     }
 };
 function random(min, max) {
