@@ -14,7 +14,7 @@ window.onload = function () {
     game.state.add('boot', BootState);
     game.state.add('gameover', GameOver);
     game.state.add('chooseplayer', ChoosePlayer);
-    game.state.add('empty', mapFactory.SimpleMap);
+    game.state.add('start', mapFactory.DemoMap);
     game.state.add('preload', PreloadState);  
       
     game.state.start('boot');

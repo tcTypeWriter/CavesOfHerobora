@@ -1,35 +1,28 @@
 'use strict';
 
-var roomData = require('./rooms/roomData');
 var roomFactory = require('./rooms/roomFactory');
 
 function DemoMap(game) {
-    roomFactory.SimpleRoom.call(this, game, 'empty');
+    roomFactory.SimpleRoom.call(this, game, 'start');
         
-    roomData["0x1"] = { background: "brick1",
-                items:{
-                            HealthPotion:[
-                                {x: 100, y: 100}
-                            ]
-                            }};
-    var room = new roomFactory.SimpleRoom(game,  "0x1");
-    this.concat(room, "left");
-    /*var rooms_name = ['', 'tree', 'spider', 'minotaur', 'bat'];
+    var rooms = [];
+    for(var  i = 1; i <= 9; i++)
+        rooms[i] = new roomFactory.SimpleRoom(game, 'room' + i);
 
-    var rooms = [{}];
-    for (var i = 1; i < 5; i++) {
-        rooms[i] = new roomFactory.SimpleRoom(game, rooms_name[i]);
-    }
-    
+    var boss = new roomFactory.BossRoom(game, 'boss');
+    this.concat(rooms[1], 'left');
+    this.concat(rooms[2], 'down');
+    this.concat(rooms[3], 'up');
+    this.concat(rooms[4], 'right');
 
-    var bossRoom = new roomFactory.BossRoom(game, 'bat_boss');
+    rooms[4].concat(rooms[5], 'right');
+    rooms[5].concat(rooms[6], 'right');
+    rooms[6].concat(rooms[7], 'up');
+    rooms[6].concat(rooms[8], 'right');
+    rooms[8].concat(rooms[9], 'down');
 
-    rooms[1].concat(bossRoom, "right");
+    rooms[8].concat(boss, 'right');
 
-    this.concat(rooms[1], "up");
-    this.concat(rooms[2], "right");
-    this.concat(rooms[3], "down");
-    this.concat(rooms[4], "left");*/
 }
 
 DemoMap.prototype = Object.create(roomFactory.SimpleRoom.prototype);

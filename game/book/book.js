@@ -28,7 +28,8 @@ function hide(arr){
 }
 
 Book.show = function(type, name){
-    book[type][name].show = true;
+    if(book[type] && book[type][name])
+        book[type][name].show = true;
 };
 
 module.exports = Book;

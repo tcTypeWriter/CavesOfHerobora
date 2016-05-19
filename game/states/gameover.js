@@ -2,6 +2,8 @@
 
 function GameOver() {}
 
+var mapFactory = require('mapfactory');
+
 GameOver.prototype = {
     create: function () {
         var style = { font: '65px Arial', fill: '#000', align: 'center'};
@@ -15,7 +17,8 @@ GameOver.prototype = {
       },
     update: function () {
         if(this.game.input.activePointer.justPressed()) {
-            this.game.state.start('empty');
+            this.game.state.add('start', mapFactory.DemoMap);
+            this.game.state.start('start');
         }
     }
 };

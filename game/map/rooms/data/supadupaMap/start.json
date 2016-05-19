@@ -1,0 +1,11 @@
+{
+    "background": "startup",
+
+    "items": {
+        "Roll":[
+            {"x": 200, "y": 200, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
+            {"x": 400, "y": 400, "type": "items",  "thing": "SpeedPotion", "sprite": "speedPotion"},
+            {"x": 600, "y": 250, "type": "items",  "thing": "СalldownPotion", "sprite": "calldownPotion"}
+        ]
+    }    
+}

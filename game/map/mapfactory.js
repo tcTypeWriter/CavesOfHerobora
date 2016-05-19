@@ -3,5 +3,6 @@
 var SimpleMap = require('./simplemap');
 
 module.exports = {
-    SimpleMap: SimpleMap
+    SimpleMap: SimpleMap,
+    DemoMap: require('./supadupamap')
 };

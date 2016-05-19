@@ -16,5 +16,17 @@ module.exports = {
     minotaur: minotaur,
     tree: tree,
     bat_boss: bat_boss,
-    death: death
+    death: death,
+
+    start: require('json!./data/supadupaMap/start'),
+    room1: require('json!./data/supadupaMap/room1'),
+    room2: require('json!./data/supadupaMap/room2'),
+    room3: require('json!./data/supadupaMap/room3'),
+    room4: require('json!./data/supadupaMap/room4'),
+    room5: require('json!./data/supadupaMap/room5'),
+    room6: require('json!./data/supadupaMap/room6'),
+    room7: require('json!./data/supadupaMap/room7'),
+    room8: require('json!./data/supadupaMap/room8'),
+    room9: require('json!./data/supadupaMap/room9'),
+    boss: require('json!./data/supadupaMap/boss')
 };
