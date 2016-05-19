@@ -14,7 +14,7 @@ function SkeletonKing(game, point, player, skeletons) {
     this.timer = null;
     this.reincarnateTimer = null;
 
-    this.health = this.maxHealth = 1;
+    this.health = this.maxHealth = 25;
 
     this.skeletons = skeletons || [];
     this.skeletonsSprites = [];
