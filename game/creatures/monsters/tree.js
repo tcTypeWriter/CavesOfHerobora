@@ -84,13 +84,13 @@ Tree.prototype.update = function () {
         this.events.onCastSkill.dispatch(skillForKill);
     }
     
-    if(this.health <= 99 && !this.branch1){
+    if(this.health <= 95 && !this.branch1){
         var skillBranch1 = this.branchSkill(this.game, this, this.player);
         this.branch1 = skillBranch1.branch;
         this.events.onCastSkill.dispatch(skillBranch1);
     }
     
-    if(this.health <= 98 && !this.branch2){
+    if(this.health <= 90 && !this.branch2){
         var skillBranch2 = this.branchSkill(this.game, this, this.player);
         this.branch2 = skillBranch2.branch;
         this.events.onCastSkill.dispatch(skillBranch2);

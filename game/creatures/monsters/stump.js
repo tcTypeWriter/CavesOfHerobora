@@ -21,6 +21,13 @@ Stump.prototype.Name = "Stump";
 
 Stump.prototype.update = function() {
     if(!this.alive) return;
+    
+    this.physics.overlap(this.player, this, hit);
+    
+    function hit(player, mob)
+    {
+        player.damage(1);
+    }
 
     var stumpIsFar = this.physics.distanceToXY(this.player, this.x, this.y) > 60;    
 
