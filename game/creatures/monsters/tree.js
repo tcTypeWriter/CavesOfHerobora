@@ -6,7 +6,7 @@ var BaseMonster = require('./baseMonster');
 var skillFactory = require('skillFactory');
 
 function Tree(game, point, player) {
-    BaseMonster.call(this, game, point, player, 'tree');
+    BaseMonster.call(this, game, point, player, 'tree', 0);
     this.scale.setTo(0.8, 0.8);
 
     this.health = this.maxHealth = 100;
@@ -84,15 +84,18 @@ Tree.prototype.update = function () {
         this.events.onCastSkill.dispatch(skillForKill);
     }
     
-    if(this.health <= 95 && !this.branch1){
+    if(this.health <= 99 && !this.branch1){
+        this.frame = 1;
         var skillBranch1 = this.branchSkill(this.game, this, this.player);
         this.branch1 = skillBranch1.branch;
         this.events.onCastSkill.dispatch(skillBranch1);
     }
     
-    if(this.health <= 90 && !this.branch2){
+    if(this.health <= 98 && !this.branch2){
+        this.frame = 2;
         var skillBranch2 = this.branchSkill(this.game, this, this.player);
         this.branch2 = skillBranch2.branch;
+        this.branch2.body.velocity.multiply(-1, -1);
         this.events.onCastSkill.dispatch(skillBranch2);
     }    
 

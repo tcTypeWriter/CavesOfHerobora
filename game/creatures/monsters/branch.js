@@ -7,11 +7,11 @@ var BaseMonster = require('./baseMonster');
 
 function Branch(game, point, player) {
     BaseMonster.call(this, game, point, player, 'branch');
-    this.scale.setTo(0.3, 0.3);
+    this.scale.setTo(0.75, 0.75);
 
     this.health = this.maxHealth = 100000;
     this.body.bounce.setTo(1, 1);
-    this.body.velocity.setTo(200, 200);
+    this.body.velocity.setTo(speed, speed);
     this.state = {};
 }
 
@@ -21,7 +21,7 @@ Branch.prototype.Name = "Branch";
 
 Branch.prototype.update = function() {
     if(!this.alive) return;
-    this.body.velocity.normalize().multiply(200, 200);
+    this.body.velocity.normalize().multiply(speed, speed);
     
     this.physics.overlap(this.player, this, hit);
     

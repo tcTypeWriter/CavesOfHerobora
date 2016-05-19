@@ -34,12 +34,14 @@ Preload.prototype = {
 
         function loadMonstersAssets(){
             load.image('bat', 'assets/monsters/bat.png');
-            load.image('tree', 'assets/monsters/oak.png'); 
+            load.spritesheet('tree', 'assets/monsters/oak.png', 168, 168);
+            load.image('tree1', 'assets/monsters/oak1.png');
+            load.image('tree2', 'assets/monsters/oak2.png'); 
             load.image('stump', 'assets/monsters/stump.png');                
             load.image('spider', 'assets/monsters/spider.png');    
             load.image('minotaur', 'assets/monsters/minotaur.png');   
             load.image('death', 'assets/monsters/death.png'); 
-            load.image('branch', 'assets/monsters/death.png');
+            load.image('branch', 'assets/monsters/branch.png');
             load.image('skeletonKing', 'assets/monsters/skeletonKing.png');
             load.image('skeleton', 'assets/monsters/armedSkeleton.png');
             load.image('vampire', 'assets/monsters/vampire.png');                      
