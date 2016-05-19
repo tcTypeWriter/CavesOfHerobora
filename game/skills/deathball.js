@@ -13,8 +13,6 @@ function Deathball(game, from, to) {
     this.scale.setTo(0.15, 0.15);
     game.physics.arcade.moveToObject(this, this.target, speed);
 
-    this.body.rotation = game.physics.arcade.angleBetween(this, this.target);
-
     this.power = power;
     game.time.events.add(time, this.destroy, this);
 }
@@ -34,6 +32,7 @@ Deathball.prototype.update = function () {
     };
     vector = normalise(vector);
     this.body.velocity.setTo(vector.x * speed, vector.y * speed);
+    this.rotation = this.game.physics.arcade.angleBetween(this, this.target);
 };
 
 function normalise(vector) {

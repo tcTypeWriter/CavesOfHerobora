@@ -90,11 +90,11 @@ BasePlayer.prototype.update = function(){
     }
 
     function updateSkillSet(){
-        if(self.keys.one.isDown)
+        if(self.keys.one.isDown && self.skillSet[0])
             self.skill = self.skillSet[0];
-        if(self.keys.two.isDown)
+        if(self.keys.two.isDown && self.skillSet[1])
             self.skill = self.skillSet[1];
-        if(self.keys.three.isDown)
+        if(self.keys.three.isDown && self.skillSet[2])
             self.skill = self.skillSet[2];
     }
 

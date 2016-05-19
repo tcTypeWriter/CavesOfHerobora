@@ -19,6 +19,12 @@
         ],
         "Roll":[
             {"x": 300, "y": 300, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"}
+        ],
+        "Coin":[
+            {"x": 350, "y": 350}
+        ],
+        "SkillShop":[
+            {"x": 450, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 2}
         ]
     }    
 }

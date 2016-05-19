@@ -59,7 +59,8 @@ Preload.prototype = {
             load.image('healthPotion', 'assets/hpPotion.png'); 
             load.image('speedPotion', 'assets/speedPotion.png'); 
             load.image('calldownPotion', 'assets/cdPotion.png');  
-            load.image('roll', 'assets/roll.png');            
+            load.image('roll', 'assets/roll.png');   
+            load.image('coin', 'assets/Coin.png');            
         }
 
         function loadObstaclesAssets(){
