@@ -14,6 +14,8 @@ var Sword = require('./sword');
 
 var Natures_call = require('./natures_call');
 
+var Branch_spawn = require('./branch_spawn');
+
 var e = module.exports;
 
 e.Fireball = Fireball;
@@ -28,6 +30,8 @@ e.SkeletonSpawn = SkeletonSpawn;
 e.Sword = Sword;
 
 e.Natures_call = Natures_call;
+
+e.Branch_spawn = Branch_spawn;
 
 e.createSkill = function(skillName, game){
     var skill = this[skillName];

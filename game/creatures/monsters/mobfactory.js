@@ -8,8 +8,10 @@ var Minotaur = require('./minotaur');
 var Death = require('./death');
 var SkeletonKing = require('./skeletonKing');
 var Skeleton = require('./skeleton');
+var Branch = require('./branch');
 
 module.exports = {
+    Branch: Branch,
     Bat: Bat,
     Tree: Tree,
     Stump: Stump,
