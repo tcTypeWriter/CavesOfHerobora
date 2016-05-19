@@ -12,7 +12,6 @@ function SkeletonSpawn(game, position, player) {
     this.player = player;
 
     this.events.onCastMonster = new Phaser.Signal();
-    
     this.skeleton = new Skeleton(this.game, this.position, this.player);
 }
 

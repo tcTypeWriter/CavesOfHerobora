@@ -1,24 +1,22 @@
 'use strict';
 
-var attack_distance = 30;
-
 var BaseMonster = require('./baseMonster');
 var skillFactory = require('skillFactory');
 
-function SkeletonKing(game, point, player) {
+function SkeletonKing(game, point, player, skeletons) {
     BaseMonster.call(this, game, point, player, 'skeletonKing');
     this.scale.setTo(0.4, 0.4);
 
     this.skill = skillFactory.createSkill('SkeletonSpawn', game);
     this.attack = skillFactory.createSkill('SkeletonBall', game);
-    this.reincarnation = skillFactory.createSkill('Reincarnation', game);
+    this.Reincarnation = skillFactory.Reincarnation;
 
     this.timer = null;
     this.reincarnateTimer = null;
 
-    this.health = this.maxHealth = 25;
+    this.health = this.maxHealth = 1;
 
-    this.skeletons = [];
+    this.skeletons = skeletons || [];
     this.skeletonsSprites = [];
 
     this.reincarnated = false;
@@ -42,7 +40,7 @@ SkeletonKing.prototype.update = function () {
         return;
     }
     else if (!this.alive) {
-        if (self.reincarnateTimer == null) {
+        if (self.reincarnateTimer === null) {
             deadKing = self.game.add.sprite(self.x, self.y, 'skeletonKing');
             deadKing.scale.setTo(0.4, 0.4);
             deadKing.angle += 90;
@@ -67,8 +65,8 @@ SkeletonKing.prototype.update = function () {
             var position = {
                 x: self.x,
                 y: self.y
-            }
-            var reincarnation = self.reincarnation(self.game, position, self.player);
+            };
+            var reincarnation = new self.Reincarnation(self.game, position, self.player, self.skeletons);
             self.events.onCastSkill.dispatch(reincarnation);
         }
         self.reincarnated = true;
@@ -89,14 +87,14 @@ SkeletonKing.prototype.update = function () {
             var fireball2Target = {
                 x: self.player.x + 50,
                 y: self.player.y + 50
-            }
+            };
             var fireball2 = self.attack(self.game, self, fireball2Target);
             self.events.onCastSkill.dispatch(fireball2);
 
             var fireball3Target = {
                 x: self.player.x - 50,
                 y: self.player.y - 50
-            }
+            };
             var fireball3 = self.attack(self.game, self, fireball3Target);
             self.events.onCastSkill.dispatch(fireball3);
         }
@@ -104,8 +102,8 @@ SkeletonKing.prototype.update = function () {
         if (aliveSkeletons > 0) {
             self.body.velocity.setTo(0, 0);
         }
-        if (aliveSkeletons == 0) {
-            if (self.skeletons.length == 0)
+        if (aliveSkeletons === 0) {
+            if (self.skeletons.length === 0)
                 spawnSkeletons();
             else
                 reincarnateSkeletons();
@@ -124,17 +122,17 @@ SkeletonKing.prototype.update = function () {
         var position1 = {
             x: random(100, 700),
             y: random(100, 500),
-        }
+        };
         var position2 = {
             x: random(100, 700),
             y: random(100, 500),
-        }
+        };
         var position3 = {
             x: random(100, 700),
             y: random(100, 500),
-        }
+        };
 
-        if (self.timer == null) {
+        if (self.timer === null) {
             self.timer = setTimeout(function () {
                 var skill1 = self.skill(self.game, position1, self.player);
                 self.events.onCastSkill.dispatch(skill1);
@@ -156,17 +154,17 @@ SkeletonKing.prototype.update = function () {
         var position1 = {
             x: self.skeletons[0].x,
             y: self.skeletons[0].y,
-        }
+        };
         var position2 = {
             x: self.skeletons[1].x,
             y: self.skeletons[1].y,
-        }
+        };
         var position3 = {
             x: self.skeletons[2].x,
             y: self.skeletons[2].y,
-        }
+        };
 
-        if (self.timer == null) {
+        if (self.timer === null) {
             self.skeletonsSprites[0] = self.game.add.sprite(position1.x, position1.y, 'skeleton');
             self.skeletonsSprites[1] = self.game.add.sprite(position2.x, position2.y, 'skeleton');
             self.skeletonsSprites[2] = self.game.add.sprite(position3.x, position3.y, 'skeleton');
