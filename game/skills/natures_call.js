@@ -25,5 +25,5 @@ Natures_call.prototype.update = function(){
     this.kill();
 };
 
-Natures_call.prototype.timeout = 3228;
+Natures_call.prototype.timeout = 10000;
 module.exports = Natures_call;

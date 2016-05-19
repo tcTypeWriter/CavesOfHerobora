@@ -9,8 +9,10 @@ var Death = require('./death');
 var SkeletonKing = require('./skeletonKing');
 var Skeleton = require('./skeleton');
 var Vampire = require('./vampire');
+var Branch = require('./branch');
 
 module.exports = {
+    Branch: Branch,
     Bat: Bat,
     Tree: Tree,
     Stump: Stump,

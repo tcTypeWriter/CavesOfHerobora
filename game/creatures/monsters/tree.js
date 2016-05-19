@@ -13,6 +13,8 @@ function Tree(game, point, player) {
     this.skill = skillFactory.createSkill('Natures_call', game);
 
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
+    
+    this.branchSkill = skillFactory.createSkill('Branch_spawn', game);
 
     this.shooting = false;
     this.game.time.events.add(5000, this.startShooting, this);
@@ -81,6 +83,18 @@ Tree.prototype.update = function () {
         var skillForKill = this.skillForKill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skillForKill);
     }
+    
+    if(this.health <= 95 && !this.branch1){
+        var skillBranch1 = this.branchSkill(this.game, this, this.player);
+        this.branch1 = skillBranch1.branch;
+        this.events.onCastSkill.dispatch(skillBranch1);
+    }
+    
+    if(this.health <= 90 && !this.branch2){
+        var skillBranch2 = this.branchSkill(this.game, this, this.player);
+        this.branch2 = skillBranch2.branch;
+        this.events.onCastSkill.dispatch(skillBranch2);
+    }    
 
 };
 
