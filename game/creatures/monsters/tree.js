@@ -14,8 +14,10 @@ function Tree(game, point, player) {
     this.skill = skillFactory.createSkill('Natures_call', game);
 
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
-    
+
     this.branchSkill = skillFactory.createSkill('Branch_spawn', game);
+
+    this.testSkill = skillFactory.createSkill('Branch', game);
 
     this.shooting = false;
     this.game.time.events.add(5000, this.startShooting, this);
@@ -33,15 +35,14 @@ Tree.prototype.update = function () {
     move();
     if (this.skill.ready())
         castSkill();
-        
-    function countAliveStumps(){
+
+    function countAliveStumps() {
         var count = 0;
-        for(var i = 0; i < self.stumps.length; i++)
-        {
-            if(self.stumps[i].alive) count++;
+        for (var i = 0; i < self.stumps.length; i++) {
+            if (self.stumps[i].alive) count++;
         }
-        return count;        
-    }    
+        return count;
+    }
 
     function move() {
         var treeIsFar = self.physics.distanceToXY(self.player, self.x, self.y) > 205,
@@ -58,27 +59,27 @@ Tree.prototype.update = function () {
         }
     }
 
-    function castSkill(){
+    function castSkill() {
         var distance = Math.max(self.width, self.height) - 30;
         var perpDist = 40;
 
         var toPlayer = self.player.position.clone()
-                                           .subtract(self.x, self.y)
-                                           .normalize();
+            .subtract(self.x, self.y)
+            .normalize();
         var perp = toPlayer.clone().rperp();
-        
+
         var center = {
-                    x: self.x + distance*toPlayer.x, 
-                    y: self.y + distance*toPlayer.y
-            };
+            x: self.x + distance * toPlayer.x,
+            y: self.y + distance * toPlayer.y
+        };
         var left = {
-                    x: center.x + perpDist*perp.x, 
-                    y: center.y + perpDist*perp.y
-            };
-        var right  = {
-                    x: center.x - perpDist*perp.x, 
-                    y: center.y - perpDist*perp.y
-            };
+            x: center.x + perpDist * perp.x,
+            y: center.y + perpDist * perp.y
+        };
+        var right = {
+            x: center.x - perpDist * perp.x,
+            y: center.y - perpDist * perp.y
+        };
         if (countAliveStumps() < 5) {
             var skill = self.skill(self.game, center, self.player);
             self.events.onCastSkill.dispatch(skill);
@@ -97,30 +98,38 @@ Tree.prototype.update = function () {
         var skillForKill = this.skillForKill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skillForKill);
     }
-    
-    if(this.health <= 99 && !this.branch1){
+
+    if (this.health <= 99 && !this.branch1) {
         this.frame = 1;
-        var skillBranch1 = this.branchSkill(this.game, this, this.player);
-        this.branch1 = skillBranch1.branch;
-        this.events.onCastSkill.dispatch(skillBranch1);
+        this.branch1 = true;
+        var position = {
+            x: this.x - 10,
+            y: this.y + 10
+        }
+        var hz = self.testSkill(self.game, this, position);
+        self.events.onCastSkill.dispatch(hz);
     }
-    
-    if(this.health <= 98 && !this.branch2){
+
+    if (this.health <= 98 && !this.branch2) {
         this.frame = 2;
-        var skillBranch2 = this.branchSkill(this.game, this, this.player);
-        this.branch2 = skillBranch2.branch;
-        this.branch2.body.velocity.multiply(-1, -1);
-        this.events.onCastSkill.dispatch(skillBranch2);
-    }    
+        this.branch2 = true;
+        var position = {
+            x: this.x + 10,
+            y: this.y + 10
+        }
+        var hz = self.testSkill(self.game, this, position);
+        self.events.onCastSkill.dispatch(hz);
+    }
+
 
 };
 
-Tree.prototype.startShooting = function(){
+Tree.prototype.startShooting = function () {
     this.shoоting = true;
     this.game.time.events.add(2000, this.stopShooting, this);
 };
 
-Tree.prototype.stopShooting = function(){
+Tree.prototype.stopShooting = function () {
     this.shoоting = false;
     this.game.time.events.add(5000, this.startShooting, this);
 };

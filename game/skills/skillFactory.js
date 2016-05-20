@@ -7,6 +7,7 @@ var Bite = require('./bite');
 var Fireworks = require('./fireworks');
 var Deathball = require('./deathball');
 var Yapona_mat = require('./yapona_mat');
+var Branch = require('./branch')
 
 var SkeletonSpawn = require('./skeletonSpawn');
 var SkeletonBall = require('./skeletonBall');
@@ -21,6 +22,7 @@ var Branch_spawn = require('./branch_spawn');
 
 var e = module.exports;
 
+e.Branch = Branch;
 e.Fireball = Fireball;
 e.Bolt = Bolt;
 e.Cobble = Cobble;

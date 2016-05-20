@@ -29,7 +29,7 @@ Stump.prototype.update = function() {
         player.damage(1);
     }
 
-    var stumpIsFar = this.physics.distanceToXY(this.player, this.x, this.y) > 60;    
+    var stumpIsFar = this.physics.distanceToXY(this.player, this.x, this.y) > 30;    
 
     if(stumpIsFar)
         this.physics.moveToObject(this, this.player, speed);
