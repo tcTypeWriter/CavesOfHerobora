@@ -10,7 +10,7 @@ function Natures_call(game, position, player) {
 
     this.position = position;
     this.player = player;
-    
+    this.stump = new Stump(this.game,  this.position, this.player);
 
     this.events.onCastMonster = new Phaser.Signal();
 }
@@ -19,9 +19,8 @@ Natures_call.prototype = Object.create(BaseSkill.prototype);
 Natures_call.prototype.constructor = Natures_call;
 
 Natures_call.prototype.update = function(){
-    var stump = new Stump(this.game,  this.position, this.player);
-    
-    this.events.onCastMonster.dispatch(stump);
+
+    this.events.onCastMonster.dispatch(this.stump);
     this.kill();
 };
 

@@ -6,6 +6,7 @@ var BaseMonster = require('./baseMonster');
 var skillFactory = require('skillFactory');
 
 function Tree(game, point, player) {
+    this.stumps = [];
     BaseMonster.call(this, game, point, player, 'tree', 0);
     this.scale.setTo(0.8, 0.8);
 
@@ -32,6 +33,15 @@ Tree.prototype.update = function () {
     move();
     if (this.skill.ready())
         castSkill();
+        
+    function countAliveStumps(){
+        var count = 0;
+        for(var i = 0; i < self.stumps.length; i++)
+        {
+            if(self.stumps[i].alive) count++;
+        }
+        return count;        
+    }    
 
     function move() {
         var treeIsFar = self.physics.distanceToXY(self.player, self.x, self.y) > 205,
@@ -69,13 +79,17 @@ Tree.prototype.update = function () {
                     x: center.x - perpDist*perp.x, 
                     y: center.y - perpDist*perp.y
             };
-
-        var skill = self.skill(self.game, center, self.player);
-        self.events.onCastSkill.dispatch(skill);
-        skill = self.skill(self.game, left, self.player);
-        self.events.onCastSkill.dispatch(skill);
-        skill = self.skill(self.game, right, self.player);
-        self.events.onCastSkill.dispatch(skill);
+        if (countAliveStumps() < 5) {
+            var skill = self.skill(self.game, center, self.player);
+            self.events.onCastSkill.dispatch(skill);
+            self.stumps.push(skill.stump);
+            skill = self.skill(self.game, left, self.player);
+            self.events.onCastSkill.dispatch(skill);
+            self.stumps.push(skill.stump);
+            skill = self.skill(self.game, right, self.player);
+            self.events.onCastSkill.dispatch(skill);
+            self.stumps.push(skill.stump);
+        }
     }
 
     if (this.physics.distanceBetween(this.player, this) < attack_distance &&
