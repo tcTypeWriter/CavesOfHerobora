@@ -3,9 +3,9 @@
 
     "items": {
         "Roll":[
-            {"x": 200, "y": 200, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
-            {"x": 400, "y": 400, "type": "items",  "thing": "SpeedPotion", "sprite": "speedPotion"},
-            {"x": 600, "y": 250, "type": "items",  "thing": "СalldownPotion", "sprite": "calldownPotion"}
+            {"x": 300, "y": 230, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
+            {"x": 430, "y": 400, "type": "items",  "thing": "SpeedPotion", "sprite": "speedPotion"},
+            {"x": 620, "y": 230, "type": "items",  "thing": "СalldownPotion", "sprite": "calldownPotion"}
         ]
     }    
 }
