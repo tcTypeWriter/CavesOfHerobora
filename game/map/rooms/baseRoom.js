@@ -173,7 +173,8 @@ BaseRoom.prototype = {
     addingMonster: function(monster, monsterModel){},
 
     update: function() {
-        var arcade = this.physics.arcade,
+        var game = this.game,
+            arcade = this.physics.arcade,
             overlap = this.physics.arcade.overlap.bind(arcade),
             collide = this.physics.arcade.collide.bind(arcade);
 
@@ -186,14 +187,20 @@ BaseRoom.prototype = {
         collide(this.obstacles, this.player);
         collide(this.obstacles, this.monsters);
         collide(this.monsters, this.monsters);
-        //collide(this.monstersSkills, this.obstacles);
-        //collide(this.playerSkills, this.obstacles);
+        collide(this.obstacles, this.monstersSkills, hitObstacle);
+        collide(this.obstacles, this.playerSkills, hitObstacle);
         
         this.monsters.sort('y');
         this.debug();
         
         function hit(monster, skill){
             skill.impact(monster);
+        }
+
+        function hitObstacle(obstacle, skill){
+            //Фигачим мертвый спрайт, который примет урон
+            var fool = new Phaser.Sprite(game, 0, 0, 'light');
+            skill.impact(fool);
         }
 
         function getItem(player, item){
