@@ -1,6 +1,12 @@
 {
     "background": "startup",
 
+    "obstacles": {
+        "Wall":[
+            {"x": 500, "y": 500, "width": 200, "height": 10}
+        ]
+    },
+
     "items": {
         "Roll":[
             {"x": 300, "y": 230, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
