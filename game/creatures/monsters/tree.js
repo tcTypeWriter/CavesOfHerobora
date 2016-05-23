@@ -15,7 +15,6 @@ function Tree(game, point, player) {
 
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
 
-    this.branchSkill = skillFactory.createSkill('Branch_spawn', game);
 
     this.testSkill = skillFactory.createSkill('Branch', game);
 
@@ -99,7 +98,7 @@ Tree.prototype.update = function () {
         this.events.onCastSkill.dispatch(skillForKill);
     }
 
-    if (this.health <= 99 && !this.branch1) {
+    if (this.health <= 65 && !this.branch1) {
         this.frame = 1;
         this.branch1 = true;
         var position = {
@@ -110,7 +109,7 @@ Tree.prototype.update = function () {
         self.events.onCastSkill.dispatch(hz);
     }
 
-    if (this.health <= 98 && !this.branch2) {
+    if (this.health <= 25 && !this.branch2) {
         this.frame = 2;
         this.branch2 = true;
         var position = {
