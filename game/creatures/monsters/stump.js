@@ -1,6 +1,6 @@
 'use strict';
 
-var speed = 180;
+var speed = 170;
 
 var skillFactory = require('skillFactory');
 var BaseMonster = require('./baseMonster');

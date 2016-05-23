@@ -10,7 +10,7 @@ function Tree(game, point, player) {
     BaseMonster.call(this, game, point, player, 'tree', 0);
     this.scale.setTo(0.8, 0.8);
 
-    this.health = this.maxHealth = 10;
+    this.health = this.maxHealth = 100;
     this.skill = skillFactory.createSkill('Natures_call', game);
 
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
