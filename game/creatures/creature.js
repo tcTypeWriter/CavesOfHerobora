@@ -30,7 +30,11 @@ Creature.prototype.damage = function (amount) {
     if (this.alive && !this.immune) {
         this.immune = true;
         this.health -= amount;
+        
+        self.tint = 0xff0000;
 
+
+        
         setTimeout(resetImmune, 250);
 
         if (this.health <= 0) {
@@ -41,6 +45,7 @@ Creature.prototype.damage = function (amount) {
 
     function resetImmune() {
         self.immune = false;
+        self.tint = 0xffffff;
     }
 
 };

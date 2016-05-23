@@ -1,14 +1,14 @@
 'use strict';
 
-var speed = 100;
+var speed = 180;
 
 var skillFactory = require('skillFactory');
 var BaseMonster = require('./baseMonster');
 
 function Stump(game, point, player) {
     BaseMonster.call(this, game, point, player, 'stump');
-    this.scale.setTo(0.3, 0.3);
-
+    this.scale.setTo(0.3, 0.3); 
+    this.body.mass = 0;
     this.health = this.maxHealth = 2;
     this.skill = skillFactory.createSkill('Bolt', game);
 

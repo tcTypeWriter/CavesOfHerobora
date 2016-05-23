@@ -6,6 +6,9 @@
             {"x": 300, "y": 230, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
             {"x": 430, "y": 400, "type": "items",  "thing": "SpeedPotion", "sprite": "speedPotion"},
             {"x": 620, "y": 230, "type": "items",  "thing": "СalldownPotion", "sprite": "calldownPotion"}
+        ],
+        "SkillShop":[
+            {"x": 450, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 2}
         ]
     }    
 }
