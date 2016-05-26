@@ -3,5 +3,15 @@
         "SkeletonKing":[
             {"x":600, "y": 300}
         ]
-    }
+    },
+    "prize": {
+        "Coin":[
+            {"x": 300, "y": 230},
+            {"x": 430, "y": 400},
+            {"x": 620, "y": 230}
+        ],
+        "SkillShop":[
+            {"x": 450, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 2}
+        ]
+    } 
 }

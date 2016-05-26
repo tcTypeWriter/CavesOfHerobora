@@ -58,7 +58,7 @@ Fireworks.prototype.boom = function(){
                     x: self.goal.x + 20*Math.cos(i),
                     y: self.goal.y + 20*Math.sin(i)
                 };
-            var fireball = new Fire(game, self.goal, to);
+            var fireball = new Fire(game, self.goal, to, self.power);
             self.events.onCastSkill.dispatch(fireball);
         }    
         startAngle += dfi / 2;
@@ -70,7 +70,7 @@ Fireworks.prototype.timeout = 1000;
 module.exports = Fireworks;
 
 
-function Fire(game, from, to) {
+function Fire(game, from, to, power) {
     BaseSkill.call(this, game, from, to, 'fireball');
     this.scale.setTo(0.06, 0.06);
     
@@ -78,12 +78,14 @@ function Fire(game, from, to) {
     this.body.angularVelocity = 200 + Math.random() * 500;
 
     game.time.events.add(300, this.destroy, this);
+
+    this.power = power || 1;
 }
 
 Fire.prototype = Object.create(BaseSkill.prototype);
 Fire.prototype.constructor = Fire;
 
 Fire.prototype.impact = function(mob){
-    mob.damage(1);
+    mob.damage(this.power);
     this.kill();
 };

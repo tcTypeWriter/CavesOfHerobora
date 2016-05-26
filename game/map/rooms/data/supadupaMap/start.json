@@ -7,7 +7,7 @@
         ]
     },
 
-    "items": {
+    "prize": {
         "Roll":[
             {"x": 300, "y": 230, "type": "items",  "thing": "HealthPotion", "sprite": "healthPotion"},
             {"x": 430, "y": 400, "type": "items",  "thing": "SpeedPotion", "sprite": "speedPotion"},

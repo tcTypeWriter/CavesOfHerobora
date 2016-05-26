@@ -4,6 +4,7 @@ var Creature = require('../creature');
 
 function BasePlayer(game, x, y, sprite_key) {
     Creature.call(this, game, x, y, sprite_key);
+    this.body.setSize(97, 134, 0, 3);
     this.scale.setTo(0.3);
 
     this.health = this.maxHealth = 10;
@@ -12,7 +13,6 @@ function BasePlayer(game, x, y, sprite_key) {
     this.state.coins = 2;
 
     var self = this;
-
     setKeys();
     setOnCastInterraptor();
 
@@ -22,7 +22,6 @@ function BasePlayer(game, x, y, sprite_key) {
             'left': Phaser.Keyboard.A,
             'down': Phaser.Keyboard.S,
             'right': Phaser.Keyboard.D,
-            'take': Phaser.Keyboard.E,
             'one': Phaser.Keyboard.ONE,
             'two': Phaser.Keyboard.TWO,
             'three': Phaser.Keyboard.THREE
@@ -55,9 +54,7 @@ BasePlayer.prototype = Object.create(Creature.prototype);
 BasePlayer.prototype.constructor = BasePlayer;
 
 BasePlayer.prototype.getItem = function (item) {
-    if (this.keys.take.isDown) {
         item.impact(this);
-    }
 };
 
 BasePlayer.prototype.update = function () {

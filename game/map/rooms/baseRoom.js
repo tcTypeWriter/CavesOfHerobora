@@ -66,6 +66,8 @@ BaseRoom.prototype = {
         var self = this;
         var game = this.game;
 
+        this.space = game.input.keyboard.addKeys({'space': Phaser.Keyboard.SPACEBAR}).space;
+
         this.physics.startSystem(Phaser.Physics.ARCADE);
 
         setBackground();
@@ -76,7 +78,13 @@ BaseRoom.prototype = {
         setDoors();
         setMonsters();
 
-        this.space = game.input.keyboard.addKeys({'space': Phaser.Keyboard.SPACEBAR}).space;
+        self.doors.forEachAlive(function(door){
+                door.close(condition);
+            });
+
+        function condition(){
+            return self.monsters.countLiving() === 0;
+        }
 
         function setBackground(){
             self.stage.backgroundColor = '#ffffff';        
@@ -173,7 +181,13 @@ BaseRoom.prototype = {
     addingMonster: function(monster, monsterModel){},
 
     update: function() {
-        var game = this.game,
+        if(this.space.isDown){
+            this.monsters.forEachAlive(function(mob){ mob.kill(); });
+        }
+
+
+        var self = this,
+            game = this.game,
             arcade = this.physics.arcade,
             overlap = this.physics.arcade.overlap.bind(arcade),
             collide = this.physics.arcade.collide.bind(arcade);
@@ -191,8 +205,11 @@ BaseRoom.prototype = {
         collide(this.obstacles, this.playerSkills, hitObstacle);
         
         this.monsters.sort('y');
-        this.debug();
+        this.debug(true);
         
+        if(self.monsters.countLiving() === 0)
+            setPrize();
+
         function hit(monster, skill){
             skill.impact(monster);
         }
@@ -206,11 +223,25 @@ BaseRoom.prototype = {
         function getItem(player, item){
             player.getItem(item);
         }
+
+        function setPrize(){
+            var items = self.items,
+                model = self.model.prize;
+
+            for(var itemType in model)
+                for(var i = 0; i < model[itemType].length; i++){
+                    var data = model[itemType][i],
+                        item = new itemFactory[itemType](game, data);
+
+                    item.setModel(data);
+                    items.add(item);
+                }
+            self.model.prize = {};
+        }
     },
 
     changeRoom: function(player, door){
-        if(this.space.isDown)
-            door.go(player.getModel());
+        door.go(player.getModel());
     },
 
     shutdown: function() {

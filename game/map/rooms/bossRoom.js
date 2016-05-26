@@ -32,18 +32,6 @@ BossRoom.prototype.create = function() {
 
     this.hp = this.game.add.sprite(255, 574, 'hp');
     this.hp.width = this.hpBar.width - 10;
-
-    var self = this;
-
-    self.doors.forEachAlive(function(door){
-        door.close(condition);
-    });
-
-    function condition(){
-        return self.monsters.countLiving() === 0;
-    }
-
-
 };
 
 BossRoom.prototype.changeRoom = function(player, door){
