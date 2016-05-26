@@ -2,7 +2,7 @@
 
 var BaseSkill = require('./baseskill'); 
 
-var speed = 400;
+var speed = 600;
 var power = 1;
 
 var numberOfFireballs = 8;

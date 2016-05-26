@@ -2,7 +2,7 @@
 
 var BaseSkill = require('./baseskill'); 
 
-var speed = 700;
+var speed = 800;
 var power = 1;
 
 function Fireball(game, from, to) {

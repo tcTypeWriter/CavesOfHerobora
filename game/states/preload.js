@@ -39,7 +39,6 @@ Preload.prototype = {
             load.image('spider', 'assets/monsters/spider.png');    
             load.image('minotaur', 'assets/monsters/minotaur.png');   
             load.image('death', 'assets/monsters/death.png'); 
-            load.image('branch', 'assets/monsters/branch.png');
             load.image('skeletonKing', 'assets/monsters/skeletonKing.png');
             load.image('skeleton', 'assets/monsters/armedSkeleton.png');             
         }
@@ -51,6 +50,8 @@ Preload.prototype = {
             load.image('cobble', 'assets/bril.png'); 
             load.image('deathball', 'assets/deathball.png');
             load.image('light', 'assets/light.png');            
+            load.image('branch', 'assets/monsters/branch.png');
+            load.image('branch2', 'assets/monsters/branch_2.png');
         }
 
         function loadItemsAssets(){
@@ -60,7 +61,8 @@ Preload.prototype = {
             load.image('speedPotion', 'assets/speedPotion.png'); 
             load.image('calldownPotion', 'assets/cdPotion.png');  
             load.image('roll', 'assets/roll.png');   
-            load.image('coin', 'assets/Coin.png');            
+            load.image('coin', 'assets/Coin.png'); 
+            load.image('helm', 'assets/helm.png');            
         }
 
         function loadObstaclesAssets(){

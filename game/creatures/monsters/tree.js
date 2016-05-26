@@ -16,8 +16,6 @@ function Tree(game, point, player) {
     this.skillForKill = skillFactory.createSkill('Yapona_mat', game);
 
 
-    this.testSkill = skillFactory.createSkill('Branch', game);
-
     this.shooting = false;
     this.game.time.events.add(5000, this.startShooting, this);
 }
@@ -106,7 +104,7 @@ Tree.prototype.update = function () {
             x: this.x - 10,
             y: this.y + 10
         };
-        var hz = self.testSkill(self.game, this, position);
+        var hz = new skillFactory.Branch(self.game, this, position);
         self.events.onCastSkill.dispatch(hz);
     }
         //25
@@ -118,7 +116,7 @@ Tree.prototype.update = function () {
             x: this.x + 10,
             y: this.y + 10
         };
-        var hz = self.testSkill(self.game, this, position);
+        var hz = new skillFactory.Branch(self.game, this, position, 'branch2');
         self.events.onCastSkill.dispatch(hz);
     }
 
