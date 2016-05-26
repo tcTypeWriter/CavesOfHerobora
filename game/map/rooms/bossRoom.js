@@ -34,11 +34,6 @@ BossRoom.prototype.create = function() {
     this.hp.width = this.hpBar.width - 10;
 };
 
-BossRoom.prototype.changeRoom = function(player, door){
-    if(this.space.isDown)
-        door.go(player.getModel());
-};
-
 BossRoom.prototype.additionalDebug = function(){
     var game = this.game;
     var st = this;

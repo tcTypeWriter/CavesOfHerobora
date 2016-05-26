@@ -97,25 +97,27 @@ Tree.prototype.update = function () {
         var skillForKill = this.skillForKill(this.game, this, this.player);
         this.events.onCastSkill.dispatch(skillForKill);
     }
-
+        //65
     if (this.health <= 65 && !this.branch1) {
+        this.body.setSize(126, 168, -17, 0);
         this.frame = 1;
         this.branch1 = true;
         var position = {
             x: this.x - 10,
             y: this.y + 10
-        }
+        };
         var hz = self.testSkill(self.game, this, position);
         self.events.onCastSkill.dispatch(hz);
     }
-
+        //25
     if (this.health <= 25 && !this.branch2) {
+        this.body.setSize(92, 120, -5, 20);
         this.frame = 2;
         this.branch2 = true;
         var position = {
             x: this.x + 10,
             y: this.y + 10
-        }
+        };
         var hz = self.testSkill(self.game, this, position);
         self.events.onCastSkill.dispatch(hz);
     }
