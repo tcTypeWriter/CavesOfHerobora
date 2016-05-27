@@ -21,6 +21,7 @@ function Bat(game, point, player) {
 
     this.state = {
         base: point,
+        goal: point,
         urge: 'patrol',
         moving: false,
         patrol: getPatrolPoints(point),

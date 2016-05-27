@@ -205,7 +205,7 @@ BaseRoom.prototype = {
         collide(this.obstacles, this.playerSkills, hitObstacle);
         
         this.monsters.sort('y');
-        this.debug(true);
+        this.debug();
         
         if(self.monsters.countLiving() === 0)
             setPrize();

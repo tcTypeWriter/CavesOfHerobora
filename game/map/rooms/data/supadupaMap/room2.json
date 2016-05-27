@@ -1,7 +1,21 @@
 {
     "monsters": {
         "Death":[
-            {"x":600, "y": 300}
+            {"x":700, "y": 400}
+        ]
+    },
+    "obstacles": {
+        "Wall":[   ]
+    },
+    "prize": {
+       "Coin":[
+            {"x": 200, "y": 400}
+        ],
+        "SpeedPotion":[
+            {"x": 450, "y": 450 }
+        ],
+        "SkillShop":[
+            {"x": 150, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 15}
         ]
     }
 }

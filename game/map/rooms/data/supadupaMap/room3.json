@@ -1,7 +1,16 @@
 {
     "monsters": {
-        "Tree":[
-            {"x":600, "y": 300}
+    },
+    "prize":{
+        "Coin":[
+            {"x": 100, "y": 400}
+        ],
+        "SpeedPotion":[
+            {"x": 450, "y": 100 }
+        ],
+        "Roll":[
+            {"x": 160, "y": 100, "type": "monsters",  "thing": "ArmedSkeleton", "sprite": "skeleton"},
+            {"x": 450, "y": 340, "type": "monsters",  "thing": "Stump", "sprite": "stump"}
         ]
     }
 }
