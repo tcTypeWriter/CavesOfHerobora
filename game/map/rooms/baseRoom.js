@@ -181,11 +181,6 @@ BaseRoom.prototype = {
     addingMonster: function(monster, monsterModel){},
 
     update: function() {
-        if(this.space.isDown){
-            this.monsters.forEachAlive(function(mob){ mob.kill(); });
-        }
-
-
         var self = this,
             game = this.game,
             arcade = this.physics.arcade,
