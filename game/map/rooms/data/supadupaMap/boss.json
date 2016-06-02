@@ -3,5 +3,10 @@
         "Tree":[
             {"x":400, "y": 300, "boss": "Oak"}
         ]
-    }
+    },
+    "prize": {
+        "Roll":[
+            {"x": 400, "y": 300, "type": "monsters",  "thing": "Tree", "sprite": "tree"}
+        ]
+    } 
 }

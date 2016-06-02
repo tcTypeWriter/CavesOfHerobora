@@ -1,7 +1,21 @@
 {
     "monsters": {
-        "SkeletonKing":[
-            {"x":600, "y": 300}
+        "Death":[
+            {"x":200, "y": 150}
         ]
-    }
+    },
+    "prize": {
+        "Coin":[
+            {"x": 100, "y": 100}
+        ],
+        "Roll":[
+            {"x": 400, "y": 300, "type": "monsters",  "thing": "Death", "sprite": "death"}
+        ],
+        "CalldownPotion":[
+            {"x": 450, "y": 450 }
+        ],
+        "SkillShop":[
+            {"x": 150, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 15}
+        ]
+    } 
 }

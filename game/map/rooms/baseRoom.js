@@ -206,7 +206,7 @@ BaseRoom.prototype = {
         
         this.monsters.sort('y');
         this.debug();
-        
+
         if(self.monsters.countLiving() === 0)
             setPrize();
 

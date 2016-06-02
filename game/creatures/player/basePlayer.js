@@ -10,7 +10,7 @@ function BasePlayer(game, x, y, sprite_key) {
     this.health = this.maxHealth = 10;
     this.skill = function () { };
 
-    this.state.coins = 2;
+    this.state.coins = 0;
 
     var self = this;
     setKeys();

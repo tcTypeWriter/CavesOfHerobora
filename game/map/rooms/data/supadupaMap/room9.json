@@ -1,7 +1,23 @@
 {
     "monsters": {
-        "Death":[
-            {"x":600, "y": 300}
+        "SkeletonKing":[
+            {"x":600, "y": 400}
         ]
-    }
+    },
+    "prize": {
+        "Coin":[
+            {"x": 370, "y": 330},
+            {"x": 400, "y": 260},
+            {"x": 430, "y": 330}
+        ],
+        "Roll":[
+            {"x": 400, "y": 300, "type": "monsters",  "thing": "SkeletonKing", "sprite": "skeletonKing"}
+        ],
+        "HealthPotion":[
+            {"x": 250, "y": 150 }
+        ],
+        "SkeletonHelm": [
+            {"x": 600, "y": 400 }
+        ]
+    } 
 }

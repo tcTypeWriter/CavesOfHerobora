@@ -1,15 +1,3 @@
 {
-    "background": "startup",
-
-    "obstacles": {
-        "Wall":[]
-    },
-
-    "prize": {
-        "Roll":[
-            {"x": 120, "y": 300, "type": "monsters",  "thing": "Bat", "sprite": "bat"},
-            {"x": 650, "y": 300, "type": "monsters",  "thing": "Spider", "sprite": "spider"},
-            {"x": 400, "y": 500, "type": "monsters",  "thing": "Death", "sprite": "death"}
-        ]
-    }    
+    "background": "startup"
 }

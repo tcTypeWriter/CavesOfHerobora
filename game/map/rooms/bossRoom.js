@@ -9,6 +9,7 @@ function BossRoom(game, key) {
 
     this.model.monsters = data.monsters || this.model.monsters;
     this.model.items = data.items || this.model.items;
+    this.model.prize = data.prize || this.model.prize;
     
     this.background = 'brick1';
 }

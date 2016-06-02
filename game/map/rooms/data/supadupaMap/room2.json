@@ -1,7 +1,12 @@
 {
     "monsters": {
-        "Death":[
-            {"x":700, "y": 400}
+        "Stump":[
+            {"x":70, "y": 100},
+            {"x":650, "y": 100},
+            {"x":400, "y": 300},
+            {"x":300, "y": 500},
+            {"x":400, "y": 500},
+            {"x":500, "y": 500}
         ]
     },
     "obstacles": {
@@ -9,13 +14,14 @@
     },
     "prize": {
        "Coin":[
-            {"x": 200, "y": 400}
+            {"x": 200, "y": 400},
+            {"x": 400, "y": 200}
         ],
-        "SpeedPotion":[
-            {"x": 450, "y": 450 }
+        "Roll":[
+            {"x": 400, "y": 300, "type": "monsters",  "thing": "Stump", "sprite": "stump"}
         ],
-        "SkillShop":[
-            {"x": 150, "y": 450, "skill": "Fireworks", "sprite": "fireball", "cost": 15}
+        "HealthPotion":[
+            {"x": 250, "y": 450 }
         ]
     }
 }
